@@ -36,7 +36,7 @@ HTTP_CODE HttpServer::ParseRequest(std::string &msg, std::string &msg_response) 
     HTTP_CODE httpcode = parseContent(buffer, checked_index, checkstate, read_index, start_line, reqCode);
 
     if (httpcode == GET_REQUEST){
-        std::string msgbody = "Hello, world";
+        std::string msgbody(2000000, 'w');
         if (reqCode == REQ_GET){
             msg_response = "HTTP/1.0 200 OK\r\n";
             msg_response += "Server: ZhuJiaying's webserver\r\n";

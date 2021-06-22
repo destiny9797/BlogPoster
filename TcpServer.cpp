@@ -67,7 +67,7 @@ TcpServer::~TcpServer() {
 
 void TcpServer::ctlEpoll(int fd) {
     struct epoll_event event;
-    event.events = EPOLLIN | EPOLLET;
+    event.events = EPOLLIN | EPOLLET | EPOLLONESHOT;
     event.data.fd = fd;
     epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, fd, &event);
 }
@@ -131,7 +131,6 @@ void TcpServer::handleRequest(TcpServer::spHttpConnection conn) {
         if (httpcode == GET_REQUEST){
             break;
         }
-
     }
 
     std::string msg_response;
@@ -145,11 +144,11 @@ void TcpServer::handleRequest(TcpServer::spHttpConnection conn) {
             msg_response.erase(msg_response.begin(), msg_response.begin() + nsend);
             conn->setMsg(msg_response);
 
-            uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT;
+            uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT | EPOLLONESHOT;
             modEpoll(fd, ev);
         }
         else{
-            uint32_t ev = EPOLLIN | EPOLLET;
+            uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
             modEpoll(fd, ev);
         }
     }
@@ -222,7 +221,7 @@ int TcpServer::sendMessage(int fd, const std::string &msg) {
         }
         sendsum += nsend;
     }
-    std::cout << "Send!" << std::endl;
+    std::cout << sendsum << "Bytes Send!" << std::endl;
 
     return sendsum;
 }
