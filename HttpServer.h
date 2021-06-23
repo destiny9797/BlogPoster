@@ -6,7 +6,7 @@
 #define MYWEBSERVER_HTTPSERVER_H
 
 #include "ThreadPool.h"
-#include "HttpParser.h"
+//#include "HttpParser.h"
 
 #include <string>
 #include <memory>
@@ -28,7 +28,7 @@ public:
 
     void Quit();
 
-    HTTP_CODE ParseRequest(std::string& msg, std::string& msg_response);
+    int ParseRequest(std::string& msg, std::string& msg_response);
 
     void GetResponse(std::string& msg_response);
 

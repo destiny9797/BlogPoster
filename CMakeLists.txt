@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SRCS
         HttpServer.cpp
         TcpServer.cpp
-        HttpConnection.cpp
+        Connection.cpp
         ThreadPool.cpp
         TaskPool.cpp
         HttpParser.cpp

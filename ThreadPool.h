@@ -12,13 +12,12 @@
 #include <functional>
 
 class TaskPool;
-class HttpConnection;
+class Connection;
 
 class ThreadPool{
 public:
     typedef std::shared_ptr<TaskPool> spTaskPool;
-    typedef std::shared_ptr<HttpConnection> spHttpConnection;
-    typedef std::function<void(spHttpConnection)> callback;
+    typedef std::shared_ptr<Connection> spConnection;
 
     ThreadPool(int threadnum, spTaskPool taskpool);
 
@@ -32,17 +31,6 @@ public:
 
     void join();
 
-    void setHandleRead(const callback& cb){
-        handleRead = cb;
-    }
-
-    void setHandleWrite(const callback& cb){
-        handleWrite = cb;
-    }
-
-    void setHandleError(const callback& cb){
-        handleError = cb;
-    }
 
 private:
     int _threadnum;
@@ -53,12 +41,6 @@ private:
 
     spTaskPool _taskpool;
 
-
-    callback handleRead;
-
-    callback handleWrite;
-
-    callback handleError;
 
 };
 

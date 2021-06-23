@@ -10,12 +10,12 @@
 #include <mutex>
 #include <condition_variable>
 
-class HttpConnection;
+class Connection;
 
 class TaskPool{
 public:
 //    typedef std::function<void()> task;
-    typedef std::shared_ptr<HttpConnection> spHttpConnection;
+    typedef std::shared_ptr<Connection> spHttpConnection;
 
     TaskPool(); //singleton
 

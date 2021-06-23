@@ -6,19 +6,20 @@
 #define MYWEBSERVER_TCPSERVER_H
 
 #include "ThreadPool.h"
-#include "HttpParser.h"
+//#include "HttpParser.h"
 #include <memory>
 #include <functional>
 #include <string>
 
 class TaskPool;
-class HttpConnection;
+class Connection;
 
 class TcpServer{
 public:
     typedef std::shared_ptr<TaskPool> spTaskPool;
-    typedef std::shared_ptr<HttpConnection> spHttpConnection;
-    typedef std::function<HTTP_CODE(std::string&, std::string&)> callback_parse;
+    typedef std::shared_ptr<Connection> spConnection;
+    typedef std::function<int(std::string&, std::string&)> callback_parse;
+
 
     TcpServer(int port, spTaskPool taskpool);
 
@@ -28,21 +29,21 @@ public:
 
     void Quit();
 
-    int getServsock(){ return _serv_sock; }
-
     void ctlEpoll(int fd);
 
     void modEpoll(int fd, uint32_t ev);
+
+    void setNonBlocking(int fd);
 
     void handleNewConn();
 
     void handleClose(int fd);
 
-    void handleRequest(spHttpConnection);
+    void handleRequest(int fd);
 
-    void handleWrite(spHttpConnection);
+    void handleWrite(int fd);
 
-    void handleError(spHttpConnection);
+    void handleError(int fd);
 
     int readMessage(int fd, std::string& msg);
 
@@ -54,7 +55,7 @@ public:
 
 private:
 
-    std::vector<spHttpConnection> _connections;
+    std::vector<spConnection> _connections;
 
     spTaskPool _taskpool;
 

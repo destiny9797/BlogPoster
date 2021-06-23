@@ -4,7 +4,7 @@
 
 #include "ThreadPool.h"
 #include "TaskPool.h"
-#include "HttpConnection.h"
+#include "Connection.h"
 #include <sys/epoll.h>
 #include <iostream>
 
@@ -37,21 +37,9 @@ void ThreadPool::join() {
 
 void ThreadPool::work() {
     while (!_quit){
-        spHttpConnection conn = _taskpool->getTask();
+        spConnection conn = _taskpool->getTask();
         if (conn != nullptr){
-            uint32_t event = conn->getEvent();
-            if (event & (EPOLLIN | EPOLLPRI)){ //对方有数据或正常关闭
-                std::cout << "one thread handle read" << std::endl;
-                handleRead(conn);
-            }
-            else if (event & EPOLLOUT){
-                std::cout << "one thread handle write" << std::endl;
-                handleWrite(conn);
-            }
-            else if (event & (EPOLLERR | EPOLLHUP)){
-                std::cout << "one thread handle error" << std::endl;
-                handleError(conn);
-            }
+            conn->handleEvent();
         }
     }
 }
