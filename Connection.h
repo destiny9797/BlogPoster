@@ -8,6 +8,7 @@
 #include <string>
 #include <functional>
 
+
 class Connection{
 public:
     typedef std::function<void(void)> callback;
@@ -23,9 +24,13 @@ public:
 
     int getfd(){ return _fd; }
 
-    void setMsg(std::string msg){ _msgtosend = msg; }
+    void setMsgtosend(std::string msg){ _msgtosend = msg; }
 
-    void getMsg(std::string& msg){ msg = _msgtosend; }
+    void getMsgtosend(std::string& msg){ msg = _msgtosend; }
+
+    void setMsgrecv(std::string msg){ _msgrecv = msg; }
+
+    void getMsgrecv(std::string& msg){ msg = _msgrecv; }
 
     void setHalfclosed(){ _halfclosed = true;}
 
@@ -52,6 +57,8 @@ private:
     uint32_t _event;
 
     std::string _msgtosend;
+
+    std::string _msgrecv;
 
     bool _halfclosed;
 

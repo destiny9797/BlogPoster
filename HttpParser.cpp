@@ -15,7 +15,8 @@ HttpParser::HttpParser(char* buffer, int len)
       start_line(0),
       checkState(CHECK_STATE_REQUESTLINE),
       requestCode(NO_REQ),
-      parsed_len(0)
+      parsed_len(0),
+      content_len(0)
 {
     char* curpath = getcwd(NULL, 0);
     if (curpath==nullptr){
@@ -141,8 +142,8 @@ HTTP_CODE HttpParser::parseContent(){
     HTTP_CODE retcode = NO_REQUEST;
     //只有当解析出一行了才会进行行解析
     while ((linestatus=parseLine(buffer)) == LINE_OK){
-        std::cout << "startline=" << start_line << ", checked=" << checked_index << ", total=" << read_index << std::endl;
-        std::cout << "parsed, *** " << std::string(buffer+start_line, buffer+checked_index) << std::endl;
+//        std::cout << "startline=" << start_line << ", checked=" << checked_index << ", total=" << read_index << std::endl;
+//        std::cout << "parsed, *** " << std::string(buffer+start_line, buffer+checked_index) << std::endl;
         char* temp = buffer + start_line;
         switch (checkState) {
             case CHECK_STATE_REQUESTLINE:

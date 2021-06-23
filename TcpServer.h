@@ -6,13 +6,15 @@
 #define MYWEBSERVER_TCPSERVER_H
 
 #include "ThreadPool.h"
-//#include "HttpParser.h"
+#include "TimerManager.h"
 #include <memory>
 #include <functional>
 #include <string>
+#include <mutex>
 
 class TaskPool;
 class Connection;
+
 
 class TcpServer{
 public:
@@ -33,6 +35,8 @@ public:
 
     void modEpoll(int fd, uint32_t ev);
 
+    void delEpoll(int fd);
+
     void setNonBlocking(int fd);
 
     void handleNewConn();
@@ -45,6 +49,8 @@ public:
 
     void handleError(int fd);
 
+    void handleExpire(int fd);
+
     int readMessage(int fd, std::string& msg);
 
     int sendMessage(int fd, const std::string& msg);
@@ -54,8 +60,11 @@ public:
     }
 
 private:
+    std::mutex _mutex;
 
     std::vector<spConnection> _connections;
+
+    TimerManager _timermanager;
 
     spTaskPool _taskpool;
 

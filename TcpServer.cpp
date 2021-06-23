@@ -22,7 +22,9 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
       _taskpool(taskpool),
       _quit(false),
       _threadpool(8, _taskpool),
-      _connections(MAX_CONN, 0){
+      _connections(MAX_CONN, 0),
+      _timermanager(MAX_CONN, std::bind(&TcpServer::handleExpire, this, std::placeholders::_1))
+{
     struct sockaddr_in serv_addr;
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -52,9 +54,6 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
     setNonBlocking(_serv_sock);
     epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _serv_sock, &event);
 
-//    _threadpool.setHandleRead(std::bind(&TcpServer::handleRequest, this, std::placeholders::_1));
-//    _threadpool.setHandleWrite(std::bind(&TcpServer::handleWrite, this, std::placeholders::_1));
-//    _threadpool.setHandleError(std::bind(&TcpServer::handleError, this, std::placeholders::_1));
 }
 
 
@@ -75,6 +74,10 @@ void TcpServer::modEpoll(int fd, uint32_t ev) {
     event.events = ev;
     event.data.fd = fd;
     epoll_ctl(_epoll_fd, EPOLL_CTL_MOD, fd, &event);
+}
+
+void TcpServer::delEpoll(int fd) {
+    epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, NULL);
 }
 
 void TcpServer::setNonBlocking(int fd) {
@@ -98,6 +101,7 @@ void TcpServer::handleNewConn() {
         conn->setHandleWrite(std::bind(&TcpServer::handleWrite, this, clnt_sock));
         conn->setHandleError(std::bind(&TcpServer::handleError, this, clnt_sock));
         _connections[clnt_sock] = conn;
+        _timermanager.addTimer(clnt_sock, 5000);
 //        std::make_shared<Request>();
         std::cout << "clnt_sock=" << clnt_sock << ", conn=" << _connections[clnt_sock] << std::endl;
 //        _handleNewConn(clnt_sock);
@@ -106,31 +110,46 @@ void TcpServer::handleNewConn() {
 }
 
 void TcpServer::handleClose(int fd) {
-    _connections[fd] = 0;
+    //清除连接，清除定时器，还要记得从epoll中取消注册
+    _timermanager.rmTimer(fd);
+    std::unique_lock<std::mutex> lk(_mutex);
+    _connections[fd] = nullptr;
+    delEpoll(fd);
     close(fd);
     std::cout << "Closed!" << std::endl;
+}
+
+void TcpServer::handleExpire(int fd) {
+    //如果正好有线程在写或读这个fd怎么办？
+    //一般来说不会，因为有线程正好在读或写，说明刚更新过定时器，如果都要超时了还没操作完，说明这个连接有问题
+    handleClose(fd);
 }
 
 void TcpServer::handleRequest(int fd) {
 //    int fd = conn->getfd();
     spConnection conn = _connections[fd];
+    if (conn==nullptr){
+        return;
+    }
+    _timermanager.updateTimer(fd, 5000);
     //读数据
     std::string msg_recv;
+    conn->getMsgtosend(msg_recv);
     std::string new_response;
 
-    while (1){
+//    while (1){
         std::string msg;
         int nread = readMessage(fd, msg);
         if (nread == 0){
             handleClose(fd);
-            break;
+            return;
         }
         else if (nread < 0){
-            break;
+            return;
         }
         msg_recv += msg;
         if (msg_recv.empty()){
-            break;
+            return;
         }
 
         //http解析
@@ -140,7 +159,7 @@ void TcpServer::handleRequest(int fd) {
         //如果解析成功，
         if (parsed_len > 0){
             std::string msg_response;
-            conn->getMsg(msg_response);
+            conn->getMsgtosend(msg_response);
             msg_response += new_response;
             std::cout << "msg_response=" << msg_response << std::endl;
 
@@ -149,7 +168,7 @@ void TcpServer::handleRequest(int fd) {
                 //如果没写完，注册写事件
                 if (nsend < msg_response.length()) {
                     msg_response.erase(msg_response.begin(), msg_response.begin() + nsend);
-                    conn->setMsg(msg_response);
+                    conn->setMsgtosend(msg_response);
 
                     uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT | EPOLLONESHOT;
                     modEpoll(fd, ev);
@@ -163,13 +182,18 @@ void TcpServer::handleRequest(int fd) {
 
         //防止粘包
         if (parsed_len == msg_recv.length()){
-            break;
+            conn->setMsgrecv("");
+//            break;
+        }
+        else if (parsed_len < msg_recv.length()){
+            msg_recv.erase(msg_recv.begin(),msg_recv.begin()+parsed_len);
+            conn->setMsgrecv(msg_recv);
         }
         else{
-            msg_recv.erase(msg_recv.begin(),msg_recv.begin()+parsed_len);
+            perror("parsed_len >>>>>> msg_recv_len.");
         }
 
-    }
+//    }
 
 
 
@@ -179,7 +203,7 @@ void TcpServer::handleWrite(int fd) {
 //    int fd = conn->getfd();
     spConnection conn = _connections[fd];
     std::string msg;
-    conn->getMsg(msg);
+    conn->getMsgtosend(msg);
     if (msg.empty()){
         return;
     }
@@ -189,7 +213,7 @@ void TcpServer::handleWrite(int fd) {
     }
     else if (nsend < msg.length()){ //如果没写完，注册写事件
         msg.erase(msg.begin(), msg.begin() + nsend);
-        conn->setMsg(msg);
+        conn->setMsgtosend(msg);
 
         uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT | EPOLLONESHOT;
         modEpoll(fd, ev);
@@ -197,7 +221,7 @@ void TcpServer::handleWrite(int fd) {
     else{
         //如果写完了，就重置ONESHOT
         msg.clear();
-        conn->setMsg(msg);
+        conn->setMsgtosend(msg);
         uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
         modEpoll(fd, ev);
         if (conn->getHalfclosed()){
@@ -217,7 +241,6 @@ int TcpServer::readMessage(int fd, std::string& msg) {
     while (1){
         int nread = 0;
         if ((nread=read(fd, buf, MAX_BUF)) > 0){
-            msg += std::string(buf);
             msg.append(buf, nread);
             readsum += nread;
         }
@@ -258,7 +281,8 @@ void TcpServer::Start() {
     _threadpool.run();
     while (!_quit){
         struct epoll_event ev[10];
-        int event_cnt = epoll_wait(_epoll_fd, ev, 10, -1);
+        _timermanager.closeExpire();
+        int event_cnt = epoll_wait(_epoll_fd, ev, 10, 2000);
         if (event_cnt < 0){
             perror("epoll_wait wrong:");
         }

@@ -61,9 +61,12 @@ int HttpServer::ParseRequest(std::string &msg, std::string &msg_response) {
                     std::stringstream readbuf;
                     readbuf << file.rdbuf();
                     filecontent = readbuf.str();
+                    if (filecontent.empty()){
+                        filecontent = "Welcome to ZhuJiaying's WebServer!";
+                    }
                 }
 
-                msg_response = "HTTP/1.0 200 OK\r\n";
+                msg_response += "HTTP/1.0 200 OK\r\n";
                 msg_response += "Server: ZhuJiaying's webserver\r\n";
                 msg_response += "Content-Type: text/html; charset=utf-8\r\n";
                 msg_response += "Content-Length: " + std::to_string(filecontent.length()) + "\r\n";
