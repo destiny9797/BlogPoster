@@ -28,7 +28,7 @@ HttpParser::HttpParser(char* buffer, int len)
 }
 
 HttpParser::~HttpParser() {
-    std::cout << "~HttpParser()" << std::endl;
+//    std::cout << "~HttpParser()" << std::endl;
 }
 
 //从状态机，解析出一行内容

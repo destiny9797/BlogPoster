@@ -8,7 +8,9 @@
 
 Timer::Timer(int fd, int timeout)
     : _fd(fd),
-      _timeout(timeout)
+      _timeout(timeout),
+      next(nullptr),
+      last(nullptr)
 {
     gettimeofday(&_now, NULL);
 }

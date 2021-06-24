@@ -7,6 +7,7 @@
 
 #include <string>
 #include <functional>
+#include <mutex>
 
 
 class Connection{
@@ -50,8 +51,11 @@ public:
         handleError = cb;
     }
 
+    std::mutex* getMutex(){ return _mutex; }
 
 private:
+    std::mutex* _mutex;
+
     int _fd;
 
     uint32_t _event;

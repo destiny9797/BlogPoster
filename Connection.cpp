@@ -12,21 +12,21 @@ Connection::Connection(int fd) : _fd(fd), _halfclosed(false) {
 }
 
 Connection::~Connection() {
-    std::cout << "~Connection()" << std::endl;
+//    std::cout << "~Connection()" << std::endl;
 }
 
 
 void Connection::handleEvent() {
     if (_event & (EPOLLIN | EPOLLPRI)){ //对方有数据或正常关闭
-        std::cout << "one thread handle read" << std::endl;
+//        std::cout << "one thread handle read" << std::endl;
         handleRead();
     }
     else if (_event & EPOLLOUT){
-        std::cout << "one thread handle write" << std::endl;
+//        std::cout << "one thread handle write" << std::endl;
         handleWrite();
     }
     else if (_event & (EPOLLERR | EPOLLHUP)){
-        std::cout << "one thread handle error" << std::endl;
+//        std::cout << "one thread handle error" << std::endl;
         handleError();
     }
 }

@@ -23,7 +23,7 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
       _quit(false),
       _threadpool(8, _taskpool),
       _connections(MAX_CONN, 0),
-      _timermanager(MAX_CONN, std::bind(&TcpServer::handleExpire, this, std::placeholders::_1))
+      _timermanager(std::bind(&TcpServer::handleExpire, this, std::placeholders::_1))
 {
     struct sockaddr_in serv_addr;
     serv_addr.sin_family = AF_INET;
@@ -73,10 +73,12 @@ void TcpServer::modEpoll(int fd, uint32_t ev) {
     struct epoll_event event;
     event.events = ev;
     event.data.fd = fd;
+
     epoll_ctl(_epoll_fd, EPOLL_CTL_MOD, fd, &event);
 }
 
 void TcpServer::delEpoll(int fd) {
+
     epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, NULL);
 }
 
@@ -87,23 +89,24 @@ void TcpServer::setNonBlocking(int fd) {
 
 void TcpServer::handleNewConn() {
     struct sockaddr_in clnt_addr;
-    socklen_t socklen;
+    socklen_t socklen = sizeof(clnt_addr); //bug: 未初始化会收到来自1.0.0.0的连接
     int clnt_sock;
     while ((clnt_sock = accept(_serv_sock, (struct sockaddr*)&clnt_addr, &socklen)) > 0){
-        //设置为非阻塞
-        setNonBlocking(clnt_sock);
-        ctlEpoll(clnt_sock);
-        std::cout << "New Connection from: " << inet_ntoa(clnt_addr.sin_addr) << std::endl;
-
         //添加HttpConnection
         spConnection conn = std::make_shared<Connection>(clnt_sock);
         conn->setHandleRead(std::bind(&TcpServer::handleRequest, this, clnt_sock));
         conn->setHandleWrite(std::bind(&TcpServer::handleWrite, this, clnt_sock));
         conn->setHandleError(std::bind(&TcpServer::handleError, this, clnt_sock));
         _connections[clnt_sock] = conn;
-        _timermanager.addTimer(clnt_sock, 5000);
+        _timermanager.addTimer(clnt_sock, 2000);
+
+        //设置为非阻塞
+        setNonBlocking(clnt_sock);
+        ctlEpoll(clnt_sock);
+//        std::cout << "New Connection from: " << inet_ntoa(clnt_addr.sin_addr) << std::endl;
+
 //        std::make_shared<Request>();
-        std::cout << "clnt_sock=" << clnt_sock << ", conn=" << _connections[clnt_sock] << std::endl;
+//        std::cout << "clnt_sock=" << clnt_sock << ", conn=" << _connections[clnt_sock] << std::endl;
 //        _handleNewConn(clnt_sock);
     }
 
@@ -111,16 +114,19 @@ void TcpServer::handleNewConn() {
 
 void TcpServer::handleClose(int fd) {
     //清除连接，清除定时器，还要记得从epoll中取消注册
+    if (_connections[fd] == nullptr){
+        return;
+    }
     _timermanager.rmTimer(fd);
     std::unique_lock<std::mutex> lk(_mutex);
     _connections[fd] = nullptr;
     delEpoll(fd);
     close(fd);
-    std::cout << "Closed!" << std::endl;
+//    std::cout << "Socket " << fd << " Closed!" << std::endl;
 }
 
 void TcpServer::handleExpire(int fd) {
-    //如果正好有线程在写或读这个fd怎么办？
+    //主线程调用，如果正好有线程在写或读这个fd怎么办？
     //一般来说不会，因为有线程正好在读或写，说明刚更新过定时器，如果都要超时了还没操作完，说明这个连接有问题
     handleClose(fd);
 }
@@ -131,7 +137,7 @@ void TcpServer::handleRequest(int fd) {
     if (conn==nullptr){
         return;
     }
-    _timermanager.updateTimer(fd, 5000);
+    _timermanager.updateTimer(fd, 2000);
     //读数据
     std::string msg_recv;
     conn->getMsgtosend(msg_recv);
@@ -153,7 +159,7 @@ void TcpServer::handleRequest(int fd) {
         }
 
         //http解析
-        std::cout << "nread=" << nread << ", received msg=" << msg_recv << std::endl;
+//        std::cout << "nread=" << nread << ", received msg=" << msg_recv << std::endl;
         int parsed_len = _parseRequest(msg_recv, new_response);
 
         //如果解析成功，
@@ -161,7 +167,7 @@ void TcpServer::handleRequest(int fd) {
             std::string msg_response;
             conn->getMsgtosend(msg_response);
             msg_response += new_response;
-            std::cout << "msg_response=" << msg_response << std::endl;
+//            std::cout << "msg_response=" << msg_response << std::endl;
 
             if (!msg_response.empty()){
                 int nsend = sendMessage(fd, msg_response);
@@ -174,8 +180,9 @@ void TcpServer::handleRequest(int fd) {
                     modEpoll(fd, ev);
                 }
                 else{
-                    uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-                    modEpoll(fd, ev);
+                    handleClose(fd);
+//                    uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
+//                    modEpoll(fd, ev);
                 }
             }
         }
@@ -220,13 +227,14 @@ void TcpServer::handleWrite(int fd) {
     }
     else{
         //如果写完了，就重置ONESHOT
-        msg.clear();
-        conn->setMsgtosend(msg);
-        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-        modEpoll(fd, ev);
-        if (conn->getHalfclosed()){
-            handleClose(fd);
-        }
+        handleClose(fd);
+//        msg.clear();
+//        conn->setMsgtosend(msg);
+//        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
+//        modEpoll(fd, ev);
+//        if (conn->getHalfclosed()){
+//            handleClose(fd);
+//        }
     }
 }
 
@@ -271,7 +279,7 @@ int TcpServer::sendMessage(int fd, const std::string &msg) {
         }
         sendsum += nsend;
     }
-    std::cout << sendsum << " Bytes Send! Total msg is " << len <<" Bytes." << std::endl;
+//    std::cout << sendsum << " Bytes Send! Total msg is " << len <<" Bytes." << std::endl;
 
     return sendsum;
 }
@@ -298,19 +306,19 @@ void TcpServer::Start() {
                 //new data
 //                _addActivateConn(evfd, curev);
                 _connections[evfd]->setEvent(curev);
-                if (curev & EPOLLIN){
-                    std::cout << "EPOLLIN" << std::endl;
-                }
-                if (curev & EPOLLOUT){
-                    std::cout << "EPOLLOUT" << std::endl;
-                }
-                if (curev & EPOLLERR){
-                    std::cout << "EPOLLERR" << std::endl;
-                }
-                if (curev & EPOLLHUP){
-                    std::cout << "EPOLLHUP" << std::endl;
-                }
-                std::cout << "evfd=" << evfd << ", _connection[evfd]=" << _connections[evfd] << std::endl;
+//                if (curev & EPOLLIN){
+//                    std::cout << "EPOLLIN" << std::endl;
+//                }
+//                if (curev & EPOLLOUT){
+//                    std::cout << "EPOLLOUT" << std::endl;
+//                }
+//                if (curev & EPOLLERR){
+//                    std::cout << "EPOLLERR" << std::endl;
+//                }
+//                if (curev & EPOLLHUP){
+//                    std::cout << "EPOLLHUP" << std::endl;
+//                }
+//                std::cout << "evfd=" << evfd << ", _connection[evfd]=" << _connections[evfd] << std::endl;
                 _taskpool->addTask(_connections[evfd]);
             }
         }

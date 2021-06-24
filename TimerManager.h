@@ -10,6 +10,7 @@
 #include <thread>
 #include <mutex>
 #include <functional>
+#include <unordered_map>
 
 class Timer;
 
@@ -18,7 +19,7 @@ public:
     typedef std::shared_ptr<Timer> spTimer;
     typedef std::function<void(int)> callback;
 
-    TimerManager(int maxfd, const callback& handle);
+    TimerManager(const callback& handle);
 
     ~TimerManager();
 
@@ -33,10 +34,17 @@ public:
 
 private:
 
+    void addToHead(spTimer);
+
     std::mutex _mutex;
 
-    std::vector<spTimer> _timers;
+    int _count;
 
+    spTimer _head;
+
+    spTimer _tail;
+
+    std::unordered_map<int, spTimer> _map;
 
     callback handleExpire;
 

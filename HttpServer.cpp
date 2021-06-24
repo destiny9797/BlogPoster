@@ -48,13 +48,13 @@ int HttpServer::ParseRequest(std::string &msg, std::string &msg_response) {
 //        std::string msgbody("Hello, world.");
             REQ_CODE method = parser.getMethod();
             const std::string& url = parser.getUrl();
-            std::cout << "url=" << url << std::endl;
+//            std::cout << "url=" << url << std::endl;
             if (method == REQ_GET){
                 std::string filecontent;
                 std::ifstream file;
                 file.open(url.c_str(), std::ios::in);
                 if (!file){
-                    std::cout << "No such file!" << std::endl;
+//                    std::cout << "No such file!" << std::endl;
                     filecontent = "No such file!";
                 }
                 else{
