@@ -10,8 +10,10 @@ set(SRCS
         ThreadPool.cpp
         TaskPool.cpp
         HttpParser.cpp
+        HttpResponse.cpp
         Timer.cpp
         TimerManager.cpp
+        Buffer.cpp
         main.cpp)
 
 add_executable(MyWebServer ${SRCS})

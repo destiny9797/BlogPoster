@@ -7,15 +7,10 @@
 #include <sstream>
 #include <unistd.h>
 #include <algorithm>
+#include <assert.h>
 
-HttpParser::HttpParser(char* buffer, int len)
-    : buffer(buffer),
-      checked_index(0),
-      read_index(len),
-      start_line(0),
-      checkState(CHECK_STATE_REQUESTLINE),
-      requestCode(NO_REQ),
-      parsed_len(0),
+HttpParser::HttpParser()
+    : checkState(CHECK_STATE_REQUESTLINE),
       content_len(0)
 {
     char* curpath = getcwd(NULL, 0);
@@ -31,155 +26,93 @@ HttpParser::~HttpParser() {
 //    std::cout << "~HttpParser()" << std::endl;
 }
 
-//从状态机，解析出一行内容
-LINE_STATE HttpParser::parseLine(char* buffer){
-    for (; checked_index<read_index; ++checked_index){
-        char temp = buffer[checked_index];
-        if (temp=='\r'){
-            if (checked_index+1==read_index){
-                return LINE_OPEN;
-            }
-            else if (buffer[checked_index+1]=='\n'){
-                buffer[checked_index++] = '\0';
-                buffer[checked_index++] = '\0';
-                return LINE_OK;
-            }
-            return LINE_BAD;
-        }
-        else if (temp=='\n'){
-            if (checked_index>1 && buffer[checked_index-1]=='\r'){
-                buffer[checked_index-1] = '\0';
-                buffer[checked_index++] = '\0';
-                return LINE_OK;
-            }
-            return LINE_BAD;
-        }
-    }
-    return LINE_OPEN;
+void HttpParser::init() {
+    checkState = CHECK_STATE_REQUESTLINE;
+    content_len = 0;
+    body = "";
+    method = "";
+    url = "";
+    version = "";
+    headers.clear();
 }
 
+
 //分析请求行
-HTTP_CODE HttpParser::parseRequseline(char* temp){
-    std::string str(temp);
-    std::stringstream sstream(str);
-    std::string method;
+bool HttpParser::parseRequseline(std::string& line){
+    std::stringstream sstream(line);
     sstream >> method;
     sstream >> url;
     sstream >> version;
     if (method.empty() || url.empty() || version.empty()){
-        return BAD_REQUEST;
-    }
-    if (method=="GET"){
-        requestCode = REQ_GET;
-        url = path + url;
-//        std::cout << "GET request" << std::endl;
-    }
-    else if (method=="POST"){
-        requestCode = REQ_POST;
-//        std::cout << "POST request" << std::endl;
-    }
-    else{
-        return BAD_REQUEST;
-    }
-
-    if (version!="HTTP/1.1" && version!="HTTP/1.0"){
-        return BAD_REQUEST;
+        return false;
     }
 
     checkState = CHECK_STATE_HEADER;
-    return NO_REQUEST;
+    return true;
 }
 
 //分析头部字段
-HTTP_CODE HttpParser::parseHeaders(char* temp){
-
-    if (temp[0]=='\0'){
-        if (content_len==0){
-            checkState = CHECK_STATE_REQUESTLINE;
-            return GET_REQUEST;
-        }
-        else{
-            checkState = CHECK_STATE_BODY;
-            return NO_REQUEST;
-        }
+void HttpParser::parseHeaders(std::string& line){
+    if (line.empty()){
+        checkState = content_len==0 ? FINISH : CHECK_STATE_BODY;
+        return;
     }
+    std::stringstream sstream(line);
+    std::string header, content;
+    sstream >> header;
+    sstream >> content;
+    headers[header] = content;
 
-    std::string str(temp);
-    std::stringstream sstream(str);
-    std::string first;
-    sstream >> first;
-    std::transform(first.begin(),first.end(),first.begin(),::tolower);
-    if (first=="content-length:"){
-        std::string length;
-        sstream >> length;
-        content_len = std::stoi(length);
+    if (header=="Content-Length:"){
+        content_len = std::stoi(content);
     }
-
-    return NO_REQUEST;
 }
 
-HTTP_CODE HttpParser::parseBody(char *temp) {
-    content = std::string(temp);
-    if (content.length() == content_len){
-        checked_index += content_len;
-        checkState = CHECK_STATE_REQUESTLINE;
-        return GET_REQUEST;
-    }
-    else if (content.length() < content_len){
-        return NO_REQUEST;
-    }
-    else{
-        content = std::string(temp, temp+content_len);
-        checked_index += content_len;
-        checkState = CHECK_STATE_REQUESTLINE;
-        return GET_REQUEST;
+void HttpParser::parseBody(std::string& line) {
+    body += line;
+    assert(body.size() < content_len);
+    if (body.size()==content_len){
+        checkState = FINISH;
     }
 };
 
 //入口函数
-HTTP_CODE HttpParser::parseContent(){
-    LINE_STATE linestatus = LINE_OK;
-    HTTP_CODE retcode = NO_REQUEST;
+HTTP_CODE HttpParser::parseContent(Buffer& buffer){
     //只有当解析出一行了才会进行行解析
-    while ((linestatus=parseLine(buffer)) == LINE_OK){
-//        std::cout << "startline=" << start_line << ", checked=" << checked_index << ", total=" << read_index << std::endl;
-//        std::cout << "parsed, *** " << std::string(buffer+start_line, buffer+checked_index) << std::endl;
-        char* temp = buffer + start_line;
+    char crlf[] = "\r\n";
+    while (buffer.datasize() > 0 && checkState!=FINISH){
+        char* lineEnd = std::search(buffer.readPtr(), buffer.writePtr(), crlf, crlf+2);
+        if (lineEnd==buffer.writePtr()){
+            break;
+        }
+        std::string line(buffer.readPtr(), lineEnd);
+//        std::cout << "oneline*** " << line << std::endl;
+//        std::cout << "state: " << checkState << std::endl;
         switch (checkState) {
             case CHECK_STATE_REQUESTLINE:
-                retcode = parseRequseline(temp);
-                if (retcode==BAD_REQUEST){
-                    return BAD_REQUEST;
+                if (!parseRequseline(line)){
+                    return NO_REQUEST;
                 }
+                url  = path + url;
                 break;
             case CHECK_STATE_HEADER:
-                retcode = parseHeaders(temp);
-                if (retcode==GET_REQUEST){
-                    parsed_len = checked_index;
-                    return GET_REQUEST;
-                }
-                else if (retcode==BAD_REQUEST){
-                    return BAD_REQUEST;
-                }
+                parseHeaders(line);
                 break;
             case CHECK_STATE_BODY:
-                retcode = parseBody(temp);
-                if (retcode==GET_REQUEST){
-                    parsed_len = checked_index;
-                    return GET_REQUEST;
-                }
+                parseBody(line);
                 break;
             default:
                 return INTERNAL_ERROR;
         }
-        start_line = checked_index;
+        buffer.updateReadptr(lineEnd-buffer.readPtr()+2);
     }
-    if (linestatus==LINE_OPEN){
+
+    if (checkState==FINISH)
+        return GET_REQUEST;
+    else
         return NO_REQUEST;
-    }
-    else{
-        return BAD_REQUEST;
-    }
+
+
 }
 
 

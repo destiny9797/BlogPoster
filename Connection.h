@@ -5,6 +5,9 @@
 #ifndef MYWEBSERVER_CONNECTION_H
 #define MYWEBSERVER_CONNECTION_H
 
+#include "Buffer.h"
+#include "HttpParser.h"
+#include "HttpResponse.h"
 #include <string>
 #include <functional>
 #include <mutex>
@@ -12,6 +15,7 @@
 
 class Connection{
 public:
+
     typedef std::function<void(void)> callback;
 
     Connection(int fd);
@@ -21,21 +25,12 @@ public:
 public:
     void setEvent(uint32_t ev) { _event = ev; }
 
-    uint32_t getEvent(){ return _event; }
+//    uint32_t getEvent(){ return _event; }
 
-    int getfd(){ return _fd; }
+    int Read(int& err);
 
-    void setMsgtosend(std::string msg){ _msgtosend = msg; }
+    int Write(int& err);
 
-    void getMsgtosend(std::string& msg){ msg = _msgtosend; }
-
-    void setMsgrecv(std::string msg){ _msgrecv = msg; }
-
-    void getMsgrecv(std::string& msg){ msg = _msgrecv; }
-
-    void setHalfclosed(){ _halfclosed = true;}
-
-    bool getHalfclosed(){ return _halfclosed; }
 
     void handleEvent();
 
@@ -51,6 +46,8 @@ public:
         handleError = cb;
     }
 
+    bool processCore();
+
     std::mutex* getMutex(){ return _mutex; }
 
 private:
@@ -60,9 +57,14 @@ private:
 
     uint32_t _event;
 
-    std::string _msgtosend;
 
-    std::string _msgrecv;
+    Buffer _inbuffer;
+
+    Buffer _outbuffer;
+
+    HttpParser _parser;
+
+    HttpResponse _responser;
 
     bool _halfclosed;
 

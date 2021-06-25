@@ -28,9 +28,6 @@ public:
 
     void Quit();
 
-    int ParseRequest(std::string& msg, std::string& msg_response);
-
-    void GetResponse(std::string& msg_response);
 
 private:
 

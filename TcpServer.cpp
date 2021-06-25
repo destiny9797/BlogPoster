@@ -13,15 +13,17 @@
 #include <fcntl.h>
 #include <iostream>
 #include <string.h>
+#include <errno.h>
 
-#define MAX_BUF 4096
-#define MAX_CONN 1000
+//#define MAX_BUF 4096
+#define MAX_CONN 65536
+#define TIMEOUT 2000 //2000ms
 
 TcpServer::TcpServer(int port, spTaskPool taskpool)
     : _port(port),
       _taskpool(taskpool),
       _quit(false),
-      _threadpool(8, _taskpool),
+      _threadpool(1, _taskpool),
       _connections(MAX_CONN, 0),
       _timermanager(std::bind(&TcpServer::handleExpire, this, std::placeholders::_1))
 {
@@ -41,12 +43,12 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
         exit(1);
     }
 
-    if (listen(_serv_sock, 10) < 0){
+    if (listen(_serv_sock, MAX_CONN) < 0){
         perror("listen wrong.");
         exit(1);
     }
 
-    _epoll_fd = _epoll_fd = epoll_create(10);
+    _epoll_fd = _epoll_fd = epoll_create(MAX_CONN);
     struct epoll_event event;
     event.events = EPOLLIN;
     event.data.fd = _serv_sock;
@@ -98,7 +100,7 @@ void TcpServer::handleNewConn() {
         conn->setHandleWrite(std::bind(&TcpServer::handleWrite, this, clnt_sock));
         conn->setHandleError(std::bind(&TcpServer::handleError, this, clnt_sock));
         _connections[clnt_sock] = conn;
-        _timermanager.addTimer(clnt_sock, 2000);
+        _timermanager.addTimer(clnt_sock, TIMEOUT);
 
         //设置为非阻塞
         setNonBlocking(clnt_sock);
@@ -137,104 +139,58 @@ void TcpServer::handleRequest(int fd) {
     if (conn==nullptr){
         return;
     }
-    _timermanager.updateTimer(fd, 2000);
+    _timermanager.updateTimer(fd, TIMEOUT);
     //读数据
-    std::string msg_recv;
-    conn->getMsgtosend(msg_recv);
-    std::string new_response;
-
-//    while (1){
-        std::string msg;
-        int nread = readMessage(fd, msg);
-        if (nread == 0){
+    int readerr = 0;
+    int nread = conn->Read(readerr);
+    if (nread < 0){
+        if (readerr != EAGAIN){
+//            std::cout << "readerr == EAGAIN" << std::endl;
             handleClose(fd);
-            return;
         }
-        else if (nread < 0){
-            return;
-        }
-        msg_recv += msg;
-        if (msg_recv.empty()){
-            return;
-        }
+    }
+    else if (nread == 0){
+        //1、如果对方已关闭，直接关闭
+        // 2、同样进行剩余消息的发送，如果没消息要发，会断开连接
+//        std::cout << "nread == 0" << std::endl;
+        handleClose(fd);
+        return;
+    }
 
-        //http解析
-//        std::cout << "nread=" << nread << ", received msg=" << msg_recv << std::endl;
-        int parsed_len = _parseRequest(msg_recv, new_response);
+//    std::cout << "before process" << std::endl;
+    bool hasRequest = conn->processCore();
+    if (!hasRequest){
+        return;
+    }
 
-        //如果解析成功，
-        if (parsed_len > 0){
-            std::string msg_response;
-            conn->getMsgtosend(msg_response);
-            msg_response += new_response;
-//            std::cout << "msg_response=" << msg_response << std::endl;
-
-            if (!msg_response.empty()){
-                int nsend = sendMessage(fd, msg_response);
-                //如果没写完，注册写事件
-                if (nsend < msg_response.length()) {
-                    msg_response.erase(msg_response.begin(), msg_response.begin() + nsend);
-                    conn->setMsgtosend(msg_response);
-
-                    uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT | EPOLLONESHOT;
-                    modEpoll(fd, ev);
-                }
-                else{
-                    handleClose(fd);
-//                    uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-//                    modEpoll(fd, ev);
-                }
-            }
-        }
-
-        //防止粘包
-        if (parsed_len == msg_recv.length()){
-            conn->setMsgrecv("");
-//            break;
-        }
-        else if (parsed_len < msg_recv.length()){
-            msg_recv.erase(msg_recv.begin(),msg_recv.begin()+parsed_len);
-            conn->setMsgrecv(msg_recv);
-        }
-        else{
-            perror("parsed_len >>>>>> msg_recv_len.");
-        }
-
-//    }
-
-
+    //不管请求是否完整，都尝试发送
+//    std::cout << "before handlewrite" << std::endl;
+    handleWrite(fd);
 
 }
 
 void TcpServer::handleWrite(int fd) {
 //    int fd = conn->getfd();
     spConnection conn = _connections[fd];
-    std::string msg;
-    conn->getMsgtosend(msg);
-    if (msg.empty()){
-        return;
-    }
-    int nsend = sendMessage(fd, msg);
-    if (nsend < 0){
-        perror("write wrong.");
-    }
-    else if (nsend < msg.length()){ //如果没写完，注册写事件
-        msg.erase(msg.begin(), msg.begin() + nsend);
-        conn->setMsgtosend(msg);
+    _timermanager.updateTimer(fd, TIMEOUT); //写也更新定时器，因为表示对方在接受
 
-        uint32_t ev = EPOLLIN | EPOLLET | EPOLLOUT | EPOLLONESHOT;
-        modEpoll(fd, ev);
+    int writeerr;
+    int nwrite = conn->Write(writeerr);
+    if (nwrite < 0){
+        if (nwrite == EAGAIN){
+            //没发完,此时不允许收
+            uint32_t ev = EPOLLOUT | EPOLLET | EPOLLONESHOT;
+            modEpoll(fd, ev);
+        }
+        else{
+            handleClose(fd);
+        }
     }
     else{
-        //如果写完了，就重置ONESHOT
+        //发完了，或者本来就没有消息要发
         handleClose(fd);
-//        msg.clear();
-//        conn->setMsgtosend(msg);
-//        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-//        modEpoll(fd, ev);
-//        if (conn->getHalfclosed()){
-//            handleClose(fd);
-//        }
+        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
+        modEpoll(fd, ev);
     }
 }
 
@@ -243,46 +199,6 @@ void TcpServer::handleError(int fd) {
     handleClose(fd);
 }
 
-int TcpServer::readMessage(int fd, std::string& msg) {
-    char buf[MAX_BUF];
-    int readsum = 0;
-    while (1){
-        int nread = 0;
-        if ((nread=read(fd, buf, MAX_BUF)) > 0){
-            msg.append(buf, nread);
-            readsum += nread;
-        }
-        else if (nread==0){
-            //对方 closed connection
-            return 0;
-        }
-        else{
-            //no more data
-            if (readsum==0){
-                return -1;
-            }
-            else
-                return readsum;
-        }
-    }
-}
-
-int TcpServer::sendMessage(int fd, const std::string &msg) {
-    int len = msg.size();
-    const char* buf = msg.c_str();
-    int sendsum = 0;
-    while (sendsum<len){
-        int ntosend = std::min(len-sendsum,MAX_BUF);
-        int nsend = write(fd,buf+sendsum,ntosend);
-        if (nsend < 0){
-            break;
-        }
-        sendsum += nsend;
-    }
-//    std::cout << sendsum << " Bytes Send! Total msg is " << len <<" Bytes." << std::endl;
-
-    return sendsum;
-}
 
 
 void TcpServer::Start() {

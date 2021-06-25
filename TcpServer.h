@@ -8,7 +8,6 @@
 #include "ThreadPool.h"
 #include "TimerManager.h"
 #include <memory>
-#include <functional>
 #include <string>
 #include <mutex>
 
@@ -20,7 +19,6 @@ class TcpServer{
 public:
     typedef std::shared_ptr<TaskPool> spTaskPool;
     typedef std::shared_ptr<Connection> spConnection;
-    typedef std::function<int(std::string&, std::string&)> callback_parse;
 
 
     TcpServer(int port, spTaskPool taskpool);
@@ -51,14 +49,6 @@ public:
 
     void handleExpire(int fd);
 
-    int readMessage(int fd, std::string& msg);
-
-    int sendMessage(int fd, const std::string& msg);
-
-    void setParseRequest(const callback_parse& cb){
-        _parseRequest = cb;
-    }
-
 private:
     std::mutex _mutex;
 
@@ -78,8 +68,6 @@ private:
 
     bool _quit;
 
-
-    callback_parse _parseRequest;
 
 };
 

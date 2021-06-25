@@ -34,7 +34,7 @@ void TimerManager::closeExpire(){
         int fd = timer->getfd();
         spTimer lasttimer = timer->last;
         handleExpire(fd);
-        std::cout << "Socket " << fd << "expired, Closed! " << std::endl;
+//        std::cout << "Socket " << fd << "expired, Closed! " << std::endl;
 
         timer = lasttimer;
     }
@@ -52,6 +52,7 @@ void TimerManager::addTimer(int fd, int timeout) {
 void TimerManager::updateTimer(int fd, int timeout) {
     std::unique_lock<std::mutex> lk(_mutex);
     spTimer timer = _map[fd];
+    assert(timer!=nullptr);
     timer->last->next = timer->next;
     timer->next->last = timer->last;
     addToHead(timer);
@@ -61,6 +62,7 @@ void TimerManager::updateTimer(int fd, int timeout) {
 void TimerManager::rmTimer(int fd) {
     std::unique_lock<std::mutex> lk(_mutex);
     spTimer timer = _map[fd];
+    assert(timer!=nullptr);
     timer->last->next = timer->next;
     timer->next->last = timer->last;
     _map.erase(fd);
