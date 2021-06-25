@@ -99,12 +99,18 @@ void TcpServer::handleNewConn() {
         conn->setHandleRead(std::bind(&TcpServer::handleRequest, this, clnt_sock));
         conn->setHandleWrite(std::bind(&TcpServer::handleWrite, this, clnt_sock));
         conn->setHandleError(std::bind(&TcpServer::handleError, this, clnt_sock));
-        _connections[clnt_sock] = conn;
-        _timermanager.addTimer(clnt_sock, TIMEOUT);
 
-        //设置为非阻塞
-        setNonBlocking(clnt_sock);
-        ctlEpoll(clnt_sock);
+        {
+            //这一组操作应该为原子操作，或者把accept也放到工作线程中
+            //其实也没必要，因为注册到epoll之前是不会有别的线程来操作这个套接字的
+            std::unique_lock<std::mutex> lk(*conn->getMutex());
+            _connections[clnt_sock] = conn;
+            _timermanager.addTimer(clnt_sock, TIMEOUT);
+
+            //设置为非阻塞
+            setNonBlocking(clnt_sock);
+            ctlEpoll(clnt_sock);
+        }
 //        std::cout << "New Connection from: " << inet_ntoa(clnt_addr.sin_addr) << std::endl;
 
 //        std::make_shared<Request>();
@@ -116,11 +122,16 @@ void TcpServer::handleNewConn() {
 
 void TcpServer::handleClose(int fd) {
     //清除连接，清除定时器，还要记得从epoll中取消注册
-    if (_connections[fd] == nullptr){
+//    if (_connections[fd] == nullptr){
+//        return;
+//    }
+    spConnection conn = _connections[fd];
+//    assert(conn!=nullptr);
+    if (conn==nullptr){
         return;
     }
+    std::unique_lock<std::mutex> lk(*conn->getMutex());
     _timermanager.rmTimer(fd);
-    std::unique_lock<std::mutex> lk(_mutex);
     _connections[fd] = nullptr;
     delEpoll(fd);
     close(fd);
@@ -136,10 +147,17 @@ void TcpServer::handleExpire(int fd) {
 void TcpServer::handleRequest(int fd) {
 //    int fd = conn->getfd();
     spConnection conn = _connections[fd];
+//    assert(conn!=nullptr);
     if (conn==nullptr){
         return;
     }
-    _timermanager.updateTimer(fd, TIMEOUT);
+    {
+        std::unique_lock<std::mutex> lk(*conn->getMutex());
+        //双重锁，这一层用于：主线程和工作线程同时操作fd的定时器
+        //函数里的那一层用于：多个工作线程同时操作定时器链表
+        _timermanager.updateTimer(fd, TIMEOUT);
+    }
+
     //读数据
     int readerr = 0;
     int nread = conn->Read(readerr);
@@ -172,7 +190,14 @@ void TcpServer::handleRequest(int fd) {
 void TcpServer::handleWrite(int fd) {
 //    int fd = conn->getfd();
     spConnection conn = _connections[fd];
-    _timermanager.updateTimer(fd, TIMEOUT); //写也更新定时器，因为表示对方在接受
+//    assert(conn!=nullptr);
+    if (conn==nullptr){
+        return;
+    }
+    {
+        std::unique_lock<std::mutex> lk(*conn->getMutex());
+        _timermanager.updateTimer(fd, TIMEOUT); //写也更新定时器，因为表示对方在接受
+    }
 
     int writeerr;
     int nwrite = conn->Write(writeerr);
@@ -189,8 +214,8 @@ void TcpServer::handleWrite(int fd) {
     else{
         //发完了，或者本来就没有消息要发
         handleClose(fd);
-        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-        modEpoll(fd, ev);
+//        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
+//        modEpoll(fd, ev);
     }
 }
 

@@ -51,8 +51,9 @@ void TimerManager::addTimer(int fd, int timeout) {
 
 void TimerManager::updateTimer(int fd, int timeout) {
     std::unique_lock<std::mutex> lk(_mutex);
+    assert(_map.count(fd));
     spTimer timer = _map[fd];
-    assert(timer!=nullptr);
+//    assert(timer!=nullptr);
     timer->last->next = timer->next;
     timer->next->last = timer->last;
     addToHead(timer);
@@ -61,8 +62,9 @@ void TimerManager::updateTimer(int fd, int timeout) {
 
 void TimerManager::rmTimer(int fd) {
     std::unique_lock<std::mutex> lk(_mutex);
+    assert(_map.count(fd));
     spTimer timer = _map[fd];
-    assert(timer!=nullptr);
+//    assert(timer!=nullptr);
     timer->last->next = timer->next;
     timer->next->last = timer->last;
     _map.erase(fd);

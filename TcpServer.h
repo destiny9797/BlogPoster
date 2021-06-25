@@ -50,7 +50,7 @@ public:
     void handleExpire(int fd);
 
 private:
-    std::mutex _mutex;
+//    std::mutex _mutex;
 
     std::vector<spConnection> _connections;
 

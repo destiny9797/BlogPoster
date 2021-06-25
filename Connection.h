@@ -48,10 +48,10 @@ public:
 
     bool processCore();
 
-    std::mutex* getMutex(){ return _mutex; }
+    std::mutex* getMutex(){ return &_mutex; }
 
 private:
-    std::mutex* _mutex;
+    std::mutex _mutex;
 
     int _fd;
 
