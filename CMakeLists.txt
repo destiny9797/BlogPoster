@@ -14,6 +14,7 @@ set(SRCS
         Timer.cpp
         TimerManager.cpp
         Buffer.cpp
+        Log.cpp
         main.cpp)
 
 add_executable(MyWebServer ${SRCS})

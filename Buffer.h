@@ -12,7 +12,7 @@
 
 class Buffer{
 public:
-    Buffer();
+    Buffer(int initlen);
 
     ~Buffer();
 
@@ -30,6 +30,7 @@ public:
 
     int datasize();
 
+    //调试用
     void printdata(){
         assert(_readindex<=_writeindex);
         std::string msg(readPtr(),writePtr());

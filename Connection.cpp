@@ -3,16 +3,18 @@
 //
 
 #include "Connection.h"
+#include "Log.h"
 #include <iostream>
 #include <sys/epoll.h>
 #include <assert.h>
 
+#define BUF_SIZE 1024
 
 Connection::Connection(int fd)
     : _fd(fd),
       _halfclosed(false),
-      _inbuffer(),
-      _outbuffer(),
+      _inbuffer(BUF_SIZE),
+      _outbuffer(BUF_SIZE),
       _parser(),
       _responser()
 {
@@ -37,6 +39,7 @@ int Connection::Read(int& err) {
             break;
         }
         total += nread;
+        LOG_DEBUG("Read %d bytes from Socket %d", nread, _fd);
     }while(1);
     return total;
     //.......
@@ -54,6 +57,7 @@ int Connection::Write(int& err) {
             //没发完，设置EPOLLOUT
             return -1;
         }
+        LOG_DEBUG("Write %d bytes to Socket %d", nwrite, _fd);
     }
     assert(_outbuffer.datasize()==0);
     return 1;

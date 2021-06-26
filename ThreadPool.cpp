@@ -5,6 +5,7 @@
 #include "ThreadPool.h"
 #include "TaskPool.h"
 #include "Connection.h"
+#include "Log.h"
 #include <sys/epoll.h>
 #include <iostream>
 
@@ -42,4 +43,6 @@ void ThreadPool::work() {
             conn->handleEvent();
         }
     }
+    std::thread::id tid = std::this_thread::get_id();
+    LOG_INFO("Work Thread Quit.");
 }

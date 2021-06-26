@@ -7,23 +7,22 @@
 #include "TaskPool.h"
 #include "Connection.h"
 #include "HttpParser.h"
+#include "Log.h"
 
-#include <string.h>
-#include <iostream>
-#include <functional>
-#include <fstream>
-#include <sstream>
 
 
 HttpServer::HttpServer(int port)
-    : _taskpool(std::make_shared<TaskPool>()),
-      _tcpserver(std::make_shared<TcpServer>(port, _taskpool))
+    : _taskpool(std::make_shared<TaskPool>())
 {
-//    _tcpserver->setParseRequest(std::bind(&HttpServer::ParseRequest, this, std::placeholders::_1, std::placeholders::_2));
+    Log& log = Log::getInstance();
+    log.Init("./log", 1024);
+    Log::getInstance().Start();
+
+    _tcpserver = std::make_shared<TcpServer>(port, _taskpool);
 }
 
 HttpServer::~HttpServer() {
-    std::cout << "~HttpServer()" << std::endl;
+//    std::cout << "~HttpServer()" << std::endl;
 }
 
 

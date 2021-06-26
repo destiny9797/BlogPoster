@@ -9,8 +9,8 @@
 #include <assert.h>
 #include <errno.h>
 
-Buffer::Buffer()
-    : _data(1024),
+Buffer::Buffer(int initlen)
+    : _data(initlen),
       _readindex(0),
       _writeindex(0)
 {

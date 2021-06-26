@@ -29,7 +29,7 @@ public:
 
     void rmTimer(int fd);
 
-
+    //关闭超时连接
     void closeExpire();
 
 private:

@@ -5,6 +5,7 @@
 #include "TcpServer.h"
 #include "TaskPool.h"
 #include "Connection.h"
+#include "Log.h"
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -55,6 +56,13 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
     //设置为非阻塞
     setNonBlocking(_serv_sock);
     epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _serv_sock, &event);
+
+    LOG_INFO("===========ZhuJiaying's Simple WebServer===========");
+    LOG_INFO("Open port: %d", port);
+    LOG_INFO("IO Model: Epoll(ET)");
+    LOG_INFO("Connection: short connection");
+    LOG_INFO("Available Max Open files: %d", MAX_CONN);
+    LOG_INFO("===================================================");
 
 }
 
@@ -111,6 +119,7 @@ void TcpServer::handleNewConn() {
             setNonBlocking(clnt_sock);
             ctlEpoll(clnt_sock);
         }
+        LOG_INFO("New Connection From: %s", inet_ntoa(clnt_addr.sin_addr));
 //        std::cout << "New Connection from: " << inet_ntoa(clnt_addr.sin_addr) << std::endl;
 
 //        std::make_shared<Request>();
@@ -135,12 +144,14 @@ void TcpServer::handleClose(int fd) {
     _connections[fd] = nullptr;
     delEpoll(fd);
     close(fd);
+    LOG_DEBUG("Socket %d closed.", fd);
 //    std::cout << "Socket " << fd << " Closed!" << std::endl;
 }
 
 void TcpServer::handleExpire(int fd) {
     //主线程调用，如果正好有线程在写或读这个fd怎么办？
     //一般来说不会，因为有线程正好在读或写，说明刚更新过定时器，如果都要超时了还没操作完，说明这个连接有问题
+    LOG_DEBUG("Socket %d expired.", fd);
     handleClose(fd);
 }
 
@@ -206,8 +217,10 @@ void TcpServer::handleWrite(int fd) {
             //没发完,此时不允许收
             uint32_t ev = EPOLLOUT | EPOLLET | EPOLLONESHOT;
             modEpoll(fd, ev);
+            LOG_WARN("Write unfinish to Socket %d", fd);
         }
         else{
+            LOG_WARN("Write wrong to Socket %d", fd);
             handleClose(fd);
         }
     }
@@ -227,13 +240,19 @@ void TcpServer::handleError(int fd) {
 
 
 void TcpServer::Start() {
+    LOG_INFO("Now Start!");
     _threadpool.run();
     while (!_quit){
-        struct epoll_event ev[10];
+        struct epoll_event ev[MAX_CONN];
         _timermanager.closeExpire();
-        int event_cnt = epoll_wait(_epoll_fd, ev, 10, 2000);
+        int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT);
         if (event_cnt < 0){
-            perror("epoll_wait wrong:");
+            if (errno==EINTR){
+                LOG_ERROR("Outside Interrupt!");
+            }
+            else{
+                LOG_ERROR("Epoll_wait wrong!");
+            }
         }
 
         for (int i=0; i<event_cnt; ++i){
@@ -244,22 +263,8 @@ void TcpServer::Start() {
                 handleNewConn();
             }
             else{
-                //new data
-//                _addActivateConn(evfd, curev);
+                //new event [ EPOLLIN | EPOLLOUT ]
                 _connections[evfd]->setEvent(curev);
-//                if (curev & EPOLLIN){
-//                    std::cout << "EPOLLIN" << std::endl;
-//                }
-//                if (curev & EPOLLOUT){
-//                    std::cout << "EPOLLOUT" << std::endl;
-//                }
-//                if (curev & EPOLLERR){
-//                    std::cout << "EPOLLERR" << std::endl;
-//                }
-//                if (curev & EPOLLHUP){
-//                    std::cout << "EPOLLHUP" << std::endl;
-//                }
-//                std::cout << "evfd=" << evfd << ", _connection[evfd]=" << _connections[evfd] << std::endl;
                 _taskpool->addTask(_connections[evfd]);
             }
         }
@@ -268,9 +273,13 @@ void TcpServer::Start() {
 
 
 void TcpServer::Quit() {
+    //等待工作线程都退出才退出
     _threadpool.quit();
 //    _taskpool->notifyAll();
     _threadpool.join();
     _quit = true;
 
+    LOG_INFO("TcpServer Quit");
+    //等服务器退出，日志才退出
+    Log::getInstance().Quit();
 }
