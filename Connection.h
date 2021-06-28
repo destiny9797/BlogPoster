@@ -55,6 +55,8 @@ public:
     void Clear();
 
 private:
+    void handlePost(const std::string& post);
+
     std::mutex _mutex;
 
     int _fd;
@@ -75,6 +77,8 @@ private:
     bool _halfclosed;
 
     bool _keepalive;
+
+    int _code;
 
 
     callback handleRead;

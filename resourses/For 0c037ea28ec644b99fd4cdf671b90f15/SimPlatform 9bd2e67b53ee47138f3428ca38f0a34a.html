@@ -1,0 +1,701 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SimPlatform</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9bd2e67b-53ee-4713-8f34-28ca38f0a34a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🍰</span></div><h1 class="page-title">SimPlatform</h1></header><div class="page-body"><hr id="d26cb77b-aa83-4a23-8986-b51e6a68a671"/><nav id="e71babc3-c732-45b7-99a9-e80df500c5a5" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#815ecc87-4e33-4a11-9daa-4c9b849d0f78">Version 1.0 </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6816855d-4ea2-4384-a205-7744525817bd">待解决问题：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32ef4a5d-bfa7-4771-b867-3cf6fc58ac6b">优化建议：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c0800712-82ad-4f86-982d-810a2604f0b7">记录：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0a7643ae-6bea-4819-b06b-38ad14532923">经验：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56663e90-ea45-4f1e-a7df-38e6d0655a25">注意：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#27ab8bcf-51cc-4343-acc1-057c1d8e82f1">循环内存的实现：circular buffer</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b603a346-f33c-4b70-8432-b8f71bdb8b7b">Version2.0</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e502db99-8fb8-488e-8052-b1dc0d361ec7">改进计划：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b33d9e41-2f17-4f0a-9687-207399639d9a">具体实现：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4bedf9b3-e7a8-4f91-a770-1d0c8e6485e7">存在问题：</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8d4b8d40-e7b9-4a94-8b62-15941d152118">Version3.0</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#868041d2-4948-4e40-b576-9b71ace7a11b">改进计划：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6f18d6af-6e62-4e67-a8e4-ca41a91e94a3">具体实现：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#df556f10-e0e6-4b26-aa86-c5524e0a82d3">存在问题：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bec57adb-f70d-40db-a007-261ceea8b63a">记录：</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b3ce76d6-40c8-4c3c-9dcc-0eec69b73c83">待完成：</a></div></nav><p id="a3f82f9e-2c69-4f45-ad7d-cd318d2e5588" class="">
+</p><p id="2a1a70ad-d2cd-4efb-b715-b6cc7830ab23" class="">
+</p><p id="42f7e8c4-6889-462c-8aa2-fc34bdb1527b" class="">
+</p><figure id="a29f24e9-1ed8-4908-be3b-8e8d63bf99a1" class="link-to-page"><a href="SimPlatform%209bd2e67b53ee47138f3428ca38f0a34a/Untitled%20a29f24e91ed84908be3b8e8d63bf99a1.html">Untitled</a></figure><p id="a80332b7-3c7e-4f60-9143-dfc224bea6a6" class="">
+</p><p id="0fd31907-b14f-4dc6-a971-4b86bf8b19be" class="">
+</p><p id="d90f9454-6669-4d05-8529-819f56035187" class="">
+</p><h2 id="815ecc87-4e33-4a11-9daa-4c9b849d0f78" class="">Version 1.0 </h2><h3 id="6816855d-4ea2-4384-a205-7744525817bd" class="">待解决问题：</h3><ol id="43e2c606-7c80-4ebb-962c-2c8cfd7bdac3" class="numbered-list" start="1"><li>这个是用户级线程还是内核级线程？</li></ol><h3 id="32ef4a5d-bfa7-4771-b867-3cf6fc58ac6b" class="">优化建议：</h3><ol id="9769eee7-ddb1-41c3-b6db-6ae8aba4232a" class="numbered-list" start="1"><li>存储类型BlockPort可以考虑改一下，便于CheckConnection</li></ol><ol id="268d9036-3bd9-4026-a656-2e6b45888ea9" class="numbered-list" start="2"><li><del>模块之间的同步？</del><p id="64f09817-4864-464c-a23c-34d4aef7da9e" class="">不需要同步的，例如在一个ber计算的模块中，两个输入端口，都要获得足够的数据才会送入比较 ✅</p></li></ol><ol id="1a9df69d-aa46-4ab7-ac88-853ca462004d" class="numbered-list" start="3"><li>协程是什么，可否将同种block改成协程 ❌</li></ol><ol id="4a1f187c-4f4c-4ca9-9fab-94e3e10c8a42" class="numbered-list" start="4"><li>把线程池的线程顺序按照连接图排序 ✅</li></ol><ol id="deaa0a32-42a2-44e1-84f5-58e19943132f" class="numbered-list" start="5"><li>仿照volk库计算优化 ✅ —— 优化了complex类型的计算，一个vector数据越多，效果越明显，4096长度约快了四倍多</li></ol><ol id="4bf90f42-dce9-46e8-b297-9ff2448b3490" class="numbered-list" start="6"><li>输出用剩余空间的一半 ❌ —— 性能不如有多少用多少，为啥呀？？？嘤嘤嘤</li></ol><p id="510d617b-12de-4fd3-a45a-c9e2f307af47" class="">
+</p><p id="e37bca23-a499-435d-8487-2addfdcdcb57" class="">
+</p><h3 id="c0800712-82ad-4f86-982d-810a2604f0b7" class="">记录：</h3><ul id="aacc3b14-658c-4fdd-b1af-9bc0c3b59db7" class="bulleted-list"><li>什么时候更新buffer的write和read索引？<p id="e271932c-b77e-4818-aea0-b630399cc1a4" class="">根据noutput算出ninput，用于更新read索引</p><p id="9b60c041-b73f-4ceb-a881-2f30a8d60fa2" class="">work返回nproduce，用于更新write索引</p></li></ul><ul id="2567713a-1a47-4abc-934f-f83f2998fa56" class="bulleted-list"><li>哪里要加锁？<p id="ea5ac707-b35a-4f82-b15d-2cd114845c3a" class="">本来这是一个多生产者多消费者的问题，写和读的时候应该加锁，本来想的是，在将产生的数据写到临界资源块的时候加锁，将临界资源块的数据读出来的时候不准写，但是可以多个同时读。这样的话，就需要在更改临界资源的时候加锁。然后每个模块都要等到资源块写满了才能读，等到资源块读完了才能写。一个写者对应一个或多个临界资源块。</p><p id="d706e087-b09e-46ce-9964-5c31ee8ec016" class=""><strong>为了提高并发度，增加了两个指针，一个指向当前写到的位置，一个指向当前读到的位置</strong>，因为有多个阅读者，所以应该有多个读指针。每次写或读都更新对应的指针，而且更新指针和读取指针的时候也不需要加锁，因为写指针的更改只由一个线程控制，读指针的更改也只由一个线程控制，可能加锁的地方也就是写的时候能不能读，读的时候能不能写，指针的更改对于对方来说都意味着有更多的空间或数据，可以做更多的工作，就算最差的情况也就是读取到了旧的读写指针，计算出了旧的剩余空间/可读数据量，无非就是少做了些工作。而且，虽然有多个读者，可能一个读到了旧的，一个读到了新的，但是对他们没有什么实质的影响，因为他们各自控制自己的读指针。</p><p id="932942c9-754a-49cf-8cc6-c7aa065dc24f" class="">因此，读写临界内存区域的时候不需要互斥。但是，一个模块（我）可能算出来当前不能读或写，那么就会阻塞，这个阻塞是通过条件变量自己阻塞自己，然后邻居模块产生了或消耗了新的数据，就通知更改我对应的条件变量并通知我，我再次检查条件变量并解锁。</p><p id="ae726d65-7b64-456e-a024-40c0f9f269b1" class="block-color-yellow_background"><strong>总结：不需要互斥，但是需要同步。</strong></p></li></ul><ul id="1c641dae-f1f0-4c3b-a91e-7efa10221f8d" class="bulleted-list"><li>在Buffer类中，所有index都是以一个数据类型为单位计算的，但是返回内存指针时，要乘以sizeofitem，在block的work函数中noutput也是以一个数据类型为单位</li></ul><ul id="eca4a94d-c24c-40fd-be16-925becc25eec" class="bulleted-list"><li>不用自旋锁的原因？<p id="813d220e-46d0-460d-beca-836f1c9f99cc" class="">自旋锁在等待时会一直询查是否达到了上锁的条件，就会一直占用cpu，这个cpu核执行其它线程的效率就下降了，因为模块数量一般是大于计算机核数的，而且每个线程等待的时间也不是很短，目前测得0.1～20ms左右。</p></li></ul><p id="3cf901d0-0ea2-4eb9-b50b-9efc11d6430b" class="">
+</p><h3 id="0a7643ae-6bea-4819-b06b-38ad14532923" class="">经验：</h3><p id="a2677c74-5c1d-4a9a-86bd-4f340b58f2af" class="">在写的过程中不断改进，例如在写到线程运行函数时，要计算可用buffer大小，考虑到数据类型的问题，回头去在connect时加上数据类型匹配的判断</p><p id="a06c58c3-34c5-462e-90d9-1019a945b301" class="">
+</p><h3 id="56663e90-ea45-4f1e-a7df-38e6d0655a25" class="">注意：</h3><p id="0bef4405-b389-442d-942b-fb16cd0b2d28" class="">如果模块既有采样、插值，又有history，要注意读取的范围，一个正确的例子：</p><pre id="10053772-3bf5-466f-912d-d15c470bd4b9" class="code"><code>//decimation=2，history=2
+int Proc::work(int noutput, std::vector&lt;const void *&gt; &amp;input, std::vector&lt;void *&gt; &amp;output)
+{
+
+    std::cout &lt;&lt; &quot;a work : &quot; &lt;&lt; noutput &lt;&lt; std::endl;
+    const int* in = (const int*)input[0];
+
+    int k = 0;
+    for (int i=0; i&lt;noutput; ++i)
+    {
+        int sum = 0;
+
+        for (int j=k; j&lt;k+GetHistory(); ++j)
+        {
+            sum += in[j];
+        }
+        std::cout &lt;&lt; sum &lt;&lt; &quot;,&quot;
+        k += GetDecimation();
+        if (num == 10)
+        {
+            std::cout &lt;&lt; std::endl;
+            num -= 10;
+        }
+        num++;
+    }
+
+    return noutput;
+}
+
+//interpolation=2, history=2
+int Proc::work(int noutput, std::vector&lt;const void *&gt; &amp;input, std::vector&lt;void *&gt; &amp;output)
+{
+    const int* in = (const int*)input[0];
+    int* out = (int*)output[0];
+
+    int k = 0;
+    for (int i=0; i&lt;noutput; ++i)
+    {
+        int sum = 0;
+        for (int j=k; j&lt;k+GetHistory(); ++j)
+        {
+            sum += in[j];
+        }
+        out[i] = sum;
+        if (i % GetInterpolation() == GetInterpolation() - 1)
+        {
+            k += 1;
+        }
+    }
+    std::cout &lt;&lt; std::endl;
+
+    return noutput;
+}</code></pre><p id="0216907a-63c9-4016-9db6-7c95741cea28" class="">
+</p><p id="849f39d5-918a-48b5-a4ce-84e495cd8a42" class="">
+</p><h3 id="27ab8bcf-51cc-4343-acc1-057c1d8e82f1" class="">循环内存的实现：circular buffer</h3><p id="ef5c7de3-0b3a-4829-9cb0-09d50a3af4dc" class="">用mmap，将连续的虚拟内存空间映射到同一个文件。</p><p id="0b92b1d0-6201-4daa-ad25-7a790f6aea4b" class=""><code>readindex==writeindex</code> 表示可读为0，可写为满， <code>writeindex==readindex-1</code> 表示可写为0，可读为满。</p><p id="b7d003d9-1f6f-499e-97e7-94afbd6f3e77" class="">
+</p><p id="5b964cd0-8aaf-4ae3-8fc4-46d5f5cf6d5e" class="">
+</p><h2 id="b603a346-f33c-4b70-8432-b8f71bdb8b7b" class="">Version2.0</h2><h3 id="e502db99-8fb8-488e-8052-b1dc0d361ec7" class="">改进计划：</h3><p id="172401c3-795c-4a92-b1ff-26160f0778ed" class="">将发送端和接收端分开来，作为两个进程，用共享内存或者管道进行进程间通信</p><p id="4ba85bbd-7a98-4ebe-999f-98463513f8e1" class="">改进动机：解决数据流单向流动的问题，一般一个发送机或接收机都是收发合制的，使发送端和接收端对于中间管道/共享内存的接口是既可以收也可以发。并且各自可以定义收发逻辑。</p><h3 id="b33d9e41-2f17-4f0a-9687-207399639d9a" class="">具体实现：</h3><ol id="bc86366c-5c27-41ab-9eef-8c2df099128c" class="numbered-list" start="1"><li>收发分离<ul id="34d4d70f-a74c-4adf-8f0a-6b3c71d5e0fb" class="bulleted-list"><li>分别开两个进程，进程间通信用共享内存 ✅</li></ul><ul id="a2439bc8-a4c5-4607-b3f8-ffd3c1c7d09f" class="bulleted-list"><li>进程间同步？信号？有个什么阻塞的？—— 同步都是用计算write_index和read_index来实现的，唯一同步的是一开始必须收发进程都打开才开始工作（用两个信号量来实现）✅ </li></ul><ul id="c6e3db23-cd7d-43ed-aa22-ccab77d801fb" class="bulleted-list"><li>通用sink和通用source，要求发送端最后都接到sink，接收端都从source开始 ✅</li></ul><ul id="792f9d8b-eb3d-4ba3-8164-8c79c05b9536" class="bulleted-list"><li>信道放在发送端的通用sink中，传入特定参数（AWGN、MI等）来指定信道模型和衰落模型。</li></ul></li></ol><ol id="b1d74a79-b2c2-4d6c-abbd-b7af3fb3fd20" class="numbered-list" start="2"><li>收发链路控制单元<p id="b112c180-5524-4f88-a902-63d12cef2077" class="">只控制SinkApi和SourceApi。后面的都会因为它们而阻塞。</p></li></ol><ol id="2c01ee8b-c56f-4e37-8295-535a424aeb19" class="numbered-list" start="3"><li>添加线程名字，便于调试 ✅</li></ol><p id="c4a00812-bd42-4749-b569-16b29c2b033f" class="">
+</p><h3 id="4bedf9b3-e7a8-4f91-a770-1d0c8e6485e7" class="">存在问题：</h3><ol id="822844d2-4853-4bd8-9d7a-becf8a28a077" class="numbered-list" start="1"><li>收发端的中心控制逻辑单元怎么实现？<p id="5fd1c2f8-9471-4998-893e-235d43c689e3" class="">例如一个简单的echo系统，如果是TDD的话，写管道和读管道的模块应该不能同时工作。中心控制单元应该能够控制所有的模块是否工作，并且能够对收到的信号进行解析含义，判断要做什么，然后做出回应。</p><ol id="53d44816-a032-41b3-ba5e-6e138de9f95f" class="numbered-list" start="1"><li>task队列怎么执行？<p id="976e0d01-b62f-4758-bad0-d2f8b6feb5d8" class="">在同一个block中（msg_generater），调用队头的task，传入noutput和输出buffer的指针。task应该带有记忆，上次一发送了多少，还有多少没有发送。</p></li></ol><ol id="3bf40f78-4e7b-488b-b87c-921496bf2354" class="numbered-list" start="2"><li>何时切换整体状态：SEND/RECEIVE<p id="e5126f17-df1b-45f9-8c7b-b963f7a38181" class="">Source和Sink模块是互斥的，用一个静态锁🔒了起来当切换状态的时候会通知对方。它们不会被数据阻塞，而是一直在检查有没有新数据的到来。</p><p id="569fa0ff-2fb6-4863-8baf-e1da01de0259" class="block-color-purple_background">Sink发现没有数据要发，并且等了一秒还是没有，就改变为RECEIVE，并通知Source；或者Sink发现发不出去了，可能对方不收或对方也在发送，则也等一秒切换为RECEIVE。</p><p id="e2cf8855-32d5-476e-8817-25db4dfbf22d" class="block-color-purple_background">Source发现没有数据到来，并且等了一秒还是没有，就改变为SEND，并通知Sink</p><p id="45a5882b-2711-402b-82e3-1e1caaf39087" class="block-color-gray_background">MsgGen发现没有发送任务了，就改变状态为RECEIVE，但是等Sink发现没有数据到来了并且状态为RECEIVE时，才通知Source</p><p id="11c0e1e3-3d5e-4d6f-aed2-e4fa0871087a" class="block-color-gray_background">Source发现没有数据到来了，并且等了一秒钟，发现还是没有数据到来，就改变状态为SEND，并通知msggen——为什么不通知sink？因为sink把数据读空之后返回BLKD_IN，要前面的模块通知他。——可是要怎样通知到msggen？——不需要通知msggen，因为阻塞的只是天线接口（sink和source），如果有发送任务的话，sink的接收buffer应该已经被填满了。——所以还是通知Sink。</p></li></ol><ol id="50087065-00b0-428d-8a2f-4ed84350b817" class="numbered-list" start="3"><li>即使两个进程之间的_done设置了，sink也会一直阻塞在BLKD_IN，导致无法优雅退出——应该要又一个Controller，控制整个进程——<strong>让sink不会被数据阻塞，只会被收发状态阻塞</strong>。</li></ol><ol id="9736e86b-9ba7-4628-baa2-35d204dbb40f" class="numbered-list" start="4"><li>如果双方都在发，都会卡在BLKD_OUT，都不接收，死循环。<p id="34e90a93-e329-47ad-9c7c-507b9e527a35" class="">Sink发现发不出去了，可能对方不收或对方也在发送，则也等一秒切换为RECEIVE。</p></li></ol></li></ol><ol id="e373da7d-bbcc-448e-a1df-392605211a7a" class="numbered-list" start="2"><li>为啥一定要收发进程都打开才开始工作呢？<p id="adbbf0c6-fa3d-45e5-ad4d-5955c8079f37" class="">因为如果某一端先开始工作了，并且改变了共享内存中的writeind之后，另一端也开始工作了，将writeind又初始化为1，那就会出现问题。</p><p id="e67ef975-abf2-4859-8503-a26978a4051b" class="">——改了，在共享内存中用一个标志表示此文件有没有被映射，有的话就不初始化了。从而不需要在进入时阻塞了。</p></li></ol><ol id="7a0f9c50-0918-4858-af03-99c6053ef307" class="numbered-list" start="3"><li><strong>收发端的SinkApi和SourceApi要按照一样的顺序构造，否则会死锁</strong><p id="5509ffbb-a63c-484e-aa0b-c0dcfcf9fa69" class="">如上一问所说，改了之后就不需要在进入时阻塞了。</p></li></ol><ol id="eb2e00de-47d2-42bd-afe5-a716eeb73163" class="numbered-list" start="4"><li>如果要实现解析请求的话，要上升到链路层、传输层和应用层了，网络层可以跳过。<p id="a75e83c2-ad51-48e9-875c-07507684dadd" class="">可以先实现一个简单的收发控制，用于计算ber的。</p><p id="022211ce-e222-4193-a4bd-a1b298930617" class="">但是这个框架可以为以后架构作准备。</p></li></ol><ol id="d1f526ff-cb43-4f17-9135-c310b0f42224" class="numbered-list" start="5"><li>为什么用共享内存<del>/管道</del>？<p id="868df4f7-1e46-46bc-b466-ace45858a8f4" class="">共享内存快。唯一需要同步的地方是，只打开Transmitter或Receiver进程时会阻塞，只有当两个都打开才会开始工作。</p></li></ol><ol id="8f13a480-83d1-4260-a069-c38e942df423" class="numbered-list" start="6"><li>如何做压力测试？</li></ol><p id="09409986-4ca1-49a7-a1e3-dd5e21f96c08" class="">
+</p><h2 id="8d4b8d40-e7b9-4a94-8b62-15941d152118" class="">Version3.0</h2><p id="755860ba-574e-4bb8-a36a-6ce8392b527f" class="">模块的构建</p><h3 id="868041d2-4948-4e40-b576-9b71ace7a11b" class="">改进计划：</h3><ol id="68b3a920-6e0a-4a9f-9c94-e19507871c72" class="numbered-list" start="1"><li>计算优化</li></ol><ol id="aead55b5-76fb-404d-b13c-363eda33793e" class="numbered-list" start="2"><li>完整的物理层</li></ol><ol id="b8386b8a-eeca-4d4a-b0fc-ad82bdbce671" class="numbered-list" start="3"><li>MAC层</li></ol><ol id="94b93a9f-f976-4b00-8a77-8ab69b6d3268" class="numbered-list" start="4"><li>在退出时删除产生的共享文件 ✅</li></ol><ol id="f3b8d069-4ced-4003-af46-9fe2ec6290ec" class="numbered-list" start="5"><li>volatile优化</li></ol><h3 id="6f18d6af-6e62-4e67-a8e4-ca41a91e94a3" class="">具体实现：</h3><ol id="4aa6df29-0152-434e-a31b-0f8292842566" class="numbered-list" start="1"><li>增加了vector计算优化，还没有应用进去。</li></ol><ol id="892aa50a-26d0-4b74-829a-a7439572ea85" class="numbered-list" start="2"><li>增加收发模式：Tx,Rx,TxRx_HalfD,TxRx_FullD，且Thread中没有Tx或Rx模式就不会切换到对应状态（似乎快了些）✅<p id="943619c0-3eea-48ce-b524-75d6301b8fa9" class="">（收发机当前的收发状态用transceiver_state来表示，具备的收发能力用CommMode来表示。）</p></li></ol><ol id="6f708a20-45d2-41a6-bfd2-e8a7b9489d93" class="numbered-list" start="3"><li>完整的物理层</li></ol><ol id="118c17b7-5213-4f88-b4d8-3ac454905ae0" class="numbered-list" start="4"><li>加上MAC层</li></ol><h3 id="df556f10-e0e6-4b26-aa86-c5524e0a82d3" class="">存在问题：</h3><ol id="adf74daf-c1e3-4a25-b919-1e32fe6d1413" class="numbered-list" start="1"><li>帧同步怎样知道一帧什么时候结束<ul id="6d5e2189-256f-4d67-8091-c31927df47f5" class="bulleted-list"><li>最简单的，固定长度帧</li></ul><ul id="81fc3d4a-a5f5-4f48-9c02-77b6d46996b9" class="bulleted-list"><li>在帧头加长度信息</li></ul><ul id="02495640-21bc-488c-9d78-d7cb04e2e343" class="bulleted-list"><li>在帧尾加结束符号</li></ul><p id="c22513db-7d6f-4c29-85f6-41472f3be816" class=""><strong>这里的帧同步跟MAC层的帧不一样，MAC的帧头包含了地址、长度等信息，而物理层仅仅是用于同步的</strong></p></li></ol><h3 id="bec57adb-f70d-40db-a007-261ceea8b63a" class="">记录：</h3><ol id="698b9510-ffa3-4b59-bb40-ed98936ad3e8" class="numbered-list" start="1"><li>M的转移表达式加不加j，影响的是下变频之后波形出现在实部还是虚部。如果不加j，出现在实部，如果加j，出现在虚部。</li></ol><ol id="e0a86587-787f-410c-a69b-259f4370d6e2" class="numbered-list" start="2"><li>还是先把UpBlocksDown变成都结束了才结束（为了bpsk的比特数量正确性），这会导致某些bug（Tx和Rx运行时，如果先结束Tx，Rx会因为有SineSource一直不结束导致程序不结束）</li></ol><p id="5dc2163a-4d26-4fda-ae71-1d6c8dea4a47" class="">
+</p><p id="eceb12bf-8dc1-438c-8635-9e45b47760d8" class="">
+</p><p id="d0c3d7c6-d64e-41a6-beb4-5e3e4d9683f9" class="">
+</p><h3 id="b3ce76d6-40c8-4c3c-9dcc-0eec69b73c83" class="">待完成：</h3><ul id="03e043ca-882d-4b08-8875-b9ec906d6d26" class="bulleted-list"><li>整理和改善类的继承关系</li></ul><ul id="88b56153-0ca7-4500-9db0-e9ac838552c7" class="bulleted-list"><li>构建简易的MAC层及以上协议栈，扩展Task种类</li></ul><ul id="0e6088e1-0e5b-4c0b-89bf-21747d62ba58" class="bulleted-list"><li>物理层中帧同步的假同步问题需要解决</li></ul><ul id="b0cf8ea5-dfcd-4188-9a32-a36ea077496d" class="bulleted-list"><li>封装库</li></ul><p id="0983b003-72dd-44d7-b9c4-b424eddf91a2" class="">
+</p><figure id="756f79f9-32ba-4c09-bbf0-d09b2864df60" class="link-to-page"><a href="SimPlatform%209bd2e67b53ee47138f3428ca38f0a34a/Untitled%20756f79f932ba4c09bbf0d09b2864df60.html">Untitled</a></figure><p id="e76f1f7b-0499-4e16-83f4-713876ad4fa8" class="">
+</p></div></article></body></html>

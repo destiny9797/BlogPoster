@@ -1,0 +1,696 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>应用层</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="58a00bb7-0e4d-485b-a9a6-116ef5434819" class="page sans"><header><h1 class="page-title">应用层</h1></header><div class="page-body"><hr id="35838489-0f4d-41ce-8daa-ad77b56e1ea5"/><p id="a5b6590b-957c-49c4-b2da-abeae5638abc" class="">
+</p><p id="e81f1bff-9e6e-478a-8194-018bb1d8d5c0" class="">
+</p><nav id="3fbcadb8-0189-4984-b84e-3bc8f46acfe9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bb5401f7-726e-4e4a-8d9d-0e2038af548f">TCP对应的应用层协议？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cde90607-ccb0-4b80-9411-0869a4fc13f0">UDP对应的应用层协议？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a8b688cf-60e8-43dc-99b9-e45f88342df3">HTTP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#009802d9-7909-46b7-ad7f-8ac1c5c63233">http 报文怎么解析的？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3246c947-7d4f-4bbe-afd6-a60c4ecfbb73">http报文的结构？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#926bb32d-d6d8-4db8-af8b-3d435fc023b7">⭐️http请求方法有哪些？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#71362554-0b06-4752-96f7-245fae5a2d0e">⭐️http请求方法中get和post的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#10efd2e1-9526-4a7a-abe7-0f7bc5ef4853">⭐️常见的http状态码有哪些？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d56c5961-ffdb-4830-bac9-b45691a97f88">301、302、304有啥关系？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ebaeaa32-7311-4eaa-b8ff-68c09647b23c">重定向和转发的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bff4cfe9-1720-4b37-8b3f-084685aeffe0">HTTP的特点？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7bf1c0cf-7c02-4173-9efc-de10b21e94ac">⭐️HTTP1.0、HTTP1.1、HTTP2.0、HTTP3.0？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b7f93d3d-bf5f-4a1f-a7a5-aebc6069d94b">⭐️Cookie是什么？使用cookie的原因？有什么用途？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1ea1f5e0-3107-4c3e-ad99-ce4ad9745b18">Session是什么？使用session的原因？有什么用途？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#762a8ae2-00b1-4f83-a67a-0f13d85938c8">⭐️Cookie和Session的关系和区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c33238ad-68a7-4649-a7e1-abcc88187458">❓RESTful是什么？RestFul 请求的 URL 有什么特点？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0e2ccb99-2852-4aaa-9caa-5f403efb7b05">❓RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9ec665f9-4d14-43de-be19-c0e53efcf135">HTTP 是无状态的吗？需要保持状态的场景应该怎么做？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#69b8562f-8325-4ac3-b57d-47df335a915b">简述 HTTP 短连接与长连接的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#27381cdb-e0f8-4080-859d-d6ff8d39a080">HTTPS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7215c92-e477-4914-8075-cd9ca135b729">⭐️HTTPS和HTTP区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#aca7c26f-a526-47cb-94a8-36d218d4ad9a">⭐️简述HTTPS的加密与认证过程？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#01b4aed8-9ab3-480d-8f78-9e2ed8bbf68b">什么是SSL/TLS？有什么作用？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e23cbbff-b2c1-486e-94b2-5ea70e8bb8b2">SSL握手流程为什么要使用非对称秘钥？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4be59baf-608f-4bb1-a8d2-a1e7fca5d53d">HTTPS的连接过程？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9a47d7e3-98ac-42e0-840f-e4ec600e923a">HTTPS是怎么保证数据传输的安全的？流程？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8a7f6308-82ed-4935-9dbe-100ec490f4ec">如何保证公钥不被篡改？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0ea51e8a-0296-489f-baa5-6b3f030daaa2">公钥加密计算量太大，如何减少耗用时间？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#58f0369d-a92b-4a95-9e14-37eaef1869f4">⭐️什么是对称加密和非对称加密？各自的优缺点？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a6141762-87c5-455e-a57a-c6d1377f9341">数字证书和数字签名是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d699b4c5-6339-48e9-8c56-fed0c120a333">HTTPS采用的加密方式？是对称还是非对称？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#165b72c3-e500-40e9-8034-aee6b7bcf1ef">为什么有时候刷新页面不需要重新建立SSL连接？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6e11dd02-eaa4-4023-bd61-0642d3865ed6">DNS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#674e42e2-1787-4603-afc8-0b19646c2272">DNS是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#af7fe616-c679-4307-ae56-ba6883b110bb">⭐️DNS解析的流程？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fadba5e0-7443-42e9-a936-70e9abb46da7">DNS查询方式有哪些？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3c2d8c1f-a8d4-473c-8abd-5656005cf377">为什么DNS解析用UDP协议？DNS什么时候使用TCP协议？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b29d4640-cc89-44cf-bcdd-b068240adcf2">DNS负载均衡是什么策略？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4668e522-ceb6-4d4b-aaf7-a3f86f180bff">DNS劫持是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d255db98-6b82-480b-bd40-194c0b82020d">攻击</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8cfcb7da-d7c1-45f7-ae83-843b68eabfef">CSRF攻击？如何防范？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b2cca9ff-39f0-4222-8445-e11612c94f29">XSS攻击？如何防范？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9fc27084-3366-4a1c-af77-9749cd854b3a">文件上传漏洞是什么？如何防范？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#75d2c13a-5bfb-4064-ae8a-7dd0452cbc22">域名劫持和域名投毒是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#39d3c38e-41dc-4eaa-a957-df5da3032de8">⭐️❓简述DDos攻击原理，如何防范？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56cf46a6-6ee0-4540-b3f8-75a34fd6a1ae">❓简述 JWT 的原理和校验机制</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#016f1f5a-c59e-482a-b5c5-0eb5ade833b8">什么是中间人攻击？如何防止攻击？</a></div></nav><p id="a3de22a4-dc24-48d5-9ebf-ec73642cbe90" class="">
+</p><p id="b489c490-6e99-4eac-a839-1319f0d2e108" class="">
+</p><p id="62174f2a-d2e2-4395-8e40-d8316f25b16c" class="">
+</p><p id="5657e9a8-5b6c-4c69-90ba-d017d72f57af" class="">
+</p><h3 id="bb5401f7-726e-4e4a-8d9d-0e2038af548f" class="">TCP对应的应用层协议？</h3><p id="8d35dc1d-0c6f-4e08-8fbc-77918bedd99c" class="">FTP:定义了文件传输协议，使用21端口。</p><p id="750beccc-4011-4dcd-b202-afd93c3c4b06" class="">Telnet:它是一种用于远程登陆的端口,23端口 </p><p id="ad1eedc9-8e41-430e-9032-7c9bbe974d7b" class="">SMTP:定义了简单邮件传送协议，服务器开放的是25号端口。 </p><p id="e914a84a-e1b2-4568-8ed5-f4140a3cf2bd" class="">POP3:它是和SMTP对应，POP3用于接收邮件。</p><h3 id="cde90607-ccb0-4b80-9411-0869a4fc13f0" class="">UDP对应的应用层协议？</h3><p id="6e900571-e2c7-4e10-9326-eedc0a71abf5" class="">DNS:用于域名解析服务，用的是53号端口</p><p id="020a3c0a-9a94-49af-9a86-61b1d951f037" class="">SNMP:简单网络管理协议，使用161号端口</p><p id="1c349e01-5f29-4520-82ea-702bda91abc3" class="">TFTP(Trival File Transfer Protocal):简单文件传输协议，69</p><p id="e5074322-cc77-46fb-9c9c-90ea2ebb844d" class="">
+</p><h2 id="a8b688cf-60e8-43dc-99b9-e45f88342df3" class="">HTTP</h2><h3 id="009802d9-7909-46b7-ad7f-8ac1c5c63233" class="">http 报文怎么解析的？</h3><p id="02cda8d2-a877-48cc-abb1-d51200fb2155" class="">
+</p><h3 id="3246c947-7d4f-4bbe-afd6-a60c4ecfbb73" class="">http报文的结构？</h3><p id="c8b8a8f8-dd5c-46d4-9c62-271b825cdfc6" class=""><strong>请求报文</strong></p><p id="f1070927-f0de-4b2b-b0e0-09a2344678f4" class="">包括<span style="border-bottom:0.05em solid">请求行、首部行、空行、实体主体（请求数据</span>）</p><p id="0da2263d-7384-49cc-9549-8e422682ef31" class="">请求报文第一行为请求行，包含了<span style="border-bottom:0.05em solid">方法</span>，请求资源的<span style="border-bottom:0.05em solid">URL</span>，<span style="border-bottom:0.05em solid">HTTP的版本</span>。</p><p id="1c00270d-d581-4f01-a5fe-bf157cb8b98c" class=""><strong>响应报文</strong></p><p id="ab976def-4a31-4de5-b1c5-dc31a98897be" class="">包括响应行、首部行、空行、实体主体</p><figure id="c35cf66f-077e-4905-af81-4d6e6c59965d" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled.png"><img style="width:1966px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled.png"/></a></figure><h3 id="926bb32d-d6d8-4db8-af8b-3d435fc023b7" class="">⭐️http请求方法有哪些？</h3><figure id="ef355c4c-dca9-4799-b695-5f755a61e0f4" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%201.png"><img style="width:1316px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%201.png"/></a></figure><h3 id="71362554-0b06-4752-96f7-245fae5a2d0e" class="">⭐️http请求方法中get和post的区别？</h3><ul id="6b6ceca1-63c7-40f4-9965-13ca926d577e" class="bulleted-list"><li>请求次数：<p id="8df6b0f2-7e40-44e3-a358-65df2f4f4ad3" class="">get是一次请求，post实际上两次请求。get产生一个TCP数据包，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；post产生两个TCP数据包，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。</p></li></ul><ul id="adfc694e-9753-4724-a2d3-ce604a424fc5" class="bulleted-list"><li>功能：<p id="ca919012-aa2d-440b-8c45-87958c81e20f" class="">get一般是获取数据，post一般是修改数据</p></li></ul><ul id="511643de-0d1b-43ab-b935-9fd774767e87" class="bulleted-list"><li>安全性：<p id="99e861c3-d48a-4026-a6c4-12f6f445f84f" class="">get把请求的数据放在url上，以?分割URL和传输数据，参数之间以&amp;相连，所以get不太安全。而post把数据放在http的包体内（requrest body）</p></li></ul><ul id="d3ea4210-6782-4a24-8109-db2c97d0edb1" class="bulleted-list"><li>REST服务角度：<p id="2a924166-3713-49f6-a9b1-08edee839688" class=""><strong>本质区别：get是幂等的，而post不是幂等的</strong></p><p id="97fb2267-a2a9-4b2f-bb89-1fb949b0a807" class="">幂等性是指一次和多次请求某一个资源应该具有同样的副作用。简单来说意味着对同一URL的多个请求应该返回同样的结果。</p><p id="9d96bb8c-b1d2-426c-87d7-7ae39763ee07" class="">所以不应该且<strong>不能用get请求做数据的增删改这些有副作用的操作</strong>。因为get 请求是幂等的，在网络不好的隧道中会尝试重试。如果用get请求增数据，会有<strong>重复操作的风险</strong>，而这 种重复操作可能会导致副作用(浏览器和操作系统并不知道你会用get请求去做增操作)。</p></li></ul><ul id="563e2dc4-7bf5-41b8-9f40-6912dbf7b66d" class="bulleted-list"><li>数据量：<p id="103dc7a3-4538-41c6-92a9-fd533aeeb78d" class="">get提交的数据最大是2k（限制实际上取决于浏览器），post理论上没有限制</p></li></ul><ul id="e8e3b407-220d-450c-91c6-674d61d96829" class="bulleted-list"><li>get请求会被浏览器主动缓存，而post不会，除非手动设置</li></ul><p id="8ad969dd-177d-41b6-9a57-4140d6aef4e7" class="">个人理解：post和http1.1有什么关系呢？</p><h3 id="10efd2e1-9526-4a7a-abe7-0f7bc5ef4853" class="">⭐️常见的http状态码有哪些？</h3><figure id="be021f82-13e8-4176-8266-5774998dde06" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%202.png"><img style="width:1310px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%202.png"/></a></figure><p id="281f5b41-5f24-4041-81a0-cf132a25f0f2" class="">1xx 信息</p><ul id="b5448d42-2bef-4484-8be6-ecbba5958ea8" class="bulleted-list"><li>100 continue ： 到目前为止都很正常，客户端可以继续发送请求或忽略这个请求</li></ul><p id="ffa9d624-e328-4e8e-a6cf-9ace13b28226" class="">2xx 成功</p><ul id="2f3b5cde-ff52-4fc2-b8ba-0f6c2ca05599" class="bulleted-list"><li>200 OK</li></ul><ul id="5baa73b8-3d11-40e7-a36b-1396714f7ed9" class="bulleted-list"><li>204 No Content ： 请求已经成功处理，但是返回的响应报文不包含实体的主体部分。一般在只需要从客户端往服务器发送信息，而不需要返回数据时使用。</li></ul><ul id="628dc480-8446-44e9-acae-0691a074d3a6" class="bulleted-list"><li>206 Partial Content ： 客户端进行了范围请求，响应报文包含由Content-Range指定范围的实体内容</li></ul><p id="0af25fd9-7cc6-49a3-b50b-d86faef55f92" class="">3xx 重定向</p><ul id="e971ea37-cca0-46e1-8b78-f4a368fa1ab6" class="bulleted-list"><li><strong>301 Moved Permanently ： 永久性重定向</strong></li></ul><ul id="71180ef4-560f-44dd-8344-775632401154" class="bulleted-list"><li>302 Found ： 临时性重定向</li></ul><ul id="907203b5-92ab-43a8-b100-63f8fd4dc818" class="bulleted-list"><li>303 SeeOther ： 和302有相同的功能，但是303明确要求客户端应该采用GET方法获取资源</li></ul><ul id="3789d0dc-fa0f-41ef-b830-0c39089ae902" class="bulleted-list"><li><strong>304 Not Modified</strong> ： 如果请求报文首部包含一些条件，如：If-Match, If-Modified-Since, If-None-Match, If-Range, If-Unmodified-Since，如果不满足条件，则服务器会返回304状态</li></ul><ul id="d053cfc8-498a-435f-bea0-bfc9b2216ffc" class="bulleted-list"><li>307 Temporary Redirect ： 临时重定向，与302的含义类似，但是307要求浏览器不会把重定向请求的POST方法改成GET方法</li></ul><p id="a583d15d-3bd0-4c0d-aae5-d394fe98acaa" class="">4xx 客户端错误<div class="indented"><ul id="fdaaa3a7-c988-4034-98c7-94bd053bb0f0" class="bulleted-list"><li>400 Bad Request ： 请求报文中存在语法错误</li></ul><ul id="21e76a4a-a3aa-4797-b88d-702b101a10e1" class="bulleted-list"><li><strong>401 Unauthorized </strong>： 发送的请求需要有认证信息（BASIC认证、DIGEST认证）</li></ul><ul id="841b8d68-612f-4904-969b-83a09d59adf1" class="bulleted-list"><li><strong>403 Forbidden </strong>： 请求被拒绝</li></ul><ul id="0722df59-d780-4a37-8f97-8a61d6eed564" class="bulleted-list"><li>404 Not Found</li></ul></div></p><p id="6da0c0e8-4e76-4206-9f7e-23a59d3f4b58" class="">5xx 服务器错误</p><ul id="d99384a8-be31-4ca9-ad80-bbcfe7eeb2d1" class="bulleted-list"><li>500 Internal Server Error ： 服务器正在执行请求时发生错误</li></ul><ul id="ba1ec868-ad54-4b7e-8952-633f2539d971" class="bulleted-list"><li>503 Service Unavailable ： 服务器暂时处于超负载或正在停机维护，现在无法处理请求</li></ul><p id="bfb40ae1-6d88-4563-8998-c37b2b1777a7" class="">
+</p><h3 id="d56c5961-ffdb-4830-bac9-b45691a97f88" class="">301、302、304有啥关系？</h3><ul id="e5a19922-1742-4a37-a87a-22e30db40b73" class="bulleted-list"><li>301（永久移动）：请求的网页已被永久移动到新位置。服务器返回此响应时，会自动将请求者转到新位置。您应使用此代码通知搜索引擎蜘蛛网页或网站已被永久移动到新位置。</li></ul><ul id="6e31d2cd-c692-45ac-892c-1e282bc8a6ad" class="bulleted-list"><li>302（临时移动）：服务器目前正从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。会自动将请求者转到不同的位置。但由于搜索引擎会继续抓取原有位置并将其编入索引，因此您不应使用此代码来告诉搜索引擎页面或网站已被移动。</li></ul><ul id="3233afe0-179d-4605-958f-925e1472b3ab" class="bulleted-list"><li>304（未修改）：自从上次请求后，请求的网页未被修改过。服务器返回此响应时，不会返回网页内容。如果网页自请求者上次请求后再也没有更改过，您应当将服务器配置为返回此响应。由于服务器可以告诉搜索引擎自从上次抓取后网页没有更改过，因此可节省带宽和开销。常用来在Web缓存服务器向初始服务器请求更新数据。</li></ul><p id="75057e33-d635-401d-833a-a54fdee4b715" class="">
+</p><h3 id="ebaeaa32-7311-4eaa-b8ff-68c09647b23c" class="">重定向和转发的区别？</h3><p id="b47e9abc-c4f7-48fe-b7da-72a9cce92e80" class="">重定向：</p><p id="292e6b07-2d6a-4e84-88ca-6e1cb3f686d0" class="">客户端浏览器发送http请求 → web服务器接收后发送30X状态码响应及对应新的location给客户浏览器 → 客户浏览器发现是30X响应，则自动再发送一个新的http请求，请求url是新的location地址→ 服务器根据此请求寻找资源并发送给客户。</p><p id="53571477-ef53-45fe-a1e9-90e0d5d98e60" class="">转发：</p><p id="3a9a6fef-6537-4b45-b53b-9177f54a6859" class="">客户端浏览器发送http请求 → web服务器接受此请求 → 调用内部的一个方法在容器内部完成请求处理和转发动作 → 将目标资源发送给客户。</p><p id="f1290302-e907-44d7-a88a-f16bd1d73f9d" class="">对比：</p><figure id="80406979-a391-4bd1-90af-f6dca6e3f041" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%203.png"><img style="width:1428px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%203.png"/></a></figure><p id="a98f230a-88ed-4e3a-8224-64a53c301a88" class="">要保持request域的数据时使用转发，要访问外站资源的时候用重定向，其余随便</p><p id="48db2d03-1dbc-4f66-8e31-ad9595a12701" class="">
+</p><h3 id="bff4cfe9-1720-4b37-8b3f-084685aeffe0" class="">HTTP的特点？</h3><p id="376df014-a4af-43f9-a8dc-be30913f21ea" class="">优点：简单、灵活和易于扩展、应用广泛和跨平台</p><p id="0915119c-8713-4f88-aa39-9274ebf87f6a" class="">缺点： 不安全</p><ul id="31fb3185-e15b-4ea1-880f-2436f176d49d" class="bulleted-list"><li>无状态：可以减轻服务器负担，但同时对于关联性操作比较麻烦（比如下单、支付要询问多次身份信息） —— 解决方案：<strong>Cookie</strong>技术</li></ul><ul id="177fe512-0c3b-4e62-bea9-1887f35d0ae2" class="bulleted-list"><li>是用明文进行通信，内容可能会被窃听</li></ul><ul id="7fc12635-7ece-4c72-bae5-7cd0d6038386" class="bulleted-list"><li>不验证通信方的身份，通信方的身份有可能遭遇伪装</li></ul><ul id="5cd8eb0a-98a2-4dc2-a1ea-043eb1b755d6" class="bulleted-list"><li>无法证明报文的完整性，报文又可能遭篡改</li></ul><p id="c2735d5b-34be-4ac6-a305-b9f147ee5b8e" class="">
+</p><p id="6897f93e-9589-4208-9376-00e3ca939e64" class="">
+</p><p id="0f6882b2-4e8f-4316-944e-b80b0abc70c2" class="">
+</p><h3 id="7bf1c0cf-7c02-4173-9efc-de10b21e94ac" class="">⭐️HTTP1.0、HTTP1.1、HTTP2.0、HTTP3.0？</h3><figure id="f021fc7e-d3ce-4fa8-87ac-6a96d036962c" class="image"><a href="HTTP%20%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89%2006508eaf42184f9eb30e2f41ab7ff0a7/Untitled%201.png"><img style="width:1346px" src="HTTP%20%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89%2006508eaf42184f9eb30e2f41ab7ff0a7/Untitled%201.png"/></a></figure><p id="336a266f-7507-4bbc-a06a-ca0164ccae50" class="">HTTP1.0的缺点：</p><ul id="d21d3b03-0ce8-4781-9ac9-e9819bae154b" class="bulleted-list"><li><mark class="highlight-red"><strong>短连接</strong></mark>，每个请求都要重新建立一个TCP连接，服务器完成请求处理后立即断开TCP连接，性能缺陷、开销大</li></ul><p id="7fcb0bb6-0d10-45cb-bf54-6d0bb93e8653" class="">HTTP/1.1</p><ul id="cef937c1-053f-48a6-8853-a5e8f23ea0c0" class="bulleted-list"><li><mark class="highlight-red"><strong>长连接</strong></mark>：早期1.0每一个请求都要TCP三次握手，1.1提出长连接</li></ul><ul id="4309a1cc-cd7f-46ec-a2a5-403756a6a784" class="bulleted-list"><li>支持客户端先只发header，来节约带宽，如果服务器认为客户端有权限请求服务器，则返回100，否则返回401。客户端如果接受到100，才开始把请求body发送到服务器。这样当服务器返回401的时候，客户端就可以不用发送请求body了，节约了带宽。</li></ul><ul id="0179e601-f5e0-47f0-8ccb-f820eab1ca1b" class="bulleted-list"><li>支持host域</li></ul><ul id="7e954315-d4ab-4795-89a0-240227a0d7db" class="bulleted-list"><li>管道网络传输：客户端发出一个请求，不必等响应，即可发送第二个</li></ul><ul id="2ea946ea-60c6-4daf-82ab-556a56351934" class="bulleted-list"><li>队头阻塞：串行请求，一个请求因某种原因阻塞了，那后面的请求都会阻塞，<strong>性能一般</strong></li></ul><ul id="5b1fa2be-3d8e-4f10-90b5-b122d7a33886" class="bulleted-list"><li>Cookie</li></ul><p id="260ad603-cf9e-4506-a277-9ba343d29498" class="">
+</p><p id="eda81c98-a40e-41aa-b6b4-282e58abee94" class="">HTTP/2.0</p><p id="fbfeb864-f2bc-4c2e-b258-fd3f76f3f487" class="">基本操作</p><ol id="8507da07-3fe9-4d8f-b24c-a7157bf6432e" class="numbered-list" start="1"><li><mark class="highlight-red"><strong>多路复用</strong></mark>：同一个连接并发处理多个请求（不按顺序，每个请求或回应有多个数据包， 称为一个数据流（Stream）——多路复用？）</li></ol><ol id="a2801e46-1cbf-41ef-be4f-a5410344078a" class="numbered-list" start="2"><li><strong>压缩头</strong>，消除重复部分：维护一张头信息表（HPACK算法），索引，<strong>提高速度</strong></li></ol><ul id="4750b380-af9e-46f4-8d73-512952d804f7" class="bulleted-list"><li>服务器可主动推送消息</li></ul><ul id="4369cfa5-015f-4684-97ce-f92d904738b8" class="bulleted-list"><li>二进制分帧：采用二进制格式，<strong>增加传输效率</strong></li></ul><ul id="04c87197-c665-4029-9779-f6082406ad4a" class="bulleted-list"><li>可指定数据流优先级</li></ul><p id="487337b0-4863-476f-9e75-18c941f9d280" class="">缺点：</p><ul id="467ebe6a-20b3-44e1-9883-6fb11d9094bd" class="bulleted-list"><li>TCP丢包重传，在一个TCP连接中的所有HTTP请求都必须等待这个丢了的包重传回来。</li></ul><p id="01f5c504-7169-49c8-82f6-033a505e36e6" class="">
+</p><p id="48d7f8ff-caa0-4599-9f7b-d1f35ce3c8f5" class="">HTTP3.0</p><p id="d20dc539-85ef-4074-b584-eb573c812545" class="">将TCP改成了带QUIC协议的UDP</p><p id="d65c22b5-d8dc-4ed6-9d7a-9ff07bb34328" class="">
+</p><h3 id="b7f93d3d-bf5f-4a1f-a7a5-aebc6069d94b" class="">⭐️Cookie是什么？使用cookie的原因？有什么用途？</h3><p id="01f210c2-d2b0-4b09-aae5-072c07d864b5" class=""><strong>使用cookie的原因：</strong></p><p id="9e38ca93-8bc7-4b89-8405-690297fd4d17" class="">Cookie 的出现是因为 HTTP 是<strong>无状态</strong>的一种协议，换句话说，服务器记不住你，可能你每刷新一次网页，就要重新输入一次账号密码进行登录。这显然是让人无法接受的，cookie 的作用就好比服务器给你 贴个标签，然后你每次向服务器再发请求时，服务器就能够 Cookie 认出你</p><p id="f7262507-c183-4aff-b6a1-74bbd6b4d53f" class=""><strong>cookie是什么？</strong></p><p id="3621369f-d0b8-4244-baba-a90acaaec193" class="">Cookie是服务器发送到用户<strong>浏览器并保存</strong>在本地的一小块数据，之后浏览器再向同一服务器发送请求时会携带上，用于告知服务器两个请求是否来自同一浏览器。</p><figure id="58907283-b7b0-4b46-a58f-0d65fdf540a5" class="image"><a href="HTTP%20%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89%2006508eaf42184f9eb30e2f41ab7ff0a7/Untitled.png"><img style="width:624px" src="HTTP%20%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89%2006508eaf42184f9eb30e2f41ab7ff0a7/Untitled.png"/></a></figure><p id="5903016a-91ee-46f4-8931-58ad6446e474" class=""><strong>用途：</strong></p><ul id="e1d40c74-48d7-4e95-a8f7-8c520e8e026f" class="bulleted-list"><li>会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）</li></ul><ul id="71672fb7-2337-4f16-b3d6-850ba2bd65ff" class="bulleted-list"><li>个性化设置（如用户自定义设置、主题等）</li></ul><ul id="bd2b981d-dcc7-40c8-aeb4-4f2475a8f3df" class="bulleted-list"><li>浏览器行为跟踪（如跟踪分析用户行为等）</li></ul><p id="7ce7c2fb-923e-4eea-8bf0-8ad438acdf33" class="">
+</p><h3 id="1ea1f5e0-3107-4c3e-ad99-ce4ad9745b18" class="">Session是什么？使用session的原因？有什么用途？</h3><p id="91e3d873-7a2c-4510-be90-45c5bff958ff" class=""><strong>使用Session的原因：</strong></p><p id="5f2098f3-cf3d-49f3-868e-0dd267c1ef84" class="">同Cookie。</p><p id="0822589c-c8a2-49bc-958b-bbb4dcfdfd9d" class=""><strong>Session是什么？</strong></p><p id="160ddfef-1e87-4e82-b138-f11b9ce03d05" class="">Session是<strong>服务端</strong>使用的一种记录客户端状态的机制。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。Session相当于程序在服务器上建立的一份客户档案。</p><p id="f46addae-6a4a-481f-9aa2-49ead7e2731f" class=""><strong>过程：</strong></p><ol id="c2767324-24a2-4acf-b9c7-d4053cfcd581" class="numbered-list" start="1"><li>用户登录时，提交包含用户名和密码的表单，放入HTTP请求报文中</li></ol><ol id="e0c83a2a-8d41-4aeb-8597-02327f3a9cf5" class="numbered-list" start="2"><li>服务器验证该用户名和密码，如果正确则把用户信息存储到Redis中，它在Redis中的Key称为Session ID</li></ol><ol id="89908d02-cf61-4dca-b029-b1eda85e8668" class="numbered-list" start="3"><li>服务器返回的响应报文的Set-Cookie首部字段包含了这个Session ID，客户端收到响应报文之后，将该Cookie值存入浏览器中</li></ol><ol id="264b59ab-7d4e-41ea-aa16-73d0ef82958c" class="numbered-list" start="4"><li>客户端之后对同一个服务器进行请求时会包含该Cookie值，服务器收到之后提取出Session ID，从Redis中取出用户信息，继续之前的业务操作。</li></ol><p id="0a084181-ee55-48e1-b08b-9021bba76104" class=""><strong>用途：</strong></p><p id="51ad15dc-cd9e-4687-b934-c010712c676c" class="">用户验证？</p><p id="84bd66b6-0455-4684-9a8d-460edc0cb5f6" class=""><strong>安全性问题：</strong></p><p id="a912bbb1-a63f-4b8c-9008-7de14cab85ef" class="">不能让Session ID被恶意攻击者轻易获取，那么就不能产生一个容易被猜到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下， 例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新 输入密码，或者使用短信验证码等方式。</p><p id="196df873-8767-4c41-80d1-bf1687cdc366" class="">
+</p><h3 id="762a8ae2-00b1-4f83-a67a-0f13d85938c8" class="">⭐️Cookie和Session的关系和区别？</h3><ul id="e1d9c2fe-267a-40e2-800e-12c027f3f1c3" class="bulleted-list"><li>都是用来验证用户身份的机制</li></ul><ul id="c1388956-f088-4cd1-bc2e-2b7f38855006" class="bulleted-list"><li>Cookie保存在客户端，Session保存在服务端</li></ul><ul id="5d77ac73-b806-40b3-a8f5-298ac3c3033f" class="bulleted-list"><li>Cookie是客户端保存用户信息的一种机制，也是实现Session的一种方式（大多数应用采用Cookie来实现Session跟踪）。Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在内存、数据库、文件中</li></ul><ul id="12e7953a-0902-4296-87de-ccd117f959ba" class="bulleted-list"><li>Session的运行依赖于Session ID，而Session ID是保存在Cookie中的，如果浏览器禁用了Cookie，同时Session也会失效（但可以通过其他方式实现，如在URL中传递Session ID，称为URL重写）</li></ul><ul id="cd4bfaea-edda-4cc3-a200-6aeaa8be5ca9" class="bulleted-list"><li>用户验证这种场合一般使用Session</li></ul><p id="cc10f26a-c42c-4455-b531-f6a23b703876" class="">如果说Cookie机制是通过检查客户身上的“通行证”来确定客户身份的话，那么Session机制就是通过检查服务器上的“客户明细表”来确认客户身份。Session相当于程序在服务器上建立的一份客户档案，客户来访的时候只需要查询客户档案表就可以了。</p><p id="66aa18f4-a623-4468-b9b8-b690edaa7edb" class="">
+</p><h3 id="c33238ad-68a7-4649-a7e1-abcc88187458" class="">❓RESTful是什么？RestFul 请求的 URL 有什么特点？</h3><p id="83b2ab38-f816-4c7f-82b0-b0873dac2800" class="">
+</p><p id="6cf8dbec-1c3a-44d8-8615-0e77cabcf946" class="">
+</p><h3 id="0e2ccb99-2852-4aaa-9caa-5f403efb7b05" class="">❓RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？</h3><p id="701c4a2c-6afb-4804-ac3a-12d56e56477a" class="">
+</p><p id="611bb820-d817-45a4-b5f2-fe26f144f4a2" class="">
+</p><h3 id="9ec665f9-4d14-43de-be19-c0e53efcf135" class="">HTTP 是无状态的吗？需要保持状态的场景应该怎么做？</h3><p id="dc965d82-a87a-48b9-a969-b33a3a6b2d4f" class="">保持状态的四种方法：</p><ol id="6ab04118-1caf-4e93-a39f-954bfbf5ed64" class="numbered-list" start="1"><li>网址重写：一种Session追踪技术</li></ol><ol id="d144b0a2-86c6-48d7-80a0-82dbcd276b86" class="numbered-list" start="2"><li>隐藏域</li></ol><ol id="4a6c32dd-c339-47d0-8418-3cb4d980b14f" class="numbered-list" start="3"><li>cookie</li></ol><ol id="eafd3741-acfa-4be7-b5f2-c1b1e3f598ca" class="numbered-list" start="4"><li>HttpSession对象</li></ol><p id="8b2870cb-dacf-43eb-879e-cb81292590e3" class="">
+</p><h3 id="69b8562f-8325-4ac3-b57d-47df335a915b" class="">简述 HTTP 短连接与长连接的区别？</h3><p id="f008f523-d77e-496f-a773-08cb263104cd" class="">短连接，每发送一次请求就要建立一次TCP连接，三次握手四次挥手。</p><p id="d97365a1-85e1-41fa-9b7a-90c9b3e70897" class="">长连接，允许一次TCP连接中发送多次请求，可以通过设置长连接的时间。</p><p id="c852efac-9bb3-4616-8aa8-d51ec719af8b" class="">
+</p><p id="e7f6c774-9fa5-43cf-9a73-ea7c42019c7f" class="">
+</p><h2 id="27381cdb-e0f8-4080-859d-d6ff8d39a080" class="">HTTPS</h2><h3 id="c7215c92-e477-4914-8075-cd9ca135b729" class="">⭐️HTTPS和HTTP区别？</h3><p id="7bf651d5-b924-4d27-8ee8-7e39bf48a565" class="">HTTPS协议 = HTTP协议 + SSL/TLS协议</p><p id="1581f8df-a45c-4d54-b6a1-408c7d4009a2" class="">HTTPS是在TCP和应用程序之间加了SSL子层。</p><p id="d27075e1-0d1c-4627-b80e-4f846a6d8170" class=""><strong>区别：</strong></p><ul id="1a3325c4-f6a4-4083-8439-0622b315ebb9" class="bulleted-list"><li>开销<p id="2eb86fdd-b084-4114-95b6-987ebdd7207c" class="">HTTPS协议需要申请证书，开销较大</p></li></ul><ul id="4b201fe1-1ad8-4107-8013-7407eb27bab9" class="bulleted-list"><li>资源消耗<p id="e3af379d-b405-4782-aece-4e667863a130" class="">HTTP是超文本传输协议，信息是明文传输，HTTPS则是具有安全性的SSL加密传输，需要消耗更多CPU和内存资源</p></li></ul><ul id="389b36ec-e211-475f-a6e5-d6cff380803c" class="bulleted-list"><li>端口<p id="7df5087c-98b3-4bc9-965c-ead99846c189" class="">http和https使用的是完全不同的连接方式，用的端口也不一样，<strong>前者是80，后者是443</strong>。</p></li></ul><ul id="20931f57-ad14-48fb-b921-c40dafc3b2b2" class="bulleted-list"><li>安全性<p id="309b6aed-f5b3-45e0-9d3b-fa6648d9c5f5" class="">HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全， HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全。</p></li></ul><p id="8f67c0ea-38e2-4224-aa0e-12b8b77057e0" class="">总而言之就是：HTTPS<strong>更加安全</strong>，但是这个安全也需要付出一些代价，如<strong>开销、资源消耗、金钱</strong>（https协议需要到ca申请证书，一般免费证书较少，因而需要一定费用）等，除此以外，<strong>端口</strong>也不同。</p><p id="73a49367-8492-4f76-a9e2-3356cff3962c" class="">
+</p><p id="4911c9d0-d200-4584-a849-4283fc92a765" class="">
+</p><h3 id="aca7c26f-a526-47cb-94a8-36d218d4ad9a" class="">⭐️简述HTTPS的加密与认证过程？</h3><p id="515a0193-df74-4c62-8903-a132e9f033ec" class="">
+</p><p id="d5f6f5cf-4edb-4c5f-96b6-bc37853ea4d4" class="">
+</p><h3 id="01b4aed8-9ab3-480d-8f78-9e2ed8bbf68b" class="">什么是SSL/TLS？有什么作用？</h3><p id="2646a6a6-f0aa-424e-a030-357fbc6f2200" class="">SSL和TLS都属于加密协议。</p><p id="836a6725-f76b-41a9-b80b-bdeab29695cb" class=""><strong>SSL：（Secure Socket Layer，安全套接字层）</strong>，位于可靠的面向连接的网络层协议和应用层协议之间的一种协议层。<strong>SSL通过互相认证、使用数字签名确保完整性、使用加密确保私密性，以实现客户端和服务器之间的安全通讯。</strong>该协议由两层组成：SSL记录协议和SSL握手协议。</p><p id="7a5fcca9-f289-4841-b750-33d5e41167f8" class=""><strong>TLS：(Transport Layer Security，传输层安全协议)</strong>，<strong>用于两个应用程序之间提供保密性和数据完整性</strong>。该协议由两层组成：TLS记录协议和TLS握手协议。</p><p id="87e1ac22-8ef1-4857-8f2f-a58b1511a0e2" class="">主要区别在于他们所支持的加密算法不同。</p><p id="96ca5652-9cee-45c3-92be-db698df39512" class="">SSL/TLS协议作用：</p><p id="cc9a5bb5-79ed-4a1a-b9f4-098cbb310dea" class="">不加密的通信有三大风险：窃听风险；篡改风险；冒充风险。HTTPS很好的解决了这三个问题：</p><ul id="b94e3d06-9e5e-42f9-bc86-7a8fab5a9292" class="bulleted-list"><li>防监听：数据是加密的，所以监听得到的数据是密文，hacker看不懂。</li></ul><ul id="774ff39e-66ee-4c08-806a-09b2521008f1" class="bulleted-list"><li>防伪装：伪装分为客户端伪装和服务器伪装，通信双方携带证书，证书相当于身份证，有证书就认为合法，没有证书就认为非法，证书由第三方颁布，很难伪造</li></ul><ul id="13351375-128e-42bd-b063-262a03de3bcc" class="bulleted-list"><li>防篡改：https对数据做了摘要，篡改数据会被感知到。hacker即使从中改了数据也白搭。</li></ul><p id="b35c53ae-3198-4a51-8f3b-b7117d80bdd2" class="">
+</p><h3 id="e23cbbff-b2c1-486e-94b2-5ea70e8bb8b2" class="">SSL握手流程为什么要使用非对称秘钥？</h3><p id="2946084f-0fcb-48f2-84ad-37e89188124a" class="">
+</p><p id="2c6ebe9f-7ca4-46ee-887e-26ceb5db7af3" class="">
+</p><p id="5c942a7d-27c4-4b1a-86ee-30a9a257adac" class="">
+</p><h3 id="4be59baf-608f-4bb1-a8d2-a1e7fca5d53d" class="">HTTPS的连接过程？</h3><p id="447c79f1-39a3-4f6d-a657-31f1d92fed34" class="">应该是先TCP三次握手，再SSL握手吧，下面应该是SSL握手的过程</p><figure id="adb2d8ba-fcfd-4b39-bd22-26881c158977" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%204.png"><img style="width:1272px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%204.png"/></a></figure><p id="7996c170-a97a-478f-8f7b-9ac9dbfda2d7" class="">过程：</p><ol id="323d834d-ed3e-4ff5-b284-6f980c03a222" class="numbered-list" start="1"><li>客户端给出协议版本号、生成的随机数（Client Random），以及自己支持的加密方法</li></ol><ol id="d21e28ab-3371-474a-9d69-d0e0417902df" class="numbered-list" start="2"><li>服务端确认双方使用的加密方法，并给出数字证书（CA），以及一个服务器生成的随机数（Server Random）</li></ol><ol id="fcede78c-9856-47f3-a52d-fffd7b075eee" class="numbered-list" start="3"><li>客户端确认CA有效，然后生成一个新的随机数（Premaster Secret），并使用CA中的公钥，加密这个随机数，发给服务端</li></ol><ol id="81564133-e899-453a-91d1-0c4a117c54c8" class="numbered-list" start="4"><li>服务端用自己的私钥解密，获取发来的随机数（Premaster Secret）</li></ol><ol id="b9ced9af-d862-408c-a152-fc3abb3ba051" class="numbered-list" start="5"><li>客户端和服务端根据约定的加密方法，使用前面的三个随机数，生成“对话密钥”（Session Key），用来加密接下来的整个对话过程</li></ol><p id="63cef66f-e79b-425e-9cf8-7d7347062309" class="">
+</p><h3 id="9a47d7e3-98ac-42e0-840f-e4ec600e923a" class="">HTTPS是怎么保证数据传输的安全的？流程？</h3><p id="1be641ba-151c-4160-b028-1b28f0c50ca4" class="">流程：</p><ol id="98f7ec89-1fac-436d-a382-5c779f41e217" class="numbered-list" start="1"><li>客户端发送请求到服务器端</li></ol><ol id="a10d5487-b6ed-44a5-a073-37f516d422d2" class="numbered-list" start="2"><li>服务器端返回证书和公开密钥，公开密钥作为证书的一部分而存在</li></ol><ol id="cb31dbd2-e8af-48b7-8a72-ea861cba223d" class="numbered-list" start="3"><li>客户端验证证书和公开密钥的有效性，如果有效，则生成共享密钥并使用公开密钥加密发送到服务器端</li></ol><ol id="99494836-e4c7-49cb-ba8d-649acc116375" class="numbered-list" start="4"><li>服务器端使用私有密钥解密数据，并使用收到的共享密钥加密数据，发送到客户端</li></ol><ol id="84b6696b-ef19-4f66-ad26-6b92a63a0656" class="numbered-list" start="5"><li>客户端使用共享密钥解密数据</li></ol><ol id="9666970f-c74c-433f-8da1-72719cc1334c" class="numbered-list" start="6"><li>SSL加密建立，服务器和客户端双方用公有的相同的对称秘钥对数据进行加密解密，可以保证在数据收发过程中的安全，即使第三方获得数据包，也无法对其进行加密，解密和篡改。</li></ol><p id="65bc5f3c-5ac9-4f44-98eb-8b59e3f1b548" class="">另外，数字签名、摘要是证书防伪非常关键的武器。 “摘要”就是对传输的内容，通过hash算法计算出一段固定长度的串。然后，再通过CA的私钥对这段摘要进行加密，加密后得到的结果就是“数字签名”（这里指的是SSL/TLS握手阶段对服务器身份的验证）</p><p id="3ba8240d-5ab3-414c-a0ff-108d08f22221" class="">
+</p><p id="a15bcfe3-9061-4794-a026-dbd1800d9a0a" class="">
+</p><h3 id="8a7f6308-82ed-4935-9dbe-100ec490f4ec" class="">如何保证公钥不被篡改？</h3><p id="ffcec6c0-a230-4e81-beaa-b01a4db70b17" class="">将公钥放在数字证书中。只要证书是可信的，公钥就是可信的。</p><p id="52c2736f-bde3-4791-afb6-4e7c05b95ddd" class="">
+</p><h3 id="0ea51e8a-0296-489f-baa5-6b3f030daaa2" class="">公钥加密计算量太大，如何减少耗用时间？</h3><p id="c801335e-a36b-40d8-8739-6f7f382232e2" class="">每一次对话(session)，客户端和服务器端都生成一个&quot;对话密钥&quot;(session key)，用它来加密信息。由于&quot;对话密钥&quot;是对称加密，所以运算速度非常快，而服务器公钥只用于加密&quot;对话密钥&quot;本身，这 样就减少了加密运算的消耗时间。</p><p id="01070b21-a4f2-42d4-827e-a180ee0279f8" class="">
+</p><h3 id="58f0369d-a92b-4a95-9e14-37eaef1869f4" class="">⭐️什么是对称加密和非对称加密？各自的优缺点？</h3><p id="c39394a7-559d-45ad-a246-431e617438a9" class=""><strong>对称加密</strong></p><p id="3c6bef96-3c07-4e47-b82a-a676f361e7c4" class="">加密和解密使用的是同一把钥匙（密钥）</p><p id="7439794b-4bba-424a-9bb5-f74341d466de" class="">加密：原文 + 密钥 = 密文；解密：密文 – 密钥 = 原文</p><p id="04cc43fc-f1d4-4abd-999b-857c51a1aab4" class=""><strong>优点</strong>：算法简单，效率高，运算速度快</p><p id="a1c9bd27-3a60-4698-8fda-e994d419605f" class=""><strong>缺点</strong>：相对来说不安全，因为只有一把密钥（无法安全地将密钥传输给通信方）</p><p id="4129a60f-f2b5-4376-b539-a1f8f05b8145" class="">
+</p><p id="b458dd6b-73fa-4381-97f8-1b639dbf1880" class=""><strong>非对称加密</strong></p><p id="1d9dfa2e-661c-4974-82fb-c7d590cecefd" class="">非对称加密中有两个钥匙，即公钥和私钥。公钥和私钥是成对存在，如果对原文使用公钥加密，则只能用对应的私钥才能解密，因为<strong>加密和解密使用的不同的密钥</strong>。</p><figure id="22b74b0a-7d1e-49ce-8348-406e02d2e2d8" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%205.png"><img style="width:332px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%205.png"/></a></figure><p id="201e95cd-b949-42a4-a0d3-98a03c0b17b9" class="">个人理解：每个人有自己的私钥，我经过一系列算法可以推导出公钥（但是公钥不能推导出私钥，这个过程是单向的），然后把这个公钥发给信任的人，信任的人用公钥加密消息发给我，我用私钥解密。即使我把公钥发给别人的时候被坏人截取了，坏人也无法从公钥解密出消息。</p><p id="288fdc70-f047-4e73-8bf7-241fc5b1345d" class=""><strong>优点</strong>：安全，即使密文被拦截，公钥被获取，但无法获取私钥，也就无法破译密文</p><p id="729257e3-5011-45e5-884d-2278f26c9338" class=""><strong>缺点</strong>：加密算法很复杂，安全性依赖于算法和密钥，而且加密解密效率低</p><p id="a3f95a5c-5646-4a95-a57d-cd08402c1baf" class="">注：非对称加密除了通信加密，还可以用来签名</p><p id="66f405ec-ad89-4661-8f9c-431deac4b278" class="">
+</p><h3 id="a6141762-87c5-455e-a57a-c6d1377f9341" class="">数字证书和数字签名是什么？</h3><p id="4ef7065e-d25d-4195-9fb1-b24b190557eb" class=""><strong>数字证书</strong></p><p id="b2f03148-d699-4a9a-bf78-df84552aa680" class="">数字证书绑定了公钥及持有者的真实身份，类似于居民身份证，用于标记通信双方身份的一种方式。数字证书是由<span style="border-bottom:0.05em solid">数字证书认证机构(CA，Certificate Authority)</span>发行的，它是客户端与服务器双方都可信赖的第三方机构。</p><p id="7dece6db-a82b-4495-a527-e54201d4b055" class="">服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。</p><p id="ff152aca-2b5b-4f0c-bb2d-ff7c3fd3dada" class="">进行 HTTPS 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。</p><figure id="07eec515-410b-4c00-99fe-948a567bd73b" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%206.png"><img style="width:528px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%206.png"/></a></figure><p id="52234031-3166-4100-a9ec-e21275607324" class=""><strong>数字签名</strong></p><p id="afacad6e-3140-43c3-91bb-be9276c6d6c1" class="">数字签名就是<strong>用于验证传输的内容是不是真实服务器发送的数据</strong>，发送的数据有没有被篡改过，是非对称加密的一种应用场景。不过他是反过来<strong>用私钥加密，与之配对的公钥进行解密</strong>。</p><ol id="e1df4db9-1541-403c-b84d-e7d46e58ce3a" class="numbered-list" start="1"><li>服务器把报文经过HASH处理后生成摘要信息，摘要信息使用私钥加密后生成签名，服务器把签名连同报文一起发送给客户端。</li></ol><ol id="72fb94d7-65ff-4dd4-b52f-2d7fdfd0ece6" class="numbered-list" start="2"><li>客户端接收到数据后，提取出签名用公钥进行解密。</li></ol><ol id="22b53d8b-398a-423c-aa78-c709fa67b718" class="numbered-list" start="3"><li>客户端把报文提取出来做同样的HASH处理，得到摘要信息，再与步骤2中解密出来的摘要进行对比，若两者相等，表示内容没有被篡改。</li></ol><figure id="87273a8a-f896-464f-96b5-7ca132a4268e"><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">数字签名是什么？</div><div class="bookmark-description">今天，我读到一篇 好文章 。 它用图片通俗易懂地解释了，&quot;数字签名&quot;（digital signature）和&quot;数字证书&quot;（digital certificate）到底是什么。 我对这些问题的理解，一直是模模糊糊的，很多细节搞不清楚。读完这篇文章后，发现思路一下子就理清了。为了加深记忆，我把文字和图片都翻译出来了。 文中涉及的密码学基本知识，可以参见我以前的 笔记 。 ==================================================== 数字签名是什么？ 作者：David Youd 翻译：阮一峰 原文网址： http://www.youdzone.com/signature.html 1. 鲍勃有两把钥匙，一把是公钥，另一把是私钥。 2. 鲍勃把公钥送给他的朋友们----帕蒂、道格、苏珊----每人一把。 3. 苏珊要给鲍勃写一封保密的信。她写完后用鲍勃的公钥加密，就可以达到保密的效果。 4. 鲍勃收信后，用私钥解密，就看到了信件内容。这里要强调的是，只要鲍勃的私钥不泄露，这封信就是安全的，即使落在别人手里，也无法解密。 5. 鲍勃给苏珊回信，决定采用&quot;数字签名&quot;。他写完后先用Hash函数，生成信件的摘要（digest）。 6. 然后，鲍勃使用私钥，对这个摘要加密，生成&quot;数字签名&quot;（signature）。 7. 鲍勃将这个签名，附在信件下面，一起发给苏珊。 8. 苏珊收信后，取下数字签名，用鲍勃的公钥解密，得到信件的摘要。由此证明，这封信确实是鲍勃发出的。 9. 苏珊再对信件本身使用Hash函数，将得到的结果，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。 10. 复杂的情况出现了。道格想欺骗苏珊，他偷偷使用了苏珊的电脑，用自己的公钥换走了鲍勃的公钥。此时，苏珊实际拥有的是道格的公钥，但是还以为这是鲍勃的公钥。因此，道格就可以冒充鲍勃，用自己的私钥做成&quot;数字签名&quot;，写信给苏珊，让苏珊用假的鲍勃公钥进行解密。 11. 后来，苏珊感觉不对劲，发现自己无法确定公钥是否真的属于鲍勃。她想到了一个办法，要求鲍勃去找&quot;证书中心&quot;（certificate authority，简称CA），为公钥做认证。证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成&quot;数字证书&quot;（Digital Certificate）。 12. 鲍勃拿到数字证书以后，就可以放心了。以后再给苏珊写信，只要在签名的同时，再附上数字证书就行了。 13. 苏珊收信后，用CA的公钥解开数字证书，就可以拿到鲍勃真实的公钥了，然后就能证明&quot;数字签名&quot;是否真的是鲍勃签的。 14. 下面，我们看一个应用&quot;数字证书&quot;的实例：https协议。这个协议主要用于网页加密。 15. 首先，客户端向服务器发出加密请求。 16.</div></div><div class="bookmark-href"><img src="http://www.ruanyifeng.com/favicon.ico" class="icon bookmark-icon"/>http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html</div></div><img src="http://www.ruanyifeng.com/blogimg/asset/201108/bg2011080902.png" class="bookmark-image"/></a></figure><p id="4c1f7c57-bff1-4cc3-99bc-e364c3cafadb" class="">在SSL/TLS中，CA用自己的私钥对服务器的公钥做数字签名</p><p id="1fa3c260-dcc5-4169-99ae-0782b0c65c28" class="">
+</p><h3 id="d699b4c5-6339-48e9-8c56-fed0c120a333" class="">HTTPS采用的加密方式？是对称还是非对称？</h3><p id="3ea3222e-649f-447a-b8fb-de06a78d5f70" class="">HTTPS 采用<span style="border-bottom:0.05em solid">混合的加密机制</span>，使用<strong>非对称密钥加密用于传输对称密钥来保证传输过程的安全性</strong>，之后使用<strong>对称密钥加密进行通信来保证通信过程的效率</strong>。</p><p id="334c1805-9407-42f1-b32d-b258138fd66b" class="">
+</p><h3 id="165b72c3-e500-40e9-8034-aee6b7bcf1ef" class="">为什么有时候刷新页面不需要重新建立SSL连接？</h3><p id="f1b9d94d-29a8-442a-9958-2d08b4ac1218" class="">TCP 连接有的时候会被浏览器和服务端维持一段时间，TCP 不需要重新建立，SSL 自然也会用之前的。</p><p id="029453dd-70fd-486f-9d3c-b89b45691409" class="">
+</p><p id="b5f4dc57-2bbb-4070-82d2-0d11fad34590" class="">
+</p><h2 id="6e11dd02-eaa4-4023-bd61-0642d3865ed6" class="">DNS</h2><h3 id="674e42e2-1787-4603-afc8-0b19646c2272" class="">DNS是什么？</h3><p id="ac35c8b4-e3b8-48c9-b560-2f75c3fb9334" class="">DNS, Domain Name System，域名系统。因特网上作为<strong>域名和IP地址相互映射</strong>的一个<strong>分布式数据库</strong>，能够使用户更方便地访问互联网，而不用去记住能够被机器直接读取的IP数串。</p><p id="e3c5cded-cf52-460b-816f-1060b64c4351" class="">我们更习惯于记住一个网站的名字，比如www.baidu.com，而不是他的ip如167.23.10.2</p><h3 id="af7fe616-c679-4307-ae56-ba6883b110bb" class="">⭐️DNS解析的流程？</h3><p id="4ffd6005-ac51-4028-9df4-584b8a80f6b5" class="">是<span style="border-bottom:0.05em solid">应用层协议</span>，使用<span style="border-bottom:0.05em solid">UDP传输</span>。</p><p id="be8d2bc1-6f30-49da-84cc-ce08b6d1f9ec" class="">浏览器缓存 → 系统缓存 → 路由器缓存 → IPS服务器缓存 → 根域名服务器缓存 → 顶级域名服务器缓存 → 主域名服务器缓存</p><p id="28b64bca-410b-485f-875a-0fcb774e4e5e" class="">注意两点：</p><ol id="5ae1dd18-19cf-4f90-82cd-0a88354cccf7" class="numbered-list" start="1"><li><strong>主机</strong>向<strong>本地域名服务器</strong>的查询一般采用<strong>递归查询</strong></li></ol><ol id="941ac685-d51b-40f3-9796-382537926e64" class="numbered-list" start="2"><li><strong>本地域名服务器</strong>向<strong>根域名服务器</strong>的查询一般采用<strong>迭代查询</strong></li></ol><p id="6e14041a-c9ff-4b52-87a6-36c79a76ae7d" class="">查询步骤：</p><ol id="88d3543a-a85e-4318-a7d9-00b125eb1657" class="numbered-list" start="1"><li>浏览器先在<strong>浏览器缓存</strong>找之前有没有缓存过的域名所对应的ip地址，如果有，直接跳过dns解析，如果没有，就去找硬盘的<strong>hosts文件</strong>中的ip，如果有，也跳过</li></ol><ol id="d5b67c2a-e9d8-4fdd-90a1-4831af055ba1" class="numbered-list" start="2"><li>浏览器发出dns请求到<strong>本地域名服务器</strong>，本地dns服务器一般都是你的网络接入服务器商提供，比如中国电信，中国移动等。</li></ol><ol id="3785f97c-0ff9-4180-a617-b78cb9526637" class="numbered-list" start="3"><li>本地域名服务器先查询自己的缓存记录，如果缓存中有此记录，直接返回结果，如果没有，则向<strong>根域名服务器</strong>查询</li></ol><ol id="91e5fde7-d82f-44eb-88de-56f32f37eefd" class="numbered-list" start="4"><li>根域名服务器告诉本地域名服务器，下一次应查询的<strong>顶级域名服务器</strong>的IP地址</li></ol><ol id="843a19c3-bb42-4ac6-9575-450b666124a3" class="numbered-list" start="5"><li>本地域名服务器去向顶级域名服务器查询</li></ol><ol id="916c1910-d523-49bc-b8c7-710345beeb84" class="numbered-list" start="6"><li>顶级域名服务器告诉本地域名服务器，下一次应查询的<strong>权威域名服务器</strong>的IP</li></ol><ol id="3beb0bbb-cc78-42d2-b725-ae0d8a9586a5" class="numbered-list" start="7"><li>本地域名服务器向权限域名服务器查询</li></ol><ol id="d94226f0-c1a7-4f49-affc-4e990b2354b1" class="numbered-list" start="8"><li>权限域名服务器告诉本地域名服务器，所查询的主机的IP地址</li></ol><ol id="29dae9ea-e16a-4796-905b-695cda1a0a91" class="numbered-list" start="9"><li>本地域名服务器把这个IP对应关系保存在缓存中，并返回给主机。</li></ol><figure id="3b4b934e-05d1-4991-84bb-0de2e5ee2def" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%203.png"><img style="width:1316px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%203.png"/></a></figure><p id="6536b7a5-35b9-46e5-b0c4-bc8bf25898a5" class="">
+</p><h3 id="fadba5e0-7443-42e9-a936-70e9abb46da7" class="">DNS查询方式有哪些？</h3><p id="07e74494-77c8-4f13-a151-4cd9bed2bc3b" class=""><strong>递归查询</strong>：</p><p id="6e04d9e4-6ffa-486f-8f45-dcd897933d5d" class="">当局部DNS服务器（例如根域名服务器）不能回答查询时，<strong>自己负责向其他DNS服务器查询</strong>，一般是先向根域名服务器查询，再一级级向下查询，最后得到的查询结果返回给局部DNS服务器，再由局部DNS服务器返回给客户端。</p><p id="2623d257-d542-4601-a9f1-0a232b890282" class=""><strong>迭代查询</strong>：</p><p id="63c4fa94-bbb8-49ac-96fb-e17a0c5f0e03" class="">当它不能回答时，不是自己去向其他服务器查询，而是<strong>把能解析该域名的其他DNS服务器的IP地址返回给客户端DNS程序</strong>，客户端DNS再继续向这些DNS服务器进行查询。”只指路，不引路“</p><p id="40422284-3cf6-4d29-8369-a6d826e7db1e" class="">
+</p><h3 id="3c2d8c1f-a8d4-473c-8abd-5656005cf377" class="">为什么DNS解析用UDP协议？DNS什么时候使用TCP协议？</h3><p id="d3e7f28c-3739-4f60-bf5e-37af4a0355e8" class="">因为UDP快，一般返回的内容也不会超过512字节，用UDP即可。</p><p id="8ab493a3-7028-4dcf-a6f6-b026f8b7dbe9" class="">DNS在进行区域传输的时候使用TCP协议，其它时候（域名解析时）则使用UDP协议。</p><p id="ae0cdd01-b184-4bc8-a5fe-98c8e3dc5dc0" class=""><strong>区域传送：</strong></p><p id="64cd879e-bdae-4bb7-b8a8-de8cf5226aff" class="">DNS的规范规定了两种类型的DNS服务器，一个叫主DNS服务器，一个叫辅助DNS服务器。在一个区中主DNS服务器从自己本机的数据文件中读取该区的DNS数据信息，而辅助DNS服务器则从区的主DNS服务器中读取该区的DNS数据信息。当一个辅助DNS服务器启动时，它需要<span style="border-bottom:0.05em solid">与主DNS服务器通信，并加载数据信息</span>，这就叫做区域传送（zone transfer），也即DNS主从复制。</p><p id="e9bd5fa2-ea0b-49b1-ab0d-807ab3827f07" class=""><strong>为什么区域传送要用TCP？</strong></p><p id="b9cbffe2-9980-4f8d-930f-b79c4bcedf78" class="">辅助域名服务器会定时（一般是3小时）向主域名服务器进行查询以便了解数据是否有变动。如有变动，则会执行一次区域传送，进行数据同步。区域传送将使用TCP而不是UDP，<span style="border-bottom:0.05em solid">因为数据同步传送的数据量比一个请求和应答的数据量要多得多，且需要保证数据的准确性</span>。</p><p id="c15e8786-a3d9-4058-a429-ca2a13852d76" class="">
+</p><h3 id="b29d4640-cc89-44cf-bcdd-b068240adcf2" class="">DNS负载均衡是什么策略？</h3><p id="b500cf26-50bf-457b-be74-4ed646ced177" class="">出现原因：当一个网站有足够多的用户的时候，假如每次请求的资源都位于同一台机器上面，那么这台机器随时可 能会崩掉。</p><p id="3d1c869e-2b39-4ac2-8fc7-2f0bb83b95ed" class="">原理：在<strong>DNS服务器中为同一个主机名配置多个IP 地址，在应答DNS查询时，DNS服务器对每个查询将以DNS文件中主机记录的IP地址按顺序返回不同的解析结果，将客户端的访问引导到不同的机器上去，使得不同的客户端访问不同的服务器</strong>，从而达到负载均衡的目的。例如可以根据每台机器的负载量，该机器离用户地理位置的距离等等。</p><p id="bc56ef6b-b79d-4397-9720-03342f83554f" class="">
+</p><p id="b05593c0-3cd4-426a-8505-e8d380019340" class="">
+</p><h3 id="4668e522-ceb6-4d4b-aaf7-a3f86f180bff" class="">DNS劫持是什么？</h3><p id="87fbfe82-ebc0-4de7-920e-226cab63d8f2" class="">DNS Hijacking。通过劫持了DNS服务器，通过某些手段取得某域名的解析记录控制权，进而修改此域名的解析结果，<strong>导致对该域名的访问由原IP地址转入到修改后的指定IP</strong>，其结果就是对特定的网址不能访问或访问的是假网址，从而实现窃取资料或者破坏原有正常服务的目的。<strong>DNS劫持通过篡改DNS服务器上的数据返回给用户一个错误的查询结果来实现的。</strong></p><p id="2635b9a6-7c29-43bb-b8db-46ab6c31960b" class="">
+</p><p id="1dcac3e0-45ed-4d7c-956c-107e764b8d42" class="">
+</p><p id="327f200e-0677-4887-a2fd-046f2967cfaf" class="">
+</p><p id="24edb26a-7be8-4285-8554-535ba5b49f45" class="">
+</p><p id="c6040948-0126-426f-8f97-5bb3a2f83220" class="">
+</p><p id="5f7a00c8-1bc1-4373-ae84-02585e7e4eb6" class="">
+</p><h2 id="d255db98-6b82-480b-bd40-194c0b82020d" class="">攻击</h2><h3 id="8cfcb7da-d7c1-45f7-ae83-843b68eabfef" class="">CSRF攻击？如何防范？</h3><p id="923b7d05-6400-4e82-86d6-d1e78d276318" class=""><strong>CSRF攻击</strong></p><p id="85deb358-acde-4087-8a29-719ed18ab54a" class=""><span style="border-bottom:0.05em solid">跨站点请求伪造</span>，指攻击者通过跨站请求，<span style="border-bottom:0.05em solid">以合法的用户的身份进行非法操作</span>。攻击者盗用你的身份，以你的名义向第三方网站发送恶意请求。CRSF能做的事情包括利用你的身份发邮件，发短信，进行交易转账，甚至盗取账号信息。</p><figure id="2a20928a-c3b6-4c86-9be1-0c7726dde30b" class="image"><a href="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%207.png"><img style="width:640px" src="%E5%BA%94%E7%94%A8%E5%B1%82%2058a00bb70e4d485ba9a6116ef5434819/Untitled%207.png"/></a></figure><p id="429d1d24-57ce-4e16-a73d-8d7153ce207e" class=""><strong>如何防范CSRF攻击？</strong></p><ul id="6cfa2a24-f46c-448d-a567-c9f15fdca665" class="bulleted-list"><li>token机制：在请求地址添加token并验证</li></ul><ul id="1bd48318-c5ab-4304-80c6-ae8b57d2b844" class="bulleted-list"><li>验证码：关键操作添加验证码</li></ul><ul id="8a48cbec-10dc-4e7e-ae5f-a4f85144d126" class="bulleted-list"><li>referer识别：验证请求来源地址。意思是，只接受本站的请求，服务器才做响应；如果不是，就拦截。</li></ul><p id="acb8f422-9dd3-4456-be84-170c17777345" class="">
+</p><h3 id="b2cca9ff-39f0-4222-8445-e11612c94f29" class="">XSS攻击？如何防范？</h3><p id="77932170-4f74-41e0-932b-899d805fc78b" class=""><strong>XSS攻击</strong></p><p id="4a53856b-2ff4-4801-a4b9-6b67d6738ef9" class=""><span style="border-bottom:0.05em solid">跨站点脚本攻击</span>，指攻击者通过<span style="border-bottom:0.05em solid">篡改网页，嵌入恶意脚本程序，在用户浏览网页时，控制用户浏览器进行恶意操作</span>的一种攻击方式。</p><p id="dbd7ec1a-a1b8-47c6-8d72-bcf05c971baf" class=""><strong>如何防范XSS攻击？</strong></p><p id="67daf9f1-045a-4e37-b6e4-5e231bbec127" class="">encode+过滤。</p><ul id="f89538f5-4c2d-4962-853b-40fa02580acc" class="bulleted-list"><li>前端、服务端，同时需要字符串输入的长度限制</li></ul><ul id="9d040a53-fe71-43aa-b1c8-fd88d5a2254d" class="bulleted-list"><li>前端、服务端，同时需要对HTML转义处理。将其中的&quot;&lt;&quot;,&quot;&gt;&quot;等特殊字符进行转义编码</li></ul><ul id="c9da27aa-71fd-4906-b938-6e3c20482fa7" class="bulleted-list"><li>过滤：移除用户输入的和事件相关的属性。如onerror可以自动触发攻击，还有onclick等。（总而言是，过滤掉一些不安全的内容）移除用户输入的Style节点、Script节点、Iframe节点。（尤其是Script节点，它可是支持跨域的呀，一定要移除）。</li></ul><p id="8e6c7217-c85b-4dcd-b347-65737c441ea6" class="">
+</p><p id="bc780641-2125-4a68-a855-031e86e9049d" class="">
+</p><p id="8f2ea5a9-2160-4083-a6b4-8a1f33635c20" class="">
+</p><h3 id="9fc27084-3366-4a1c-af77-9749cd854b3a" class="">文件上传漏洞是什么？如何防范？</h3><p id="e875a1e7-6d29-4c12-9835-b6e6de05e996" class=""><strong>文件上传漏洞</strong></p><p id="bef0bc00-14fb-440b-a8ce-7ed63104cb9b" class="">指的是用户上传一个可执行的脚本文件，并通过此脚本文件获得了执行服务端命令的能 力。</p><p id="76799f2b-eb63-403b-a5d1-31a6db82559b" class=""><strong>如何防范？</strong></p><p id="a36be7aa-73f3-4733-8f9f-5f7321bcf1bb" class="">文件上传的目录设置为不可执行。</p><ul id="5e33bfdc-aa8f-46d2-8717-45adaf05004b" class="bulleted-list"><li>判断文件类型。在判断文件类型的时候，可以结合使用MIME Type，后缀检查等方式。因为对于上传文件，不能简单地通过后缀名称来判断文件的类型，因为攻击者可以将可执行文件的后缀名称改为图片或其他后缀类型，诱导用户执行。</li></ul><ul id="0cb3c7fb-c390-4b10-93bc-0591a00b9bc2" class="bulleted-list"><li>对上传的文件类型进行白名单校验，只允许上传可靠类型。</li></ul><ul id="7f8693e9-199a-4b6f-b958-9969f929e61b" class="bulleted-list"><li>上传的文件需要进行重新命名，使攻击者无法猜想上传文件的访问路径，将极大地增加攻击成本，同时向shell.php.rar.ara这种文件，因为重命名而无法成功实施攻击。</li></ul><ul id="04a2f7ea-c263-490f-a294-a62c5018407c" class="bulleted-list"><li>限制上传文件的大小。</li></ul><ul id="e07d5181-e72d-49f1-9a37-1ca927f84587" class="bulleted-list"><li>单独设置文件服务器的域名。</li></ul><p id="054f7bae-3726-4e65-9579-043be9896bf5" class="">
+</p><p id="ff9da68c-eb06-48a8-a088-9529e347c143" class="">
+</p><h3 id="75d2c13a-5bfb-4064-ae8a-7dd0452cbc22" class="">域名劫持和域名投毒是什么？</h3><p id="411a194d-28ae-49bf-b061-08d939c25c5f" class="">
+</p><p id="f5242a3f-aef3-46b4-a02e-eba3c033101e" class="">
+</p><h3 id="39d3c38e-41dc-4eaa-a957-df5da3032de8" class="">⭐️❓简述DDos攻击原理，如何防范？</h3><p id="58e942cc-f9e6-4fc1-a81b-e45562902f64" class="">黑客入侵并控制很多台机器，让他们一起攻击某一台服务器，比如发送大量的SYN包，因此SYN攻击就属于ddos攻击。</p><p id="f234f635-adc3-418d-98bb-646c16c36323" class="">
+</p><h3 id="56cf46a6-6ee0-4540-b3f8-75a34fd6a1ae" class="">❓简述 JWT 的原理和校验机制</h3><p id="a62ac609-42be-4b6e-ac5b-403e35c9e8a4" class="">
+</p><p id="144eea58-b5aa-4e57-b85a-bb1394960953" class="">
+</p><h3 id="016f1f5a-c59e-482a-b5c5-0eb5ade833b8" class="">什么是中间人攻击？如何防止攻击？</h3><p id="9437a479-d051-4797-9e98-72960bd44e9f" class=""><strong>信息篡改</strong></p><p id="410f4249-7ad0-433b-b3c4-79bc84478e69" class="">当主机A、和主机B通信时，都由主机C来为其“转发”。</p><p id="c67dd0f3-0478-44fa-85e1-fb7282688ed1" class=""><strong>信息窃取</strong></p><p id="611a44a7-5eae-4b28-a929-d3466429939c" class="">当A、B通信时，C不主动去为其“转发”，只是把他们的传输的数据备份，以获取用户网络的活动，包括账户、密码等敏感信息，这时被动攻击也是非常难被发现的。</p></div></article></body></html>

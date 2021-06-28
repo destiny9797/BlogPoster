@@ -18,7 +18,7 @@ public:
 
     void init();
 
-    void setStatus(const std::string& method, const std::string &url);
+    void setStatus(int code, const std::string &url);
 
     void setResponse(Buffer& buffer);
 

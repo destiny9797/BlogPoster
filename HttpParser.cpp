@@ -3,11 +3,15 @@
 //
 
 #include "HttpParser.h"
+
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
 #include <algorithm>
 #include <assert.h>
+
+//#include <mysqlx/xdevapi.h>
+
 
 HttpParser::HttpParser()
     : checkState(CHECK_STATE_REQUESTLINE),
@@ -32,6 +36,14 @@ void HttpParser::init() {
     keepalive = false;
 }
 
+void HttpParser::parseUrl(std::string &url) {
+    if (url == "/" || url == "/For"){
+        url = "/ohohoh 998069b3e639400cb81e32dbaa4fee17.html";
+    }
+    else{
+        urldecode(&*url.begin(), &*url.begin());
+    }
+}
 
 //分析请求行
 bool HttpParser::parseRequseline(std::string& line){
@@ -43,6 +55,7 @@ bool HttpParser::parseRequseline(std::string& line){
         return false;
     }
 
+    parseUrl(url);
     checkState = CHECK_STATE_HEADER;
     return true;
 }
@@ -113,5 +126,52 @@ HTTP_CODE HttpParser::parseContent(Buffer& buffer){
 
 
 }
+
+void HttpParser::urldecode(char *dst, const char *src) {
+    char a, b;
+    while (*src) {
+        if ((*src == '%') &&
+            ((a = src[1]) && (b = src[2])) &&
+            (isxdigit(a) && isxdigit(b))) {
+            if (a >= 'a')
+                a -= 'a'-'A';
+            if (a >= 'A')
+                a -= ('A' - 10);
+            else
+                a -= '0';
+            if (b >= 'a')
+                b -= 'a'-'A';
+            if (b >= 'A')
+                b -= ('A' - 10);
+            else
+                b -= '0';
+            *dst++ = 16*a+b;
+            src+=3;
+        } else if (*src == '+') {
+            *dst++ = ' ';
+            src++;
+        } else {
+            *dst++ = *src++;
+        }
+    }
+    *dst++ = '\0';
+}
+
+//void HttpParser::parsePost() {
+//    if (url=="/login.html"){
+//        int posbegin = body.find("username=") + 9;
+//        int posend = body.find_first_of('&');
+//        std::string username = body.substr(posbegin,posend);
+//        posbegin = body.find("password=") + 9;
+//        posend = body.size();
+//        std::string password = body.substr(posbegin,posend);
+//        spSqlconn conn = MysqlConnPool::getInstance().getSqlconn();
+//        mysqlx::Schema db = conn->getSchema("webserver");
+//        mysqlx::Table table = db.getTable("user");
+//
+//        table.select("username", "password").where("username= :username").bind("username",username).execute();
+//    }
+//
+//}
 
 

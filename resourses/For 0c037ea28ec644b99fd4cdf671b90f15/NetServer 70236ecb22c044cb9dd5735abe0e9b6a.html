@@ -1,0 +1,640 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>NetServer</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="70236ecb-22c0-44cb-9dd5-735abe0e9b6a" class="page sans"><header><h1 class="page-title">NetServer</h1></header><div class="page-body"><hr id="e0458775-e5da-423e-9189-b9cc8855e5bf"/><p id="69a5857b-64b7-472b-b5b1-f2361bb31e67" class="">
+</p><p id="5715cfb5-2a1e-4edc-a405-d83a47d80f84" class="">
+</p><p id="bb0542f2-bd2a-4cf4-b55d-1d3305bf09c9" class="">
+</p><p id="7621b75a-1693-44a5-af05-f3f58eaab41c" class="">HttpServer类</p><p id="4dce7570-396f-4120-9959-8560e53ad38e" class="">定义了处理连接的函数、处理消息的函数、处理发送的函数、处理关闭的函数、处理错误的函数</p><p id="e14c9051-be21-4d72-bd0f-36bbb9e1d641" class="">工作线程池 threadpool ，启动线程池，即创建n个线程加入threadlist，至于在哪里join还不知道，线程执行 <code>task()</code> </p><p id="d6df94bd-bee9-49fe-9f4c-fe2fb36355c4" class="">TCP服务器 tcpserver_，并用五个处理函数对其进行设置——回调函数</p><p id="6bb7b2bc-cd9b-4c9d-89b6-70e01075af61" class="">
+</p><p id="2fc46f26-df85-4003-a5d9-e5cd04290197" class="">TcpServer类</p><p id="e0cfe889-9c27-4ce3-85ff-64d539d86a37" class="">定义了几个核心功能：新TCP连接处理、连接清理、连接错误的函数</p><p id="95de8db9-611a-411f-8333-b6452d215c8d" class="">服务器socket：serversocket_，对其进行设置</p><p id="16bcfd75-86d9-4930-b70d-e92e2abe4dad" class="">服务器事件：serverchannel_，对其进行设置——回调函数</p><p id="b116fbac-4edf-4220-8145-45e388dad214" class="">IO线程池：eventloopthreadpool，创建线程，加入threadlist，线程执行 <code>loop_→loop()</code> </p><p id="780258e9-959f-4fcc-be3d-6ac3405e0e9e" class="">主loop：不知道干啥的</p><p id="aa0d4b15-6d59-4236-8af8-667348085cd0" class="">
+</p><p id="8a018112-5f66-4078-b85c-9482a3ef0012" class="">Poller类：</p><p id="03f7a837-2cf7-4703-89f1-24c872863232" class="">eventlist用于传给epoll_wait函数，会将事件存在其中。根据线程间通信，获取eventlist[i].data.ptr就可以获得A线程中的某个啥啥channel的地址，就可以获得fd，进行比对，就可以为channel设置event，再把event加到activechannel中，在loop中对每个channel进行事件处理。</p><figure id="0f1f0c68-53ef-4908-9475-c160e3d6048b"><a href="https://www.dazhuanlan.com/2019/12/09/5dedf96a76470/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://www.dazhuanlan.com/2019/12/09/5dedf96a76470/</div></div></a></figure><p id="76a4919d-36cb-41f1-9dea-6aef4e0f19ca" class="">
+</p><p id="c9960208-c8f8-4a72-926f-d8a4c0f8d961" class="">Channel类：</p><p id="5f948b4e-d046-4999-8d55-c7d3c62bf062" class="">其它类中用到了几种channel：</p><p id="327202cb-3c1e-4fff-8274-fe9c004ef1f9" class="">tcpserver中有serverchannel对象、</p><p id="6813ee9b-1e27-4490-8f13-0c4e9478475a" class="">eventloop中有wakeupchannel对象 —— 这意味着每个IO线程都有一个wakeupchannel对象？</p><p id="c1e1c3c3-7f8d-438d-a2b8-f00e6d9d943b" class="">
+</p><p id="660c47e6-1654-4f28-baff-8d99c5e5c48f" class="">线程池：</p><p id="3e51113d-8008-465e-8edf-fc11af69f1b9" class="">预先创建指定个数的线程，如果有新的需求（如新连接），则从线程池中取一个空闲的线程给它。</p><p id="87f6aefd-169c-4a64-a6bb-68dabd489429" class="">
+</p><p id="41ff1014-5730-4bc2-91f9-ceae7edf1d0f" class="">join在哪<div class="indented"><p id="242f305b-8e5d-4deb-82d9-19fc61ae4738" class="">eventloopthread 的析构函数中</p><p id="c012afa5-eed0-414a-8b80-5a89f5d61374" class="">ThreadPool 的析构函数中</p><p id="2180d86c-80f9-4e11-93a4-1ddf1ca5e0f7" class="">TimerManager 的Stop()函数中</p><p id="d2e2c686-582a-4c5b-abda-38e4ca8722a6" class=""><strong><em>join是用于回收线程的</em></strong></p></div></p><p id="aea9e7fe-02cd-4008-9488-f6563380b4ca" class="">暂时的理解：<div class="indented"><p id="9820791f-cf0e-4454-bc68-9eab3cb1faf7" class="">main中先有一个主loop，这个主loop用于后面在tcpserver中将serverchannel添加到poller中。此外，每个loop中会有一个wakeupchannel，与serverchannel一同添加到poller中。</p><p id="c8e91683-fb34-4cc1-ac20-872505bff8bb" class="">然后构造一个httpserver对象，启动工作线程池，每个线程不断检测taskqueue并执行。task是加到线程池的queue中的，线程从queue中取任务执行</p><p id="0abdb627-06ea-4c02-afbf-feb1bfdfb200" class="">构造tcpserver对象，启动IO线程池，IO线程中会执行 <code>loop-&gt;loop()</code> ,每次有新连接，就获取一个IO线程，创建一个tcpconnection，在成员channel中注册事件执行函数，将channel添加到任务队列，之后在epoll中获得事件之后会setevent，然后在loop()中会执行任务</p><p id="8de479bd-a0c0-4ee2-91d1-460530c11046" class="">
+</p><p id="1e4b1983-5ada-4632-881a-913e943a2e60" class="">整个程序应该都是服务端的，所以tcpconnection应该也是服务端的fd</p></div></p><p id="2c05f2fd-2646-4327-b935-c74100936e39" class="">
+</p><figure id="a1dd379b-c18a-4b78-bd97-e9843cfd3610"><a href="https://www.cnblogs.com/burningTheStar/p/7064193.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">关于eventfd,epoll,线程间通信小记</div><div class="bookmark-description">先介绍eventfd 使用这个函数来创建一个事件对象，linux线程间通信为了提高效率，大多使用异步通信，采用事件监听和回调函数的方式来实现高效的任务处理方式（虽然会将逻辑变得复杂）。 linux内核会为这个事件对象维护一个64位的计数器(uint64_t).并在初始化时用传进去的initval来初始化这个计数器，然后返回一个文件描述符来代表这个事件对象。 ...</div></div><div class="bookmark-href"><img src="https://www.cnblogs.com/favicon.ico" class="icon bookmark-icon"/>https://www.cnblogs.com/burningTheStar/p/7064193.html</div></div></a></figure><p id="d6a855a3-54d1-49b8-b04d-b97bd4d39db4" class="">
+</p><p id="feb882ce-c72b-4553-a419-3716a593ea4f" class="">
+</p><p id="27f4b942-c312-4108-8185-d886f4e7561b" class="">注意⚠️：</p><ul id="7a93eee1-5de2-4e29-985d-ff545d673af4" class="bulleted-list"><li>不要将一个普通指针用智能指针返回，否则智能指针在某个地方自动销毁，会将指针指向的内容析构。</li></ul></div></article></body></html>

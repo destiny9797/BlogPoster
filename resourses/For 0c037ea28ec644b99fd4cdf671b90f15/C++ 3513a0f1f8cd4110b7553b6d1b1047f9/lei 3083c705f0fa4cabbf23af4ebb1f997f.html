@@ -1,0 +1,774 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>lei</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3083c705-f0fa-4cab-bf23-af4ebb1f997f" class="page sans"><header><h1 class="page-title">lei</h1></header><div class="page-body"><hr id="930eb56b-0827-48d4-82e7-4d9fb0ed0b0b"/><p id="4edc2aa7-efd6-4850-9105-27505dce8b5f" class="">
+</p><p id="620f470c-7354-4b91-897c-1ecf7fb1cbf6" class="">
+</p><nav id="50c2f6ec-ea19-480f-8daa-d9b6f1e94e25" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b6ca0d6c-b7f3-4ea2-b3a2-23c38d034351">面向对象的三大特性？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#398c9d2f-ae79-466c-b203-19af4d15ae33">继承</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#24768e66-f185-4e8f-8191-c0ad8996b21c">重载、重写（覆盖）和隐藏的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1c15cc09-96cc-4feb-a2af-75334075ce8b">什么是类的继承？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#47c212e3-db45-450f-90cd-c86568d4058f">public、protected、private访问权限？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1eac1691-588b-4fb6-89f2-9fd24ff92b75">public、protected、private指定继承方式？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a0f3aefc-92b7-4f54-b798-45296e62d4cb">final和override关键字？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#071e1763-5a76-4540-ba19-8b359f3bbb8b">什么是菱形继承？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d365ec72-8803-41ec-a7cf-a514a7f6b8b6">什么是虚拟继承？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#996c4d0b-bb89-4c33-b7e8-b35331aa4ecf">多继承的优缺点？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4fa6969d-9888-40c8-b1c8-f4bf228fa4f8">构造</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#008b9361-13e5-4fc3-a985-dbaccdcb56e2">有哪几种构造函数？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4235541f-c3fa-4263-bcd6-b2fe93cbd640">构造函数的几种关键字？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9356065a-489b-4a80-8271-c7ca7ea6dad8">什么时候会调用拷贝构造函数？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#159d6542-6663-4827-954c-201255101e51">拷贝构造函数和赋值运算符的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fade0e03-eec2-41d1-8ec9-10e65e625b73">为什么拷贝构造函数必须传引用不能传值？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e0236279-8f57-4407-a704-6b89f53adec8">什么是直接初始化？什么是拷贝初始化？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#eba6f13b-12ef-4161-8169-defdece207ac">什么时候会调用转换构造函数</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3de99502-bdf1-4ceb-98b5-43ca2ead065f">移动构造函数？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#13a294d3-3df6-4fb0-b81e-811aeeadd790">类成员初始化方式有哪些？有何区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2db9c72f-0748-4a0f-a785-6c99036ed94a">什么时候必须使用成员初始化？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9a6fcb5-16eb-40ae-8f64-d1774b4d1450">什么时候合成构造函数？（non-trival）</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bdb2ba24-ffae-47fd-a9c5-f060bc603bf5">什么时候会合成拷贝构造函数呢？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3a6306fe-86e3-46e1-a40a-cd681cf27b1c">如果有一个空类，会默认添加哪些函数？（trival）</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1ba47aed-2313-4732-ad11-8fa5d5b178b2">构造函数的执行顺序？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9764ce46-0f64-4588-9193-ff2753b2cbb5">析构函数的执行顺序？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#485828f4-3627-4c8d-a155-40b35c78112d">析构函数的作用？什么时候会析构？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ecd52e7d-fc49-476b-8661-66468a007a58">构造函数、析构函数、虚函数可否声明为内联函数？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ffad0021-e9bb-4fd8-b870-385a2680c31b">构造函数和析构函数可否抛出异常？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#883df1e7-7c85-4706-8ef3-7753bddb61ae">多态</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c543aea7-41c2-440f-b859-1f7999640690">什么是多态？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3f7674c0-d6bb-425c-9b24-9ede6ff2ef23">多态如何实现？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ddce35d4-02e6-47a8-9f12-9ef3d2d1ae04">虚表、虚表指针是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#48bf66e6-1175-4049-88b1-5e101cb0af66">基类的虚函数表存放在内存的什么区？虚表指针vptr的初始化时间？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5d6f5fe9-4248-4de0-8bdf-0b0b09d01112">构造函数能否声明为虚函数或纯虚函数？析构函数呢？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#95be3857-bad8-4a3c-8cc8-f0a3e89e80f9">构造函数和析构函数可以调用虚函数吗？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#753f3eaa-3190-4d76-897d-b3bbc0b7aa2b">哪些函数不能是虚函数？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#18e21120-8f05-4b47-980a-dead38f221d2">其它</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#731277e0-8211-482c-8af6-f78b5ae99113">内联函数和宏定义的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#37c0b978-e552-4647-a120-1fe38fdc2e82">为什么友元函数必须在类内部声明？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d8c001aa-1f2d-4b0a-9d24-85e8eb545646">this指针？90、91</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3cdde020-8e6a-49e5-afba-656221a26381">类如何实现只能静态分配和只能动态分配？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c9d586d7-2bc7-4d4e-b854-addcac855f1f">组合是什么？与继承相比有什么优缺点？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d54a664b-7854-46db-8d2d-b01b581b2e07">静态成员与普通成员的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fe9617a9-169f-4647-8f9a-b4ef2c02247d">在成员函数中调用delete this会出现什么问题？对象还可以使用吗？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2838c4e1-45de-45bd-85a0-83707a3a099b">空类的大小是多少？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a144b37e-ed61-4085-9c80-108d00077e5e">在成员函数里 <code>memset(this,0,sizeof(*this))</code> 会怎样？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26600243-f498-4828-8bb9-e110761898a2">如何组织一个类被实例化？</a></div></nav><p id="49f4dec7-e18d-4680-a989-70e7dc657e41" class="">
+</p><p id="531843a6-edad-410e-af42-870fe09d413e" class="">
+</p><p id="aa7b76bc-b848-4a88-8df6-4730af5793be" class="">
+</p><p id="2599b586-a6d2-4c53-b195-35f292805b1c" class="">
+</p><h3 id="b6ca0d6c-b7f3-4ea2-b3a2-23c38d034351" class="">面向对象的三大特性？</h3><p id="8240f236-da4c-4a2c-9ed1-6a6647293083" class="">继承、封装、多态。</p><ol id="91b218b1-9e8f-4b39-bd7b-1eb6977c3f32" class="numbered-list" start="1"><li>继承<p id="4f91c371-63ed-41b8-8adc-cac0067fca82" class="">一个类继承了另一个类的属性和方法，这个新的类包含了上一个类的属性和方法。</p><p id="c335f85b-a482-42d1-b16d-d386f2e63e47" class="">它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。</p><p id="8a0bd316-4c09-4c3b-9fb2-fbc4d189ebf5" class="">例如：将人定义为一个抽象类，拥有姓名、性别、年龄等公共属性，吃饭、睡觉、走路等公共方法，在定义一个具体的人时，就可以继承这个抽象类，既保留了公共属性和方法，也可以在此基础上扩展跳舞、唱歌等特有方法。</p><p id="fad40e97-8ff5-448a-bceb-343c14a860ed" class="">
+</p></li></ol><ol id="88b5bf74-f46f-4326-8cc2-f44af7f879f3" class="numbered-list" start="2"><li>封装<p id="1d5d31b3-324b-41f1-b997-a10b73654d32" class="">数据和代码捆绑在一起，避免外界干扰和不确定性访问。</p><p id="eddfcc6c-3dbd-4df0-ad79-46de467ef0e6" class="">封装，也就是<strong>把客观事物封装成抽象的类</strong>，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。</p><p id="5ea5025f-f21a-4988-a30a-1bdbfe842ef3" class="">例如：将公共的数据或方法使用public修饰，而不希望被访问的数据或方法采用private修饰。</p></li></ol><ol id="212497cc-65ef-4685-af16-bc836eadab0c" class="numbered-list" start="3"><li>多态<p id="e48ab0c1-f4c8-4914-a132-f25a5f07059c" class="">同一事物表现出不同事物的能力，即向不同对象发送同一消息，不同的对象在接收时会产生不同的行为<strong>(重载实现编译时多态，虚函数实现运行时多态)</strong>。</p><p id="e05489ff-9b7c-4f09-9ff6-f8d87e573a0f" class="">允许将子类类型的指针赋值给父类类型的指针，在调用某个成员函数时，根据不同的子对象以不同的方式运作。</p><p id="f5fce1a7-0ff4-4d13-b393-ae962108835b" class="">
+</p></li></ol><h2 id="398c9d2f-ae79-466c-b203-19af4d15ae33" class="">继承</h2><h3 id="24768e66-f185-4e8f-8191-c0ad8996b21c" class="">重载、重写（覆盖）和隐藏的区别？</h3><ul id="ce6cef1d-2821-4d32-9aec-f7a82a0889b2" class="bulleted-list"><li><strong>重载（overload）</strong><p id="cfd24421-2d24-45a9-a685-6f078620b58e" class="">在<strong>同一范围</strong>定义中的<strong>同名成员函数</strong>才存在重载关系。主要特点是函数名相同，参数类型和数目有所不同，不能出现参数个数和类型均相同，仅仅依靠返回值不同来区分的函数。重载和函数成员是否是虚函数无关。</p></li></ul><ul id="5e7f436a-a90b-40b8-a01b-855ccbdb9025" class="bulleted-list"><li><strong>重写（覆盖）（override）</strong><p id="7d3b3e33-623e-4876-a987-e5f99ef598b1" class="">重写指的是在<strong>派生类中覆盖基类中的同名函数</strong>，重写就是重写函数体，<strong>要求基类函数必须是虚函数</strong>且（除了实现细节，其余完全相同）：</p><ul id="36b8291c-0527-45d2-8b9d-9ad992aa2177" class="bulleted-list"><li>与基类的虚函数有相同的参数个数</li></ul><ul id="274974a2-f43c-4cf0-a79e-3c1d196d0d93" class="bulleted-list"><li>与基类的虚函数有相同的参数类型</li></ul><ul id="f30b9901-130a-4206-9c18-723abb9a91f5" class="bulleted-list"><li>与基类的虚函数有相同的返回值类型</li></ul></li></ul><ul id="8009cfd1-f668-4b6e-b7e6-1fe31c278708" class="bulleted-list"><li><strong>隐藏（hide）</strong><p id="c35035cd-20a1-418c-8b36-56fbbb1ef165" class="">某些情况下，<strong>派生类中的函数屏蔽了基类中的同名函数</strong>，包括以下情况：</p><ul id="00e1b905-1afe-4ec1-b2ce-6f597e15deab" class="bulleted-list"><li>两个函数参数相同，但是基类函数不是虚函数。<strong>和重写的区别在于基类函数是否是虚函数。</strong></li></ul><ul id="93648296-e756-42df-8cae-461196d99576" class="bulleted-list"><li>两个函数参数不同，无论基类函数是不是虚函数，都会被隐藏。<strong>和重载的区别在于两个函数不在同一个类中。</strong></li></ul></li></ul><p id="f92691f3-7db2-47e8-b641-675eaa6a74dd" class=""><strong>重载和重写的区别：</strong></p><ol id="6a24ff5e-4909-496d-a4de-9e8ed02d4417" class="numbered-list" start="1"><li>函数重写是子类和父类之间的继承关系，是垂直关系；方法的重载是同一个类中方法之间的关系，是水平关系；</li></ol><ol id="ab0be6ab-3734-4cf3-ae67-e2e1b15c644d" class="numbered-list" start="2"><li>重写需要子类和父类中的两个函数的函数原型完全相同；重载要求两个函数参数列表不同；</li></ol><ol id="93acbc76-5757-470f-b619-dbd6e7fd69b1" class="numbered-list" start="3"><li>在重写关系中，调用具体调用哪一个函数是根据（对象对应存储空间的实际类型）为准的，这涉及到动态绑定和静态绑定的问题，也就是虚函数的调用机制，而函数重载主要是靠形参列表的不同来区分具体调用哪个函数的</li></ol><p id="2b00bfb4-62c9-4cae-80fb-5e14d29cd3c8" class=""><strong>重载和隐藏的区别：</strong><div class="indented"><p id="a2e17c0c-3153-4b9a-9afa-750ca66b2fb2" class="">重载两个函数在同一个类中，隐藏两个函数在不同类中。</p></div></p><p id="5a46eb63-689a-4470-9a8f-23896500c2ac" class=""><strong>重写和隐藏的区别：</strong><div class="indented"><p id="02a30425-7c2a-46ea-a571-53021cb55ccd" class="">重写的基类函数是虚函数，隐藏不是。</p></div></p><p id="93d3147c-a95b-4fb6-afb1-169570b8641a" class="">
+</p><p id="9e3cee60-4402-42db-955e-18d591f6379f" class="">
+</p><h3 id="1c15cc09-96cc-4feb-a2af-75334075ce8b" class="">什么是类的继承？</h3><p id="ba6ccb45-6a37-4983-81e0-edec8f336455" class=""><strong>定义：</strong></p><p id="41795ecc-5988-4369-9ca2-25f37158d87d" class="">所谓的继承就是一个类继承了另一个类的属性和方法，这个新的类包含了上一个类的属性和方法，被称为子类或者派生类，被继承的类称为父类或者基类</p><p id="084233e3-690e-4fdd-9e07-228e2f622325" class=""><strong>特点：</strong></p><ul id="1f8fb89a-e6bb-4ee6-be19-7f03c37dd3a8" class="bulleted-list"><li>子类拥有父类的所有属性和方法</li></ul><ul id="a9bd0863-ebce-4156-bbca-91d662e7792a" class="bulleted-list"><li>子类可以拥有父类没有的属性和方法</li></ul><ul id="67506425-c331-4259-b2bf-0b19bfa774d5" class="bulleted-list"><li>子类对象可以当做父类对象使用</li></ul><p id="b4c82042-63b2-43c5-9ada-c111c4629305" class=""><strong>访问控制：</strong></p><p id="5d13cc1a-2eb5-493a-98fc-ab7c3969debe" class="">public、protected、private</p><p id="b5189863-58e0-481e-87a1-f24cf106cad5" class="">
+</p><h3 id="47c212e3-db45-450f-90cd-c86568d4058f" class="">public、protected、private访问权限？</h3><p id="4db81c25-9d10-4f9d-afc1-024af1466647" class="">public的变量和函数在类的内部外部都可以访问。 </p><p id="b9335d60-3f16-457d-bc84-ad2de51567d6" class="">protected的变量和函数只能在类的内部和其派生类中访问。 </p><p id="d904e3c0-d310-47dd-a7ad-0bdb088ad0ad" class="">private修饰的元素只能在类内访问。</p><p id="fc6fbbb5-c7eb-4836-bf28-763f82f155ed" class="">
+</p><h3 id="1eac1691-588b-4fb6-89f2-9fd24ff92b75" class="">public、protected、private指定继承方式？</h3><p id="d8cec98d-11b7-4f04-97ea-8053c9b40465" class=""><strong>1) public继承方式</strong></p><ul id="4fabf420-ad9a-4822-9d30-fa1cfc1f7b5e" class="bulleted-list"><li>基类中所有 public 成员在派生类中为 public 属性；</li></ul><ul id="61561817-f109-4b03-9bbc-90a2fcc52092" class="bulleted-list"><li>基类中所有 protected 成员在派生类中为 protected 属性；</li></ul><ul id="da46a9ee-45a0-41c6-8683-8d9de9cc014f" class="bulleted-list"><li>基类中所有 private 成员在派生类中不能使用。</li></ul><p id="cdcea657-9112-440f-8aea-9c59485ad1ab" class=""><strong>2) protected继承方式</strong></p><ul id="5c83bb12-7497-40e6-b933-67d0e8697278" class="bulleted-list"><li>基类中的所有 public 成员在派生类中为 protected 属性；</li></ul><ul id="62d14ddc-e977-4a0c-a970-900e9409453c" class="bulleted-list"><li>基类中的所有 protected 成员在派生类中为 protected 属性；</li></ul><ul id="3af2feb5-126a-47c5-861e-e256d60b8a5a" class="bulleted-list"><li>基类中的所有 private 成员在派生类中不能使用。</li></ul><p id="ba351c2f-7ee2-48d5-b5f9-b88dd3d5c859" class=""><strong>3) private继承方式</strong></p><ul id="39a49eb6-e1ef-4335-8772-11ba296331ce" class="bulleted-list"><li>基类中的所有 public 成员在派生类中均为 private 属性；</li></ul><ul id="a8a244f1-7805-4212-993f-b1f13874cfef" class="bulleted-list"><li>基类中的所有 protected 成员在派生类中均为 private 属性；</li></ul><ul id="bb2d6b92-8397-4901-82c1-43bfddeb2447" class="bulleted-list"><li>基类中的所有 private 成员在派生类中不能使用。</li></ul><figure id="cc0e5ab5-9a80-47ea-be2a-ccace53bff6e" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled.png"><img style="width:384px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled.png"/></a></figure><figure id="8d5bca33-2f4c-4559-89bc-495c3e8b9374" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%201.png"><img style="width:1226px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%201.png"/></a></figure><p id="48c149a7-0aa2-41e5-a282-01796797ce60" class="">
+</p><h3 id="a0f3aefc-92b7-4f54-b798-45296e62d4cb" class="">final和override关键字？</h3><p id="96f23b61-7f7d-4ca9-aa31-789d4e847033" class=""><strong>final</strong></p><p id="810149ad-e6c1-41c2-b338-124b7ff03423" class="">当不希望某个类被继承，或不希望某个虚函数被重写，可以在类名和虚函数后添加final关键字，添加 final关键字后被继承或重写，编译器会报错。</p><p id="cd2218bc-789d-438c-82e0-e9c1c322eb24" class=""><strong>override</strong></p><p id="39f986e6-1e29-4c44-9c0e-d699ad836155" class="">在对某个虚函数重写时，可以在后面加上override，也可以不加。</p><p id="c5cdd716-98fc-4138-9e56-cb11970955d9" class="">如果不使用override，当你手一抖，将foo()写成了f00()会怎么样呢?结果是编译器并不会报错，因为它并不知道你的目的是重写虚函数，而是把它当成了新的函数。如果这个虚函数很重要的话，那就会对 整个程序不利。所以，override的作用就出来了，它指定了子类的这个虚函数是重写的父类的，如果你 名字不小心打错了的话，编译器是不会编译通过的:</p><p id="d65ab0fc-b32a-45b6-b580-1eb270f824bf" class="">
+</p><h3 id="071e1763-5a76-4540-ba19-8b359f3bbb8b" class="">什么是菱形继承？</h3><p id="76453648-f9f6-4a5b-ae35-6463e2c66420" class="">如果没有虚继承，MyClass中会有两份Base中成员的拷贝。</p><figure id="12982b15-a58f-4a92-ac0b-cd4e9e607c6e" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%202.png"><img style="width:231px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%202.png"/></a></figure><p id="8e1a8718-081c-404d-b4de-47761c1d8944" class="">
+</p><p id="8afde4bb-6319-4c9d-8ea0-158774ba4705" class="">
+</p><h3 id="d365ec72-8803-41ec-a7cf-a514a7f6b8b6" class="">什么是虚拟继承？</h3><p id="f4465813-f64a-4b5d-a04c-df91edca4133" class="">由于C++支持多继承，除了public、protected和private三种继承方式外，还支持虚拟(virtual)继承</p><p id="539cbed2-1569-4183-9f52-f7f7dbb27f3e" class=""><mark class="highlight-red"><strong>虚拟继承和虚拟基类是为了解决多重继承（菱形继承）的问题而出现的。</strong></mark></p><p id="c4b61e89-3b46-41aa-b7e5-1d4da6ffc067" class="">一般通过<strong>虚基类指针</strong>和<strong>虚基类表</strong>实现，每个虚继承的子类都有一个虚基类指针（占用一个指针的存储空间，4字节）和虚基类表（不占用类对象的存储空间）（需要强调的是，<strong>虚基类依旧会在子类里面存在拷贝</strong>，只是仅仅最多存在一份而已，并不是不在子类里面了）；<strong>当虚继承的子类被当做父类继承时，虚基类指针也会被继承（例如上面的MyClass会继承A和B中的虚基类指针共8字节）</strong>。</p><p id="32f3430a-5095-4b5f-aedb-0241f4ce007a" class="">虚基类表存储的是虚基类相对直接继承类的偏移。</p><figure id="04ded20e-3591-4d3c-a6f9-82139d2f6847"><a href="https://blog.csdn.net/longlovefilm/article/details/80558879" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://blog.csdn.net/longlovefilm/article/details/80558879</div></div></a></figure><p id="6ba149e2-6320-4c40-a049-549b2e22c388" class="">
+</p><p id="68434eb6-7880-402f-a882-7a4d32ee5c6f" class="">
+</p><p id="460c4a39-76cd-4ff4-ba63-8c675f4c46fd" class="">
+</p><h3 id="996c4d0b-bb89-4c33-b7e8-b35331aa4ecf" class="">多继承的优缺点？</h3><p id="7a4fd96f-da77-460d-b8b1-bc0bc9f1475f" class="">优点：</p><figure id="192bd197-6ad1-4ead-b464-e817b4333a85" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%203.png"><img style="width:1326px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%203.png"/></a></figure><p id="43cc7ddd-a385-42a8-82a2-12d6dc5f4247" class="">
+</p><p id="30f10c96-e96e-4928-844c-4b0e9ad948cb" class="">缺点：</p><p id="454dedac-9afc-47ac-937f-3151177ed9b9" class="">菱形继承的问题。</p><p id="e78c04bb-4cc8-4ead-8a17-5fbe94d5a313" class="">
+</p><p id="5a90e365-c0c3-4a53-b08d-88b6b12430ed" class="">
+</p><p id="c136aa8d-a3ca-43e5-a2c1-77c9267368ba" class="">
+</p><h2 id="4fa6969d-9888-40c8-b1c8-f4bf228fa4f8" class="">构造</h2><h3 id="008b9361-13e5-4fc3-a985-dbaccdcb56e2" class="">有哪几种构造函数？</h3><ul id="b89ca4bb-dbb0-48d6-a177-4100979b59dc" class="bulleted-list"><li>默认构造函数<p id="dfebb5c4-1ae2-47cd-8785-e90f40172a2e" class=""><code>Student()</code></p></li></ul><ul id="056e2cad-c60c-4ad2-87ef-a99abb59ffa3" class="bulleted-list"><li>初始化构造函数（有参数）<p id="32426589-aff1-4de3-9132-2d79e0ee531a" class=""><code>Student(int num, int age)</code></p><pre id="2eb9f539-0e7c-49a2-ab81-00d94619f2c1" class="code"><code>//用默认构造函数初始化对象S1
+Student s1;
+//用初始化构造函数初始化对象S2
+Student s2(1002,18);</code></pre></li></ul><ul id="461be6a6-a998-4140-8c37-fc814eb1a3ad" class="bulleted-list"><li>拷贝构造函数<p id="73715616-6d3f-4680-aaf7-bdec9746e84e" class=""><code>Student(Student&amp;)</code></p></li></ul><ul id="6effbb0d-3fdc-4e1a-a03b-3e261f7467da" class="bulleted-list"><li>移动构造函数</li></ul><ul id="64928255-2732-416e-81e3-831ac9ccd729" class="bulleted-list"><li>委托构造函数</li></ul><ul id="4b7d628f-17d5-4f65-882f-f10d71435fc1" class="bulleted-list"><li>转换构造函数<p id="95ee7967-44c2-468d-9941-896bdcfa43a1" class=""><code>Student(int r)</code></p></li></ul><pre id="01128681-143b-4dbf-b736-42bb42e3268f" class="code"><code>class Student{
+public:
+		Student(){//默认构造函数，没有参数 this-&gt;age = 20;
+        this-&gt;num = 1000;
+    };
+		Student(int a, int n):age(a), num(n){}; //初始化构造函数，有参数和参数列表 
+		Student(const Student&amp; s){//拷贝构造函数，这里与编译器生成的一致
+        this-&gt;age = s.age;
+        this-&gt;num = s.num;
+    };
+		Student(int r){ //转换构造函数,形参是其他类型变量，且只有一个形参 this-&gt;age = r;
+        this-&gt;num = 1002;
+    };
+    ~Student(){}
+public:
+		int age;
+		int num; 
+};</code></pre><p id="6eeb8585-3481-4eee-90a7-046b8eeaa149" class="">
+</p><h3 id="4235541f-c3fa-4263-bcd6-b2fe93cbd640" class="">构造函数的几种关键字？</h3><ul id="e7db44a0-1fd6-40b4-9128-c2003e5199a5" class="bulleted-list"><li><strong>default</strong><p id="956a3467-94f7-4533-94dc-4f312d9a30d7" class="">default关键字可以显式要求编译器生成合成构造函数，防止在调用时相关构造函数类型没有定义而报错</p><p id="ee846055-36a0-4071-a1a6-b739f6775020" class="">如下，如果没有语句1，语句2会报错。</p><pre id="1ab0cd2d-0d2a-4b55-9e13-4a3747872505" class="code"><code>#include &lt;iostream&gt;
+using namespace std;
+class CString
+{
+public:
+		CString() = default; //语句1
+		//构造函数
+		CString(const char* pstr) : _str(pstr){}
+		void* operator new() = delete;//这样不允许使用new关键字 
+		//析构函数
+    ~CString(){}
+public:
+     string _str;
+};
+int main() {
+		auto a = new CString(); //语句2 
+		cout &lt;&lt; &quot;Hello World&quot; &lt;&lt;endl; 
+		return 0;
+}
+//运行结果 
+//Hello World</code></pre></li></ul><p id="3683e9b1-2b95-4c16-90cb-b4d2367673fe" class="">
+</p><ul id="6441ec21-f087-4765-b088-f6b82e6c2345" class="bulleted-list"><li><strong>delete</strong><p id="76e61b0e-98c2-4b4c-87ab-75e894716099" class="">delete关键字可以删除构造函数、赋值运算符函数等，这样在使用的时候会得到友善的提示</p></li></ul><ul id="7a23e019-f7bd-4a37-bbc0-6383a6122a38" class="bulleted-list"><li><strong>0</strong><p id="86118d1c-a4c0-4d7c-a0ae-33d67427bb57" class="">将虚函数定义为纯虚函数(纯虚函数无需定义，= 0只能出现在类内部虚函数的声明语句处；当然，也 可以为纯虚函数提供定义，不过函数体必须定义在类的外部)</p></li></ul><p id="a0bc54d9-7de0-4e59-b755-d25bb31f9c7d" class="">
+</p><p id="516c6ad9-fb93-4f28-83e3-339d2ad057df" class="">
+</p><h3 id="9356065a-489b-4a80-8271-c7ca7ea6dad8" class="">什么时候会调用拷贝构造函数？</h3><p id="a764248c-e346-4f5b-a88c-c52868d85e44" class="">当用一个已初始化过了的自定义类类型对象去初始化另一个新构造的对象的时候，拷贝构造函数就会被自动调用。也就是说，当类的对象需要拷贝时，拷贝构造函数将会被调用。以下情况都会调用拷贝构造函数：</p><ol id="3a4f4b3d-841b-4479-9093-4d4dc05a3b82" class="numbered-list" start="1"><li>一个对象以值传递的方式传入函数体  </li></ol><ol id="0719fe50-6f5a-4b3e-aa2b-4de8adb02544" class="numbered-list" start="2"><li>一个对象以值传递的方式从函数返回  </li></ol><ol id="ab05f71d-7776-42c5-854e-b5d9f1177534" class="numbered-list" start="3"><li>一个对象需要通过另外一个对象进行初始化</li></ol><p id="0d45f120-f5a0-4486-ac54-2be8c58c5c55" class="">
+</p><p id="582aee5e-b0be-40e7-bcfd-5dced19c090e" class="">
+</p><h3 id="159d6542-6663-4827-954c-201255101e51" class="">拷贝构造函数和赋值运算符的区别？</h3><figure id="83cf4d48-7e46-4716-8862-6bf6bab842a6" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%204.png"><img style="width:240px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%204.png"/></a></figure><p id="d92853e1-7196-4a5a-b3bf-4aa4dbcc53e3" class="">
+</p><p id="9bb2c8a1-0173-4597-b9ba-ccc87531ff37" class="">拷贝构造函数：首先是一个<strong>构造</strong>函数，它调用的时候<strong>产生一个对象</strong>，是通过参数传进来的那个对象来初始化，产生的对象。</p><p id="da090e80-45cf-4d5e-a707-f3c5b144878f" class="">赋值：operator=();是把一个对象（该对象已经存在）<strong>赋值给一个原有的对象</strong>，所以如果原来的对象中有内存分配要先把内存释放掉，而且还要检查一下两个对象是不是同一个对象，如果是的话就不做任何操作。</p><p id="fa76e793-3f28-4d27-8988-e964eee95ad1" class=""><mark class="highlight-red"><strong>一句话总结：用一个已存在的对象去构造一个不存在的对象(构造之前不存在)，就是拷贝构造。用一个已存在的对象去覆盖另一个已存在的对象，就是赋值运算</strong></mark></p><p id="de34ef99-b955-4bb1-b75e-76cc26cf49f5" class="">
+</p><p id="d19b7c31-b4e9-4ba5-9d05-0582b001da25" class="">
+</p><h3 id="fade0e03-eec2-41d1-8ec9-10e65e625b73" class="">为什么拷贝构造函数必须传引用不能传值？</h3><p id="c186789b-4ab8-4dfe-8ec5-75fa54b8b066" class="">值传递时，需要给形参分配存储单元，<strong>形参变量是实参变量的副本</strong></p><ul id="a999cc04-e4d1-473b-a8e8-c84c200f4f81" class="bulleted-list"><li>对于内置数据类型，直接赋值拷贝给形参</li></ul><ul id="e0555c9d-541f-4fad-9048-79b89cb7f4ad" class="bulleted-list"><li>对于类类型，首先调用该类的拷贝构造函数来初始化形参</li></ul><p id="35ecd535-a484-4ad6-8d7e-a376c742b245" class="">所以传值时，会调用拷贝构造函数，而拷贝构造函数又要传值，<strong>会一直递归，内存溢出</strong>。</p><p id="27722e91-1835-4089-a70e-e62b8534d8b7" class="">而传引用，相当于传递地址值，地址总是指针类型（内置数据类型），不会有拷贝构造函数的调用。</p><p id="0c4eece9-0b2a-4a6b-8a8c-9aa7989c63b6" class="">
+</p><p id="416c7266-050b-4d29-a021-7f30fe18c11b" class="">
+</p><p id="605f589f-24c6-4dcb-9a5f-f1cc9de30e81" class="">
+</p><p id="3ee5f2eb-ce5c-419e-8de7-0dbe27f07b4d" class="">
+</p><p id="517ccf95-eec7-45d8-af8f-9d45cf9e8a17" class="">
+</p><h3 id="e0236279-8f57-4407-a704-6b89f53adec8" class="">什么是直接初始化？什么是拷贝初始化？</h3><p id="04d37e10-3fd5-4fbc-a833-1e676e8a7db1" class=""><strong>直接初始化：</strong></p><p id="b460bcb0-227f-4ce1-a685-38b3cc5688aa" class="">直接初始化并不是指调用默认构造函数，而是直接调用与实参匹配的构造函数。简而言之就是用括号的初始化。</p><pre id="e708f4e9-518a-469d-98b0-24a2c803dfed" class="code"><code>string a; //调用默认构造函数
+string a(&quot;hello&quot;); //直接初始化，调用参数为const char *类型的构造函数
+string b(a); //直接初始化，调用拷贝构造函数</code></pre><p id="6a3c6e71-458c-41e4-98a1-0ba93885c965" class=""><strong>拷贝初始化：</strong></p><p id="0afac6db-64cc-43d6-b9f7-851ed0507352" class="">使用指定构造函数创建一个临时对象，然后用拷贝构造函数将那个临时对象拷贝到正在创建的对象。</p><pre id="e6a3fad7-d701-4f71-bb90-83853be463cf" class="code"><code>string a = &quot;hello&quot;;   //相当于隐式调用构造函数
+string b = a;         //注意这里相当于隐式调用拷贝构造函数，而不是调用赋值运算符函数</code></pre><p id="c5bcc708-1ce2-460a-b728-57b40d54f1ae" class="">复制初始化应该是先调用对应的构造函数创建一个临时对象，再调用拷贝构造函数将临时对象拷贝给要创建的对象。例如在string a=”hello”中，string类的string(const char *)构造函数会被首先调用，创建一个临时对象，然后拷贝构造函数将这个临时对象复制到a。</p><p id="315c342d-7d1e-45d1-a170-0e1e9c6e6a15" class="">
+</p><p id="b66d338b-ead3-490d-a4c5-79c83dab1ccc" class="">
+</p><h3 id="eba6f13b-12ef-4161-8169-defdece207ac" class="">什么时候会调用转换构造函数</h3><p id="d69155f2-0377-4bc2-9b71-f46227e33c3c" class="">假如重载了+号运算符，使得两个Student类的对象可以相加，其结果为两个对象的成员变量age之和。（返回的时候调用？）</p><pre id="f9fc95ce-c9a8-4f77-b75b-90c85c235d72" class="code"><code>Student s1(01,18);
+Student s2(02,20);
+s1+s2;  //其值就是s1.age + s2.age = 18+20=36。</code></pre><p id="13760b6a-48ad-4dec-bd24-d6b959648990" class=""><strong>那么 s1+19 呢(类对象与int直接相加）？</strong></p><p id="4436cfaa-8de1-4c42-95a3-84364cd408fa" class="">因为我们定义了 转换构造函数，那么 s1+19，执行如果过程：</p><ol id="73276ca4-35a8-4447-8f4e-70698bc07cce" class="numbered-list" start="1"><li>首选调用+号运算符，发现19不是Student类的对象，而是int类型</li></ol><ol id="12e0a9ee-b1c3-4564-a0eb-1638bcbe8e02" class="numbered-list" start="2"><li>然后调用转换构造函数，将19变为Student（19）</li></ol><ol id="7a972466-5fcb-4eb3-91a1-0a5226c6642f" class="numbered-list" start="3"><li>现在便可以进行加法运算，其值是s1.age+ (TempStudentObject).age=18+19 = 37</li></ol><p id="a582b9c7-b10c-4ad1-9fbb-ebbf3613e67d" class="">
+</p><p id="435f929d-8204-4117-84ef-2d75301db27c" class="">
+</p><h3 id="3de99502-bdf1-4ceb-98b5-43ca2ead065f" class="">移动构造函数？</h3><p id="a46637d4-51fb-42e1-b2f0-37f993a215f2" class=""><strong>设计初衷：</strong></p><p id="d4064dcd-eff4-493c-82c1-311a99019ada" class="">用对象a初始化对象b，后对象a我们就不在使用了，但是对象a的空间还在呀(在析构之前)， 既然拷贝构造函数，实际上就是把a对象的内容复制一份到b中，那么为什么我们不能直接使用a的空间呢？这样就<strong>避免了新的空间的分配</strong>，大大降低了构造的成本。</p><p id="057c249e-bbee-4dd5-9f98-66bddbe140b3" class=""><strong>实现方式：</strong></p><p id="55485814-311d-4537-a414-3fef66dc66d9" class="">移动构造函数中，对于指针，我们采用
+浅层复制。浅层复制之所以危险，是因为两个指针共同指向一片内存空间，若第一个指针将其释放，另一个指针的指向就不合法了。</p><p id="fbb1e1f1-ea34-4a95-9026-05dd036896b6" class="">所以我们只要避免第一个指针释放空间就可以了。避免的方法就是将第一个指针(比如a-&gt;value)置为NULL，这样在调用析构函数的时候，由于有判断是否为NULL的语句，所以析构a的时候并不会回收a-&gt;value指向的空间</p><p id="4fbefc67-67cc-4957-ae27-feb24e14f824" class=""><strong>什么时候会调用移动构造函数？</strong></p><p id="7c5fa73b-ab5c-4cc1-ba8e-3568e7348ba3" class="">移动构造函数的参数和拷贝构造函数不同，拷贝构造函数的参数是一个左值引用，但是移动构造函 数的初值是一个右值引用。意味着，移动构造函数的参数是一个右值或者将亡值的引用。也就是说，只有用一个右值，或者将亡值初始化另一个对象的时候，才会调用移动构造函数。而那个move语句，就 是将一个左值变成一个将亡值。</p><p id="e3a7df6a-b743-42d7-8f44-301ef853a514" class="">
+</p><p id="b45e8512-beda-4886-b61e-f889276598d6" class="">
+</p><p id="45cde60f-ee35-43d3-b76e-01585faa555d" class="">
+</p><h3 id="13a294d3-3df6-4fb0-b81e-811aeeadd790" class="">类成员初始化方式有哪些？有何区别？</h3><ul id="88e79aaa-0b52-4285-a800-2a3a32a1602a" class="bulleted-list"><li><strong>赋值初始化</strong>：在函数体内进行赋值</li></ul><ul id="cc4863d3-80ab-4444-bcd5-84e634a6e8e4" class="bulleted-list"><li><strong>列表初始化</strong>：在冒号后使用初始化列表进行初始化，<strong>顺序是由类中的成员声明顺序决定的，不是由初始化列表的顺序决定的</strong></li></ul><p id="e28870b8-3340-4a72-b4ba-564dd24cd01a" class=""><strong>区别：</strong></p><p id="8b1a03cd-c0c8-4452-8b21-bd0b6bfdae14" class="">对于在函数体中初始化，是<span style="border-bottom:0.05em solid">在所有的数据成员被分配内存空间后才进行</span>的。</p><p id="e978db4e-cec0-4cc6-ae24-24bd8236e8da" class="">列表初始化是<span style="border-bottom:0.05em solid">给数据成员分配内存空间时就进行初始化</span>，就是说分配一个数据成员只要冒号后有此数据成员的赋值表达式(此表达式必须是括号赋值表达式)，那么分配了内存空间后在进入函数体之前给数据成员赋值，就是说初始化这个数据成员此时函数体还未执行</p><p id="87dde7ba-f167-46d7-a01d-9ab9a47c20ea" class=""><strong>用初始化列表更快一些</strong></p><p id="7d3e93f1-1875-4b60-bff1-844377dfe182" class="">因为赋值初始化是在构造函数中做赋值的操作，而列表初始化是纯粹的初始化操作，在C++中赋值操作会产生<span style="border-bottom:0.05em solid">临时对象，临时对象的出现就是一次调用构造函数的过程，会降低程序的效率</span>。</p><p id="2b63b9b3-6f00-4b8e-b4b7-370bbf1df8f1" class="">
+</p><h3 id="2db9c72f-0748-4a0f-a785-6c99036ed94a" class="">什么时候必须使用成员初始化？</h3><ol id="c927a361-da8e-4270-87ca-86d5bfb6a27b" class="numbered-list" start="1"><li>当初始化一个引用成员时</li></ol><ol id="514b138c-9f6d-490c-9c2c-78f73fc00731" class="numbered-list" start="2"><li>当初始化一个常量成员时</li></ol><ol id="5a966209-f9df-4c78-b494-7fabcec3b26a" class="numbered-list" start="3"><li>当调用一个基类的构造函数，而它拥有一组参数时</li></ol><ol id="7e2bb619-b4ee-41fc-b725-27462bb66f59" class="numbered-list" start="4"><li>当调用一个成员类的构造函数，而它拥有一组参数时</li></ol><p id="36772500-0bfe-4f12-a6aa-af13c31236e3" class="">
+</p><h3 id="d9a6fcb5-16eb-40ae-8f64-d1774b4d1450" class="">什么时候合成构造函数？（non-trival）</h3><ul id="5084bc79-dad9-4573-ae67-c0b2ed42e7b1" class="bulleted-list"><li>带有default constructor 的成员类对象（ member class object）；</li></ul><ul id="a082b09d-df82-4ca9-93be-c4af6d7d8647" class="bulleted-list"><li>带有default constructor 的基类（base class）的类；</li></ul><ul id="4c42c0d4-bd39-4a7d-9421-15a232ab8b38" class="bulleted-list"><li>带有虚函数（virtual functions）的类；</li></ul><ul id="174ab9f9-bd7d-4228-949f-08d1c8a0ad72" class="bulleted-list"><li>带有虚基类（virtual class）的类；？？？</li></ul><p id="2a53384c-0bb4-4396-9310-23c4cf429bfe" class="">
+</p><h3 id="bdb2ba24-ffae-47fd-a9c5-f060bc603bf5" class="">什么时候会合成拷贝构造函数呢？</h3><ul id="e996f00a-fc7f-4d7b-8dea-a87e513fc99e" class="bulleted-list"><li>如果一个类没有拷贝构造函数，但是含有一个类类型的成员变量，该类型含有拷贝构造函数，此时编译器会为该类合成一个拷贝构造函数</li></ul><ul id="72e942d5-e511-4d76-aa65-861388b6e534" class="bulleted-list"><li>如果一个类没有拷贝构造函数，但是该类继承自含有拷贝构造函数的基类，此时编译器会为该类合成一个拷贝构造函数</li></ul><ul id="547a162b-7c7e-4e64-bd9d-6f486d1bf0cf" class="bulleted-list"><li>如果一个类没有拷贝构造函数，但是该类声明或继承了虚函数，此时编译器会为该类合成一个拷贝构造函数</li></ul><ul id="63592f24-6b02-4392-b3d8-a5e0da8aa032" class="bulleted-list"><li>如果一个类没有拷贝构造函数，但是该类含有虚基类，此时编译器会为该类合成一个拷贝构造函数</li></ul><p id="465374e2-fa13-40fc-8add-1d472982ad50" class="">
+</p><p id="af2acc7d-a2b7-4aad-900e-922fa9956b50" class="">
+</p><p id="706f4f3c-55c8-45ad-97bc-565822dcd168" class="">
+</p><p id="e32edf09-08ff-4911-adae-dd4cb1745282" class="">
+</p><h3 id="3a6306fe-86e3-46e1-a40a-cd681cf27b1c" class="">如果有一个空类，会默认添加哪些函数？（trival）</h3><pre id="bd1be330-6aaa-4cd8-9bd7-a4108fbe18a0" class="code"><code>1) Empty(); // 缺省构造函数//
+2) Empty( const Empty&amp; ); // 拷贝构造函数//
+3) ~Empty(); // 析构函数//
+4) Empty&amp; operator=( const Empty&amp; ); // 赋值运算符//</code></pre><p id="7328cad6-b191-4da2-99c3-f5a50ded2537" class="">
+</p><h3 id="1ba47aed-2313-4732-ad11-8fa5d5b178b2" class="">构造函数的执行顺序？</h3><ol id="8bb7915c-902a-48fa-9385-ca83a1aa4b49" class="numbered-list" start="1"><li>虚拟基类的构造函数（多个虚拟基类则按继承顺序）</li></ol><ol id="adc995f2-30ad-424b-b851-d7a3fb402834" class="numbered-list" start="2"><li>基类的构造函数（按继承顺序）</li></ol><ol id="dac7fc6c-90de-4476-828e-042dfcfd65e9" class="numbered-list" start="3"><li>类类型的成员对象的构造函数（按初始化顺序）</li></ol><ol id="16c7f6dd-bf93-4fde-ba20-d198eaf701e7" class="numbered-list" start="4"><li>自己的构造函数</li></ol><p id="9a4e2f56-e1b7-4b7d-8807-96a5d8f68926" class="">
+</p><p id="f6143534-8e08-4b9d-86fc-9bca92c903cf" class="">
+</p><h3 id="9764ce46-0f64-4588-9193-ff2753b2cbb5" class="">析构函数的执行顺序？</h3><ol id="b028ae9e-afd0-4ea0-9cbb-7080f16dc7c5" class="numbered-list" start="1"><li>调用派生类的析构函数</li></ol><ol id="17a23bec-c8fe-40cd-9794-05cd7de94c21" class="numbered-list" start="2"><li>调用成员类对象的析构函数</li></ol><ol id="3bc91a98-b620-48ac-99cf-1d5a8800845c" class="numbered-list" start="3"><li>调用基类的析构函数</li></ol><p id="c0bff71c-d721-43a5-8a29-8cb8091d68ed" class="">
+</p><h3 id="485828f4-3627-4c8d-a155-40b35c78112d" class="">析构函数的作用？什么时候会析构？</h3><p id="f491d6a9-f51d-4d51-b2fa-287f0fdbb4f3" class="">作用：释放给对象分配的内存空间。</p><p id="aef192a3-2a17-4069-ad24-d46ca2f8b383" class="">什么时候会析构：</p><ol id="81450db3-40c8-4795-8b4b-be2614fe5545" class="numbered-list" start="1"><li>对象生命周期结束，被销毁时</li></ol><ol id="a81e017a-fb12-4ba3-88aa-7f58b35cf05d" class="numbered-list" start="2"><li>delete指向对象的指针时（或delete对象的基类类型指针，而其析构函数是虚函数时）</li></ol><ol id="d8c2d138-ef9f-4001-8542-675a3974d1e8" class="numbered-list" start="3"><li>对象B是对象A的成员，A的析构函数调用时，B的析构函数也会被调用</li></ol><p id="ecddb3fa-09b2-4879-91ea-227a416dcb8d" class="">
+</p><h3 id="ecd52e7d-fc49-476b-8661-66468a007a58" class="">构造函数、析构函数、虚函数可否声明为内联函数？</h3><p id="ff31c502-22ca-4058-8911-abced71d5c0f" class=""><strong>构造函数和析构函数声明为内联函数是没有意义的：</strong></p><p id="ed74ff8e-e8d3-4586-9346-db50725a2eef" class="">将构造函数和析构函数声明为inline是没有什么意义的，即编译器并 不真正对声明为inline的构造和析构函数进行内联操作，因为编译器会在构造和析构函数中添加额外的 操作(申请/释放内存，构造/析构对象等)，致使构造函数/析构函数并不像看上去的那么精简。</p><p id="28ae90ee-a1eb-40e4-aeef-0124fdd9fe34" class=""><strong>将虚函数声明为inline，要分情况讨论</strong></p><ul id="8842e657-b580-4b16-9626-52431138a0fb" class="bulleted-list"><li>当是指向派生类的指针(多态性)调用声明为inline的虚函数时，不会内联展开；</li></ul><ul id="981597ef-050d-4aa3-b951-8618318cdf4c" class="bulleted-list"><li>当是对象本身 调用虚函数时，会内联展开，当然前提依然是函数并不复杂的情况下</li></ul><p id="c5119063-52e2-43b1-9898-adabdbbb93ea" class="">
+</p><p id="3acf1bf0-d7d0-4a18-b194-0ec05001309c" class="">
+</p><h3 id="ffad0021-e9bb-4fd8-b870-385a2680c31b" class="">构造函数和析构函数可否抛出异常？</h3><p id="bd1e76de-d35d-481b-bc67-4945d7fab6f1" class="">析构函数不能抛出异常：</p><ol id="207eaee3-585f-4cd7-9eb2-80c4480e897e" class="numbered-list" start="1"><li>如果析构函数抛出异常，则<strong>异常点之后的程序不会执行</strong>，如果析构函数在异常点之后执行了某些必要的动作比如释放某些资源，则这些动作不会执行，会造成诸如资源泄漏的问题。</li></ol><ol id="eed3e41b-8ca0-41a3-9638-0c9cb4817524" class="numbered-list" start="2"><li>通常<strong>异常发生时，c++的机制会调用已经构造对象的析构函数来释放资源</strong>，此时若析构函数本身也抛出异常，则前一个异常尚未处理，又有新的异常，会造成程序崩溃的问题。<p id="debd9866-4378-4ee7-abcd-609e6aa78ec1" class="">C++异常处理模型有责任清除那些由于出现异常所导致的已经失效了的对象(也即对象超出了它原来的作用域)，并释放对象原来所分配的资源， 这就是调用这些对象的析构函数来完成释放资源的任务，所以从这个意义上说，<strong>析构函数已经变成了异常处理的一部分</strong>。</p></li></ol><p id="b958874e-fcdf-4e36-8b0d-57077a1e5d86" class=""><strong></strong><strong>那么当无法保证在析构函数中不发生异常时，</strong> <strong>该怎么办</strong><strong>?</strong></p><p id="0ea2c935-e68a-46a4-8d4f-8ab99886c15b" class="">其实还是有很好办法来解决的。那就是<strong>把异常完全封装在析构函数内部，决不让异常抛出函数之外（或者使用智能指针将使用到的资源当初对象来看待）。</strong>这是一种非常简单，也非常有效的方法。</p><pre id="e3b39589-6b49-4e15-9ea6-c26d8d440324" class="code"><code>~ClassName()
+{
+		try{
+				do_something();
+		}
+		catch(){  //这里可以什么都不做，只是**保证catch块的程序抛出的异常不会被扔出析构函数之外**。
+		}
+}</code></pre><p id="415bfdcc-ee78-4096-ada8-c358e80c44da" class="">
+</p><p id="bc4df1ba-c44b-405b-b654-dba4093ccdb6" class="">
+</p><h2 id="883df1e7-7c85-4706-8ef3-7753bddb61ae" class="">多态</h2><h3 id="c543aea7-41c2-440f-b859-1f7999640690" class="">什么是多态？</h3><p id="41c9487c-d4f7-4e55-b324-a9f0e553562b" class="">同一操作作用于不同的对象，可以有不同的解释，产生不同的执行结果，这就是多态性。</p><h3 id="3f7674c0-d6bb-425c-9b24-9ede6ff2ef23" class="">多态如何实现？</h3><p id="02f1615c-cda9-464f-a472-36edc545303c" class=""><strong>概括：</strong></p><p id="88a207a5-885a-4418-a237-f33ec9a0b23b" class="">在基类的函数前加上 <code>virtual</code> 关键字，在派生类中重写该函数，运行时将会根据所指对象的实际类型来调用相应的函数，如果对象类型是派生类，就调用派生类的函数，如果对象类型是基类，就调用基类的函数。</p><figure id="21367d5e-ae6e-4993-8750-17ee71a29afb" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%205.png"><img style="width:1256px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%205.png"/></a></figure><p id="69cefd28-2991-4349-b9f1-5c207b7e18b9" class="">
+</p><div id="6f6a0c7b-da55-43dc-bfbe-f4f85d060bfd" class="column-list"><div id="6cf147c4-c72b-4e0a-bd21-dd80f8f2f629" style="width:50%" class="column"><figure id="6216c48e-6b1e-4036-b5ff-967fb08d3a35" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%206.png"><img style="width:513px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%206.png"/></a></figure></div><div id="dbe5657b-2a67-4807-82f2-07934f4e8fbc" style="width:50%" class="column"><figure id="4729d7af-1c8b-4b50-b7d9-11c908f24cdf" class="image"><a href="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%207.png"><img style="width:515px" src="lei%203083c705f0fa4cabbf23af4ebb1f997f/Untitled%207.png"/></a></figure><p id="f49e3f30-1b50-4f1c-af5d-26557098beb9" class="">
+</p></div></div><p id="c383a230-7f15-4d43-8149-1d16c37b4fcb" class="">
+</p><p id="093213bc-a33b-488f-9904-f3745218c624" class=""><strong>过程：</strong></p><ol id="0873eec6-c3d3-418b-a194-bddcf56700e9" class="numbered-list" start="1"><li>编译器在发现基类中有虚函数时，会自动为每个含有虚函数的类（或其派生类）生成一份虚表，该表是一个一维数组，虚表里保存了虚函数的入口地址</li></ol><ol id="454b6a5b-32a5-4553-bfcb-930b2a5fecdd" class="numbered-list" start="2"><li>编译器会在每个对象的前四个字节中保存一个虚表指针，即<strong>vptr</strong>，指向对象所属类的虚表。在构造时，根据对象的类型去初始化虚指针vptr，从而让vptr指向正确的虚表，从而在调用虚函数时，能找 到正确的函数</li></ol><ol id="236dd228-19f7-4051-bed8-94eb58385f3a" class="numbered-list" start="3"><li>什么时候初始化虚表指针呢？在派生类定义对象时，程序运行会自动调用构造函数，在构造函数中创建虚表并对虚表初始化。在构造子类对象时，会先调用父类的构造函数，此时，编译器只“看到了”父类，并为父类对象初始化虚表指针，令它指向父类的虚表；当调用子类的构造函数时，为子类对象初始化虚表指针：</li></ol><p id="24b1abba-a216-4eb1-a920-0c5a2ee9181a" class="">这样指向派生类的基类指针在运行时，就可以根据派生类对虚函数重写情况动态的进行调用，从而实现多态性。</p><p id="4aa6c50e-e636-45b0-af73-f84952e6ecd2" class=""><strong>个人理解：</strong></p><p id="4889db0a-f67e-40f0-baba-a7023df4a2d4" class="">虚表在编译阶段就都已经存在于内存中了，它属于各个类而不是类对象。在构造的时候，生成的对象中的虚表指针指向的虚表是自己类的虚表，而不是基类的虚表。当将生成的子类对象指针赋给基类指针时，此时基类指针指向的虚表其实是子类的虚表，而调用虚函数时，因为虚表也是基类的一部分，因此可以访问到子类的虚函数。</p><figure id="8ee58929-0928-4c6d-b936-9a0f368d8a1d"><a href="https://zhuanlan.zhihu.com/p/75172640" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">C++ 虚函数表剖析</div><div class="bookmark-description">为了实现C++的多态，C++使用了一种动态绑定的技术。这个技术的核心是虚函数表（下文简称虚表）。本文介绍虚函数表是如何实现动态绑定的。 每个包含了虚函数的类都包含一个虚表。 我们知道，当一个类（A）继承另一个类（B）时，类A会继承类B的函数的调用权。所以如果一个基类包含了虚函数，那么其继承类也可调用这些虚函数，换句话说，一个类继承了包含虚函数的基类，那么这个类也拥有自己的虚表。 我们来看以下的代码。类A包含虚函数vfunc1，vfunc2，由于类A包含虚函数，故类A拥有一个虚表。 class A { public: virtual void vfunc1(); virtual void vfunc2(); void func1(); void func2(); private: int m_data1, m_data2; }; 类A的虚表如图1所示。 图1：类A的虚表示意图 虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。 虚表是属于类的，而不是属于某个具体的对象，一个类只需要一个虚表即可。同一个类的所有对象都使用同一个虚表。 为了指定对象的虚表，对象内部包含一个虚表的指针，来指向自己所使用的虚表。为了让每个包含虚表的类的对象都拥有一个虚表指针，编译器在类中添加了一个指针，*__vptr ，用来指向虚表。这样，当类的对象在创建时便拥有了这个指针，且这个指针的值会自动被设置为指向类的虚表。 图2：对象与它的虚表 上面指出，一个继承类的基类如果包含虚函数，那个这个继承类也有拥有自己的虚表，故这个继承类的对象也包含一个虚表指针，用来指向它的虚表。 说到这里，大家一定会好奇C++是如何利用虚表和虚表指针来实现动态绑定的。我们先看下面的代码。 class A { public: virtual void vfunc1(); virtual void vfunc2(); void func1(); void func2(); private: int m_data1, m_data2;</div></div><div class="bookmark-href"><img src="https://static.zhihu.com/heifetz/favicon.ico" class="icon bookmark-icon"/>https://zhuanlan.zhihu.com/p/75172640</div></div><img src="https://pic4.zhimg.com/v2-f5ff0e1423db52b91d78602032b1e326_720w.jpg?source=172ae18b" class="bookmark-image"/></a></figure><p id="5373abc6-fc14-4c91-b72e-cef98589514a" class="">
+</p><h3 id="ddce35d4-02e6-47a8-9f12-9ef3d2d1ae04" class="">虚表、虚表指针是什么？</h3><p id="f36369fe-8216-4c92-9255-c55007abde83" class=""><strong>虚表：</strong></p><p id="26f2eab6-38e5-4d89-a30e-a97fe817b079" class="">虚函数表的缩写，类中含有virtual关键字修饰的方法时，编译器在<strong>编译阶段</strong>会自动生成虚表。虚函数表类似一个数组，存储虚函数的地址，即<strong>虚函数表的元素是指向类成员函数的指针</strong>。</p><p id="258f7ab9-028a-450e-ab27-989d5b0c9b47" class=""><strong>虚表指针（vptr）：</strong></p><p id="d8fb32fd-ee5f-462e-8c3c-c17018358e97" class="">指向虚函数表的指针。在含有虚函数的类实例化对象时，<strong>对象地址的前四个字节存储的指向虚表的指针</strong></p><p id="867d6d20-c37b-494d-84d4-2216b933709d" class="">虚函数的调用关系：<strong>this -&gt; vptr -&gt; vtable -&gt;virtual function</strong></p><figure id="d66db45b-deca-4316-a816-6f13b93579a4"><a href="https://blog.csdn.net/haoel/article/details/1948051/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">C++ 虚函数表解析_陈皓专栏　【空谷幽兰，心如皓月】-CSDN博客_虚函数表</div><div class="bookmark-description">陈皓 http://blog.csdn.net/haoel C++ 中的虚函数的作用主要是实现了多态的机制。关于多态，简而言之就是用父类型别的指针指向其子类的实例，然后通过父类的指针调用实际子类的成员函数。这种技术可以让父类的指针有&quot;多种形态&quot;，这是一种泛型技术。所谓泛型技术，说白了就是试图使用不变的代码来实现可变的算法。比如：模板技术， RTTI 技术，虚函数技术，要么是试图做到在编译时决议，要么试图做到运行时决议。 关于虚函数的使用方法，我在这里不做过多的阐述。大家可以看看相关的 C++ 的书籍。在这篇文章中，我只想从虚函数的实现机制上面为大家 一个清晰的剖析。 当然，相同的文章在网上也出现过一些了，但我总感觉这些文章不是很容易阅读，大段大段的代码，没有图片，没有详细的说明，没有比较，没有举一反三。不利于学习和阅读，所以这是我想写下这篇文章的原因。也希望大家多给我提意见。 对 C++ 了解的人都应该知道虚函数（ Virtual Function ）是通过一张虚函数表（ Virtual Table ）来实现的。简称为 V-Table 。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。 这里我们着重看一下这张虚函数表。 C++ 的编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能--如果有多层继承或是多重继承的情况下）。 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。 Fun pFun = NULL; 实际运行经果如下： (Windows XP+VS2003,Linux 2.6.22 + GCC 4.1.3) 这个时候你应该懂了吧。什么？还是有点晕。也是，这样的代码看着太乱了。没问题，让我画个图解释一下。如下所示： 注意：在上面这个图中，我在虚函数表的最后多加了一个结点，这是虚函数表的结束结点，就像字符串的结束符&quot; /0 &quot;一样，其标志了虚函数表的结束。这个结束标志的值在不同的编译器下是不同的。在 WinXP+VS2003 下，这个值是 NULL 。而在 Ubuntu 7.10 + Linux 2.6.22</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/haoel/article/details/1948051/</div></div><img src="https://p-blog.csdn.net/images/p_blog_csdn_net/haoel/15190/o_vtable1.jpg" class="bookmark-image"/></a></figure><p id="b77916e6-96d4-4be5-8e1b-8493fd24c3de" class="">
+</p><h3 id="48bf66e6-1175-4049-88b1-5e101cb0af66" class="">基类的虚函数表存放在内存的什么区？虚表指针vptr的初始化时间？</h3><p id="057093bf-8384-49df-adbe-098afa8d74a3" class="">C++中<strong>虚函数表位于只读数据段(.rodata)</strong>，也就是C++内存模型中的常量区；而<strong>虚函数则位于代码段 (.text)</strong>，也就是C++内存模型中的代码区。</p><p id="37bc02ef-37cf-423d-8dff-6f088f7a48b6" class="">vptr应该是在构造的时候初始化吧。</p><p id="ab22e81e-8b72-433b-b803-e4c51aa73720" class="">
+</p><p id="08ce9d85-f93d-4dc5-bebd-3f17be091ee1" class="">
+</p><p id="c3efde6b-7bbd-476e-96d5-95db74a62d27" class="">
+</p><h3 id="5d6f5fe9-4248-4de0-8bdf-0b0b09d01112" class="">构造函数能否声明为虚函数或纯虚函数？析构函数呢？</h3><p id="4a061984-2ca2-4c2d-a259-d3fb887cd5da" class=""><mark class="highlight-red"><strong>构造函数不能为虚函数！！！析构函数要为虚函数！！！</strong></mark></p><p id="b2c3a6c6-910f-40f9-92f7-c839fe3e8218" class=""><strong>构造函数不能为虚函数（构造函数中才对虚表指针初始化）</strong></p><p id="6542dca5-ca76-4fcb-9194-9a27d5705cae" class="">因为虚函数需要通过虚表来调用，这个虚表是在构造时候初始化的，现在还没构造呢内存空间都没有呢，虚表也还没初始化呢，怎么调用虚函数呢。</p><p id="be58a111-272a-41fe-8115-9f316797c9fd" class="">虚函数对应一个vtable，这大家都知道，可是这个vtable其实是存储在对象的内存空间的。问题出来了，如果构造函数是虚的，就需要通过 vtable来调用，可是对象还没有实例化，也就是内存空间还没有，无法找到vtable，所以构造函数不能是虚函数。</p><p id="d77451da-7b5b-456c-9b76-aef4434d447b" class="">虚函数表指针是什么时候初始化的呢？当然是构造函数。当我们通过new来创建一个对象的时候，第一步是申请需要的内存，第二步就是调用构造函数。试想，如果构造函数是虚函数，那必然需要通过vtbl来找到虚构造函数的入口地址，显然，我们申请的内存还没有做任何初始化，不可能有vtbl的。因此，构造函数不能是虚函数。</p><p id="ee58ed93-e4b6-4bf2-9394-67d6315a1f1a" class=""><strong>析构函数要为虚函数（为了防止内存泄漏）</strong></p><p id="2df9ad6a-b6ad-4f1d-b7d9-1a4e114cdbf6" class="">当用父类指针new一个子类对象，当销毁对象时，如果析构函数不是虚函数，就只会调用父类的析构函数，释放父类对象时不会释放子类对象，有可能造成内存泄漏。</p><p id="813d6dda-dade-468e-9ac8-16a0866285de" class=""><strong>析构函数是否要为纯虚？</strong></p><p id="e51b4c84-0794-4b5c-a701-5b4a258124d3" class="">在某些类里声明纯虚析构函数很方便。纯虚函数将产生抽象类——不能实例化的类（即不能创建此类型的对象）。有些时候，你想使一个类成为抽象类，但刚好又没有任何纯虚函数。怎么办？因为抽象类是准备被用做基类的，基类必须要有一个虚析构函数，纯虚函数会产生抽象类，所以方法很简单：在想要成为抽象类的类里声明一个纯虚析构函数。</p><p id="ee528b72-1c12-46c5-b5a8-958b0ec867b1" class="">而且必须提供纯虚析构函数的定义，因为即使是抽象类，编译器也要产生对其析构函数调用。</p><p id="c583bfcc-2346-487f-988d-7510e95a20e4" class="">
+</p><p id="8ce836f4-0dc6-4b54-a6d4-4ba97ea12a55" class="">
+</p><h3 id="95be3857-bad8-4a3c-8cc8-f0a3e89e80f9" class="">构造函数和析构函数可以调用虚函数吗？</h3><p id="9b5a95a1-6d53-477e-8f27-69d0fced903c" class="">不建议。</p><p id="df8b538d-b547-4b02-b5d4-d7c935fa0bc4" class=""><strong>构造函数和析构函数调用虚函数时都不使用动态联编</strong>，如果在构造函数或析构函数中调用虚函数，则运行的是为构造函数或析构函数自身类型定义的版本</p><p id="612bbd88-94a6-4419-9ad5-ef774454a316" class="">构造函数中：</p><p id="9d4087bd-4ee7-4a05-a504-878a267ad50d" class="">因为父类对象会在子类之前进行构造，此时子类部分的数据成员还未初始化，因此调用子类的虚函数时不安全的，故而C++不会进行动态联编</p><p id="54a1a469-8b17-4ace-9b76-4d6400bc62d3" class="">析构函数中：</p><p id="2b15abc5-a6b2-4d65-b26b-281a82c9d8ea" class="">析构函数是用来销毁一个对象的，在销毁一个对象时，先调用子类的析构函数，然后再调用基类的析 构函数。所以在调用基类的析构函数时，派生类对象的数据成员已经销毁，这个时候再调用子类的虚函 数没有任何意义。</p><p id="acf073bc-f26b-4a7e-981a-238d457bf4f3" class="">
+</p><p id="fc15eb5b-915b-4f80-a77b-3e937f55cf7b" class="">
+</p><h3 id="753f3eaa-3190-4d76-897d-b3bbc0b7aa2b" class="">哪些函数不能是虚函数？</h3><ul id="031fa5b3-b208-41fb-8d65-032a87ccf112" class="bulleted-list"><li><strong>构造函数</strong></li></ul><ul id="be13e65b-b0ab-4cc7-8657-fe94b6005a4a" class="bulleted-list"><li><strong>内联函数</strong><p id="86a22ebb-c889-4c4d-8928-826c40baa4c0" class="">内联函数表示在编译阶段进行函数体的替换操作，而虚函数意味着在运行期间进行类型确定，所以内联函数不能是虚函数</p></li></ul><ul id="d53e763c-3303-4a49-b924-336eec935bfd" class="bulleted-list"><li><strong>静态函数</strong><p id="08cd8bd3-c1ea-4450-b422-90709f236fbf" class="">静态函数不属于对象属于类，静态成员函数没有this指针，因此静态函数设置为虚函数没 有任何意义。</p><p id="f34228c1-1e5b-42ae-938f-07abeff9b5f0" class="">虚函数依靠vptr和vtable来处理。vptr是一个指针，在类的构造函数中创建生成，并且只能用this指针来访问它，因为它是类的一个成员，并且vptr指向保存虚函数地址的vtable。s</p></li></ul><ul id="3fbedf70-cf8f-4f6b-8f73-968153ee6bec" class="bulleted-list"><li><strong>友元函数</strong><p id="6a2c3980-cfe3-413a-a75b-4cd59154903f" class="">友元函数不属于类的成员函数，不能被继承。对于没有继承特性的函数没有虚函数的说 法。</p></li></ul><ul id="6dc0df24-9d2d-46be-ae0d-8be92f85be81" class="bulleted-list"><li><strong>普通函数</strong><p id="b3461777-d0ff-4f4b-9467-f8bfe2ad2c08" class="">普通函数不属于类的成员函数，不具有继承特性，因此普通函数没有虚函数。</p></li></ul><p id="ea908185-8fc8-4be2-baff-f427c4f515fe" class="">
+</p><p id="e69a010e-0525-467a-a125-8cae65bdb579" class="">
+</p><h2 id="18e21120-8f05-4b47-980a-dead38f221d2" class="">其它</h2><h3 id="731277e0-8211-482c-8af6-f78b5ae99113" class="">内联函数和宏定义的区别？</h3><p id="0ab14666-858a-4b10-9e19-2f5c339263de" class=""><strong>区别：</strong></p><ul id="2aa161a3-2b23-40ea-940c-91ce3cb906f7" class="bulleted-list"><li><strong>内联函数在编译时</strong>展开，<strong>宏在预编译时</strong>展开，所以在使用时，宏只做<span style="border-bottom:0.05em solid">简单字符串替换</span>(编译前)。而<span style="border-bottom:0.05em solid">内联函数可以进行参数类型检查</span>(编译时)，且具有返回值。</li></ul><ul id="c5497e36-c53c-460a-a319-6b624ab1c64c" class="bulleted-list"><li>内联函数是函数，有函数特性（具有重载等功能），宏不是</li></ul><ul id="f8f37e99-0acc-4738-bcec-99a9539f373e" class="bulleted-list"><li>内联函数直接嵌入到目标代码中，宏是简单的做文本替换</li></ul><ul id="d5e2c8a0-f6f6-426d-942d-ef42b8a21c35" class="bulleted-list"><li>内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员，进而提升效率。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了。</li></ul><p id="4e905a88-a647-40c8-ba38-fd752f3245dd" class="">
+</p><h3 id="37c0b978-e552-4647-a120-1fe38fdc2e82" class="">为什么友元函数必须在类内部声明？</h3><p id="de1a350f-96f7-46c9-9f8e-0fbbfdadd9ab" class="">因为编译器必须能够读取这个结构的声明以理解这个数据类型的大小、行为等方面的所有规则。 有一条规则在任何关系中都很重要，那就是谁可以访问我的私有部分。</p><p id="24117c1c-a28f-4ae7-a6ac-5a20885e8150" class="">
+</p><h3 id="d8c001aa-1f2d-4b0a-9d24-85e8eb545646" class="">this指针？90、91</h3><p id="b56b56f1-431f-4fe9-b268-5711460ad01d" class="">
+</p><p id="3b4b44b8-3018-4fce-a793-9cefea937cbe" class="">
+</p><p id="2a466319-c286-4f37-95b4-7c87a20444e0" class="">
+</p><h3 id="3cdde020-8e6a-49e5-afba-656221a26381" class="">类如何实现只能静态分配和只能动态分配？</h3><p id="0645ffba-6077-49b5-bc3c-037dc35c44cf" class="">前者是把new、delete运算符重载为private属性。后者是把构造、析构函数设为protected属性，再用子类来动态创建。</p><p id="b7260bea-0eec-4979-af44-08018d85e869" class="">
+</p><p id="a8705af8-4c97-42e5-91ec-7ff4b3a9df9c" class="">
+</p><h3 id="c9d586d7-2bc7-4d4e-b854-addcac855f1f" class="">组合是什么？与继承相比有什么优缺点？</h3><p id="0dc2ccac-8164-47fc-aeef-5a34a15be0ec" class="">组合就是设计类的时候把要组合的类的对象加入到该类中作为自己的成员变量。</p><p id="2f635426-cae1-428e-b797-edcee981c19c" class=""><strong>组合的优点：</strong></p><ul id="27b8ca9f-1999-4be2-abc6-82a5d6668171" class="bulleted-list"><li>当前对象只能通过所包含的那个对象去调用其方法，所以所包含的对象的内部细节对当前对象时不可见的。</li></ul><ul id="d7feec5d-0f6b-491f-89c3-f69d4900c7b4" class="bulleted-list"><li>当前对象与包含的对象是一个<strong>低耦合</strong>关系，如果修改包含对象的类中代码不需要修改当前对象类的代码。</li></ul><ul id="96e6a652-4825-4e63-9a1a-ccc8ff70b830" class="bulleted-list"><li>当前对象可以在运行时动态的绑定所包含的对象。可以通过set方法给所包含对象赋值。</li></ul><p id="b9acaeff-0138-453b-8ecb-bebb4f619fef" class=""><strong>组合的缺点：</strong></p><ul id="a851ee20-ec5e-4753-8cc8-78341d778da6" class="bulleted-list"><li>容易产生过多的对象</li></ul><ul id="e6aac839-3ca4-4853-ad76-881bb7200dcc" class="bulleted-list"><li>为了能组合多个对象，必须仔细对接口进行定义</li></ul><p id="27ca9517-bdbd-472f-b979-761d68f9278d" class="">
+</p><p id="fcbb7316-230b-45ee-ab47-cdd5e2c2fc2e" class="">
+</p><h3 id="d54a664b-7854-46db-8d2d-b01b581b2e07" class="">静态成员与普通成员的区别？</h3><ol id="06efd336-1006-4248-a85c-b5c3c47a72fc" class="numbered-list" start="1"><li>生命周期<p id="90d25a3f-9a5f-44c2-8871-811839c2e398" class="">静态成员变量从类被加载开始到类被卸载，一直存在；</p><p id="c2814344-68a8-4752-a4f5-dc39bf20c446" class="">普通成员变量只有在类创建对象后才开始存在，对象结束，生命期就结束。</p></li></ol><ol id="d5b76b46-9043-4eb9-bf74-5d706466e52d" class="numbered-list" start="2"><li>共享方式<p id="a26e3804-92c7-4be8-8fee-180681c055b3" class="">静态成员变量是全类共享；</p><p id="015d968a-7138-4cf1-b072-f0806b607692" class="">普通成员变量是每个对象单独享用。</p></li></ol><ol id="3356c43f-14c6-42dd-a1c5-99c843b3f946" class="numbered-list" start="3"><li>内存存储位置<p id="efd48876-a23f-4cc5-89ae-0c4706ad42d5" class="">静态成员变量存储在静态全局区；</p><p id="7b0640f0-8825-4916-88bc-f13f0b664c82" class="">普通成员变量存储在栈或堆中。</p></li></ol><ol id="3466f80a-a3be-449e-993f-aa37aae4b398" class="numbered-list" start="4"><li>初始化位置<p id="4f5f6ff2-e96b-4faf-a252-5bab8b64c02c" class="">静态成员变量在类外初始化；</p><p id="def954b7-2c8e-444c-9133-c44a01e51b19" class="">普通成员变量在类中初始化。</p></li></ol><ol id="db894036-d74f-4e52-9efc-0cd1d8de8339" class="numbered-list" start="5"><li>默认实参<p id="b5c9b890-cd23-43aa-a269-c02ca7d8778b" class="">可以使用静态成员变量作为默认实参。</p></li></ol><p id="96d52cb9-dba3-4ceb-8fec-3bc9fc2c59eb" class="">
+</p><p id="3332ef7d-acdc-4741-b01d-535ac56e096f" class="">
+</p><h3 id="fe9617a9-169f-4647-8f9a-b4ef2c02247d" class="">在成员函数中调用delete this会出现什么问题？对象还可以使用吗？</h3><p id="314246d9-4b89-470b-b297-8ffefbe03c4a" class=""><strong>会出现什么问题？</strong></p><p id="91e9e0dd-57b2-4041-9be9-b8272a44953f" class="">在类对象的内存空间中，只有数据成员和虚函数表指针，并不包含代码内容，类的成员函数单独放在代码段中。在调用成员函数时，隐含传递一个this指针，让成员函数知道当前是哪个对象在调用它。 <span style="border-bottom:0.05em solid">当调用delete this时，类对象的内存空间被释放。在delete this之后进行的其他任何函数调用，只要不涉及到this指针的内容，都能够正常运行。一旦涉及到this指针，如操作数据成员，调用虚函数等，就会</span><strong><span style="border-bottom:0.05em solid">出现不可预期的问题</span></strong><span style="border-bottom:0.05em solid">。</span></p><p id="f6c7e1ca-b218-473d-bf98-0fec01f0a3c0" class=""><strong>为什么是不可预期的问题？</strong></p><p id="2cd5073d-5c14-489a-83a2-0c11657ef1a6" class="">delete this之后不是释放了类对象的内存空间了么，那么这段内存应该已经还给系统，不再属于这个进程。照这个逻辑来看，应该发生指针错误，无访问权限之类的令系统崩溃的问题才对啊？这个问题牵涉 到操作系统的内存管理策略。<span style="border-bottom:0.05em solid">delete this释放了类对象的内存空间，但是内存空间却并不是马上被回收到系统中，可能是缓冲或者其他什么原因，导致这段内存空间暂时并没有被系统收回。此时这段内存是可以访问的，你可以加上100，加上200，但是其中的值却是不确定的。当你获取数据成员，可能得到的是一串很长的未初始化的随机数；访问虚函数表，指针无效的可能性非常高，造成系统崩溃。</span></p><p id="2a29c6f1-da3f-4ccd-9c73-7450b9d42bbf" class=""><strong>如果在析构函数中delete this，会发生什么？</strong></p><p id="6cbd1a64-9529-4ebb-bbe2-8483f11f25ae" class="">堆栈溢出。因为delete的本质是「为将被释放的内存<strong>调用一个或多个析构函数</strong>，然后释放内存」。</p><p id="d4594e12-ef95-4278-8bb9-a50ecae2779c" class="">
+</p><h3 id="2838c4e1-45de-45bd-85a0-83707a3a099b" class="">空类的大小是多少？</h3><p id="1dfb04dc-e4bd-46eb-989a-4734c175540f" class="">不为0，不同编译器不同，vs为1。</p><p id="b49266ce-4c3a-425a-a185-25564434e93a" class="">如果有虚函数，不为1，具体大小根据指针大小确定。</p><p id="72f8033a-21bf-4a07-b419-c2eea8127add" class="">因为C++要求类的每个实例必须有独一无二的地址，所以编译器自动为空类分配一个字节大小，便保证了每个实例有独一无二的地址。</p><p id="c599dec2-0867-4dfb-994c-0f00718a73e3" class="">
+</p><p id="ec386501-5b18-4194-9a83-021939cbcf9b" class="">
+</p><h3 id="a144b37e-ed61-4085-9c80-108d00077e5e" class="">在成员函数里 <code>memset(this,0,sizeof(*this))</code> 会怎样？</h3><p id="b74a6711-98fe-47f4-850a-1a737ff2eb74" class="">将整个对象的内存全部置为0。</p><p id="bc3cc99b-dca3-41bd-9080-e3db1dc861c3" class="">但是如果有虚函数，会破坏虚函数表；如果有对象，会破坏对象的内存。</p><p id="b8e5d085-3b05-41e1-ad0b-141205e5fa1a" class="">
+</p><p id="b41bc2d9-e9df-4e33-96a7-39d1847c2475" class="">
+</p><h3 id="26600243-f498-4828-8bb9-e110761898a2" class="">如何组织一个类被实例化？</h3><ul id="8d4735ef-3bbd-4c55-92ac-9d140f35b1bc" class="bulleted-list"><li>将类定义为抽象基类</li></ul><ul id="dee60bcd-df22-4f64-a550-1111f61ec13f" class="bulleted-list"><li>将构造函数声明为private，不允许类外部创建类对象，只能在类内部创建对象</li></ul></div></article></body></html>

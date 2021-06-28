@@ -1,0 +1,642 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>整体</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0984b83c-9355-4c2b-9884-91dcdcec5ad6" class="page sans"><header><h1 class="page-title">整体</h1></header><div class="page-body"><hr id="f4376841-2c88-409c-9143-50291a380c61"/><p id="a11cc637-9492-482b-9e14-09623c312c3e" class="">
+</p><nav id="d215ddc7-c4f7-4f27-8f32-65673c091d5b" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#370ee700-2548-4d3d-b308-5c43a0fd1431">⭐️OSI的七层模型分别是哪七层？各自的功能？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8f104101-7ed8-49b8-a871-37836217f026">各层传输的数据？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1e1a8b6f-266f-40ba-9b8b-878dedc796b6">七层、五层模型的常见协议有哪些？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#03ee3a27-71f3-45a9-9031-c7c87a0eb491">完整的HTTP请求过程包括哪些内容？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5874b16c-71f2-4df9-bed7-b35e3bca2c36">⭐️在浏览器输入url到显示页面的过程？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a79f77b7-bd0b-4cbe-b90e-02907598b766">C/S和B/S架构的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#246a9699-0cf2-4519-ab0c-1a82c207afaa">简述在四层和七层网络协议中负载均衡的原理</a></div></nav><p id="cbe498fd-f2cd-4874-9564-67f66321bd06" class="">
+</p><p id="5978f88b-4f5d-4fbb-8aee-3c9e0813463f" class="">
+</p><p id="cbfa1f04-2207-43d1-b051-265fffbb1dfa" class="">
+</p><p id="b1e080bc-39b7-4ca0-a63b-0f903f3db2f0" class="">
+</p><h3 id="370ee700-2548-4d3d-b308-5c43a0fd1431" class="">⭐️OSI的七层模型分别是哪七层？各自的功能？</h3><ul id="ef278571-d821-4c29-b0e6-05ee1fc56af2" class="bulleted-list"><li>7.应用层（Application Layer）提供为应用软件而设计的接口，以设置与另一应用软件之间的通信。例如：HTTP、HTTPS、FTP、Telnet、SSH、SMTP、POP3等。</li></ul><ul id="81125324-ddc6-433a-9297-ea2b12854d98" class="bulleted-list"><li>6.表示层（Presentation Layer）把数据转换为能与接收者的系统格式兼容并适合传输的格式。</li></ul><ul id="ed9ff6d7-ac8e-4e36-bd11-e02beeedad88" class="bulleted-list"><li>5.会话层（Session Layer）负责在数据传输中设置和维护计算机网络中两台计算机之间的通信连接。</li></ul><ul id="5e920a9c-7da4-4937-b786-d0b64e8a19e1" class="bulleted-list"><li>4.传输层（Transport Layer）把传输表头（TH）加至数据以形成数据包。传输表头包含了所使用的协议等发送信息。例如:传输控制协议（TCP）等。</li></ul><ul id="3199b662-152b-440e-9939-39cd73a6f57a" class="bulleted-list"><li>3.网络层（Network Layer）决定数据的路径选择和转寄，将网络表头（NH）加至数据包，以形成分组。网络表头包含了网络资料。例如:互联网协议（IP）等。</li></ul><ul id="4fdc8cd4-b288-4071-9949-f095cf2f5892" class="bulleted-list"><li>2.数据链路层（Data Link Layer）负责网络寻址、错误侦测和改错。分为两个子层：逻辑链路控制（logical link control，LLC）子层和介质访问控制（Media access control，MAC）子层。</li></ul><ul id="3eca0089-e5b4-4cc4-b6e8-7af712177312" class="bulleted-list"><li>1.物理层（Physical Layer）在局部局域网上发送数据帧（Data Frame），它负责管理电脑通信设备和网络媒体之间的互通。包括了针脚、电压、线缆规范、集线器、中继器、网卡、主机接口卡等。</li></ul><figure id="1c88bca8-f5f7-4d15-9ccf-0771c76f7fd8" class="image"><a href="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled.png"><img style="width:528px" src="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled.png"/></a></figure><figure id="b4db192d-81cd-473d-85bc-6c67be2d895d" class="image"><a href="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%201.png"><img style="width:1318px" src="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%201.png"/></a></figure><p id="d79c0f0d-bfcf-4122-aa9b-0f229be2862b" class="">
+</p><figure id="04a5e4e2-9871-4d45-b08c-3f0b42791853" class="image"><a href="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%202.png"><img style="width:288px" src="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%202.png"/></a></figure><p id="dd7f5d0a-0070-40be-9e99-6c2164c00053" class="">七层模型是一个标准，而非实现。</p><p id="ab848aa5-fa6b-4670-925b-592e33937859" class="">四层模型是一个实现的应用模型，是由七层模型简化合并而来。</p><h3 id="8f104101-7ed8-49b8-a871-37836217f026" class="">各层传输的数据？</h3><ul id="125af75b-b5e2-4b0e-bc21-10170feb051a" class="bulleted-list"><li>传输层的数据称为<strong>段</strong></li></ul><ul id="e112ade4-08da-4bca-b8b5-6deadc366623" class="bulleted-list"><li>网络层的数据称为<strong>包</strong></li></ul><ul id="82bcdb6a-4278-46c2-b9f9-2504ec196e16" class="bulleted-list"><li>数据链路层的数据称为<strong>帧</strong></li></ul><ul id="1c9b01b6-3a77-4bb6-a659-03d4b06cf3f6" class="bulleted-list"><li>物理层的数据称为<strong>比特流</strong></li></ul><p id="cff7aaf9-42a9-40f9-844a-9f8b31491bf4" class="">
+</p><h3 id="1e1a8b6f-266f-40ba-9b8b-878dedc796b6" class="">七层、五层模型的常见协议有哪些？</h3><figure id="9caad549-1f25-43c4-a54e-b652c0f79654" class="image"><a href="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%203.png"><img style="width:1322px" src="%E6%95%B4%E4%BD%93%200984b83c93554c2b988491dcdcec5ad6/Untitled%203.png"/></a></figure><p id="7dc7411e-d681-43c4-a74e-43b90f7a14ed" class="">
+</p><h3 id="03ee3a27-71f3-45a9-9031-c7c87a0eb491" class="">完整的HTTP请求过程包括哪些内容？</h3><ul id="87ac8f54-7f97-4b10-81e7-4e32638cab15" class="bulleted-list"><li>建立起客户机与服务器的连接（可能包括域名解析、TCP握手等）</li></ul><ul id="57dd3dad-9ec5-4765-afb5-fdbc3d48fafe" class="bulleted-list"><li>建立连接后，客户机发送一个请求给服务器</li></ul><ul id="5bd78031-f019-4612-b06d-8fed2d5757f5" class="bulleted-list"><li>服务器收到请求后给予响应信息</li></ul><ul id="1790c716-c27e-481a-b5da-f12aba1e70b1" class="bulleted-list"><li>客户端浏览器将返回的内容解析并呈现，断开连接</li></ul><p id="eedb49b7-e040-4918-9980-031377037b9f" class="">其中还有更加具体的一些内容我们看不见：</p><p id="5a270ba9-5b19-445b-a128-aaaec6c052ae" class=""><strong>域名解析</strong> → 发起<strong>TCP的3次握手</strong> → 建立TCP连接后发起http请求 → 服务器响应http请求，浏览器得到html代码 → 浏览器解析html代码，并请求html代码中的资源（如js、css、图片等） → 浏览器对页面进行渲染呈现给用户</p><p id="fe672dbd-a876-4ca7-bb29-538e204f4480" class="">
+</p><h3 id="5874b16c-71f2-4df9-bed7-b35e3bca2c36" class="">⭐️在浏览器输入url到显示页面的过程？</h3><ol id="7a383772-f1a0-4e0e-a667-00c1805437b5" class="numbered-list" start="1"><li>浏览器URL解析，得到域名、产生HTTP请求信息</li></ol><ol id="45891318-3020-4d5e-82d7-987afbe502d9" class="numbered-list" start="2"><li>DNS解析，获得目标IP地址</li></ol><ol id="1279da2a-1e61-4a9c-851f-ee347430a55a" class="numbered-list" start="3"><li>ARP协议，得到MAC地址</li></ol><ol id="e641ac5f-584e-446e-becc-3f9232beed39" class="numbered-list" start="4"><li>TCP连接</li></ol><ol id="6e4572b2-b733-4ce4-9f0e-639d0a559780" class="numbered-list" start="5"><li>发送HTTP请求（如果不是HTTP协议，会断开TCP连接（挥手），然后加上SSL加密技术重新TCP连接，之后发送请求。发送请求这中间应该包含了一层一层往下加头的过程，再经过交换机、路由器等）</li></ol><ol id="064bf1ca-990e-4be8-b110-b8907ea7f9c3" class="numbered-list" start="6"><li>接收响应，浏览器渲染，显示页面</li></ol><figure id="2856dde1-bc7f-433d-8f35-8294c6b36876" class="link-to-page"><a href="%E5%AE%8C%E6%95%B4%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B%202856dde1bc7f433d8f358294c6b36876.html">完整网络通信过程</a></figure><p id="955fc3f3-aee6-4f30-9868-e4c177376edb" class="">
+</p><ol id="8ea5de10-b475-4aac-aa50-717ff81c12ba" class="numbered-list" start="1"><li>URL 解析</li></ol><ol id="c3de02cb-256c-4760-b397-745e716db830" class="numbered-list" start="2"><li>DNS 查询</li></ol><ol id="20f52e0d-c0e4-4def-8ab1-1dc617529473" class="numbered-list" start="3"><li>TCP 连接</li></ol><ol id="bc14bd98-fa25-4c1b-b7d7-5ecee7ddb281" class="numbered-list" start="4"><li>客户端发送HTTP请求</li></ol><ol id="af310087-c44d-4f10-80e6-5ee380da6e04" class="numbered-list" start="5"><li>服务端处理请求</li></ol><ol id="22cf5afa-da6b-4f9b-95bd-445b388a4f68" class="numbered-list" start="6"><li>接收响应</li></ol><ol id="59a3b65d-db2c-463d-ac2f-5641bcd592ae" class="numbered-list" start="7"><li>渲染页面</li></ol><p id="6df1b7e5-942a-4b55-961b-d523d96164ff" class="">
+</p><p id="495f7366-044f-4ee3-a555-9d557b00f6d7" class="">
+</p><h3 id="a79f77b7-bd0b-4cbe-b90e-02907598b766" class="">C/S和B/S架构的区别？</h3><p id="a9df8d1e-c5dd-4bf2-a8c7-980f0a1f670c" class="">C/S架构：</p><p id="f5972e52-b8a4-4149-b764-30718ec9a366" class="">指客户机和服务器，在客户机端必须装客户端软件及相应环境后，才能访问服务器。例如安装在电脑上的拨号软件。</p><p id="f10bb90a-a073-4c8f-b4a8-3f092c8c8dcf" class="">B/S架构：</p><p id="37e7ca64-a644-473d-b80d-e463e4d88135" class="">即浏览器／服务器结构。就是在客户端你不需要下载专用的客户端软件，只需一款浏览器，把大部分的事务逻辑处理放在后端服务器。例如通过网页形式登录的EDU无线网络。</p><p id="5d7f848c-22a5-4526-a359-d248f0bf5fc0" class="">区别：</p><ol id="7f1ff234-3bed-4d3d-8897-5885baafa6b4" class="numbered-list" start="1"><li>C/S可以使用任何通信协议，而B/S架构规定必须实现HTTP协议。</li></ol><ol id="66a883c6-1421-4ee5-be64-c2f1cfb6e86f" class="numbered-list" start="2"><li>C/S中，将各种计算和数据处理放在客户端执行，服务器端只进行数据存取，因此客户端与服务器端交换的完全是纯数据流；而在B/S中，数据的计算和逻辑处理大部分都在服务器端进行，而浏览器只是将计算与数据取得的结果呈现。</li></ol><ol id="a4286e5f-ee36-4bd1-b6e7-97dd2b04f071" class="numbered-list" start="3"><li>由于C/S的信息处理在本地，可以降低服务器端的压力，提升处理速度；同时由于C/S需要客户端软件支持，升级和维护比较困难，需要针对不同的环境进行客户端程序开发，成本较大。相反的，B/S具有的优势是分布性良好，随时随地通过浏览器就能处理业务；同时维护方便简单，改变服务器端的数据就能实现更新升级；由于数据处理都在服务器，浏览器只作为数据的呈现者，导致服务器的压力较大，对服务器的要求较高。</li></ol><p id="1365d1a9-53cb-4ae0-bf41-377c8ce68c3c" class="">类似于客户端游戏和网页游戏？</p><p id="18167527-8f4f-4778-a7dc-192610e42c4e" class="">
+</p><p id="9a40007f-25f6-4d36-80ee-626fb0feb2a4" class="">
+</p><h3 id="246a9699-0cf2-4519-ab0c-1a82c207afaa" class="">简述在四层和七层网络协议中负载均衡的原理</h3></div></article></body></html>

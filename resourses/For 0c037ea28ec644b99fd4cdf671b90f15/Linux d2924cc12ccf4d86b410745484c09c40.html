@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Linux</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d2924cc1-2ccf-4d86-b410-745484c09c40" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💿</span></div><h1 class="page-title">Linux</h1></header><div class="page-body"><hr id="c6b41d3f-7658-4974-b21b-41b536010512"/><p id="77b77269-bc41-4307-9249-b7ea6bf47a9f" class="">
+</p><p id="9d27f7e8-f55b-4d6d-a3c1-1bb0b1569e58" class="">
+</p><p id="523f0d6b-88ef-4bf8-91eb-570b621757ce" class="">
+</p><nav id="69fca61c-50d5-42e8-979c-ba1e32212ac2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a0b4fcf4-543e-4897-9680-fc94c2e44112">Linux命令</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#794f94dd-7fd4-442a-b71f-63af2e717c14">说下常用的linux命令？他们的功能？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#39a248bb-a4bf-4290-bdd2-af8d926c4ad1">netstat可以看到tcp的哪些状态？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c6a9a991-f1fc-4c34-aeb3-40faccf7650c">统计现在TCP连接time_wait状态的连接数？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#34cdf20e-11fb-41ca-a8e3-48da4f7e8752">查看当前进程状态、杀死某个进程用什么命令？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a80146bb-f7a8-4a6e-85a8-60f698eee119">怎么看一个进程打开了哪些文件？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1dc2bfba-af6b-4a15-a021-7e1d5059ca75">Linux 下如何查看端口被哪个进程占用？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a5a13313-6a4c-4016-b4eb-e04fdf9562a9">CPU占用高如何排查？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1d658d31-6c4f-4ce4-bf32-6a0bb29942cf">IO占用高如何排查？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0cf62e65-0823-4315-801e-efa598b71fdf">Linux 下如何排查 CPU 以及 内存占用过多？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#844b1d9d-b6da-4a22-bd9c-f654d519c5cb">Linux 下如何查看某个端口对应的进程？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1dfd81a2-7186-434e-8600-af3be444a143">linux怎么看CPU占用？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2577ef23-4931-40ec-b032-478add08db13">top命令可以看到哪些信息？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#144d7d22-837a-4819-b8fa-1797786a9efd">查看进程命令？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ba69a12d-1248-4aeb-ad14-d79f480c158f">Linux下load average是什么（平均可运行进程数量）？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b19e18d5-d027-4edd-bec4-ce1d92229140">Linux 如何查看实时的滚动日志？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#006942c9-3d81-4f8d-96b2-1d9cb630ac84">如何调试服务器内存占用过高的问题？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#555dc7ce-8b51-470e-9f89-472f801f3812">Linux 页大小是多少？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#79328e4f-e7ce-4006-9bcd-25363dafa546">简述 traceroute 命令的原理</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0bf0807d-03ec-41cc-8049-725091273add">shell中$命令是什么含义？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fae2158d-0639-4cc5-85b3-92061ac882d0">ELF可执行文件听过吗</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c9ebaf36-d299-4091-a2b8-5cf51fecdc48">零拷贝</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#08d0611f-1476-4d1e-a329-a15159e3d628">简述 Linux 零拷贝的原理</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3091fa67-9aec-4154-994b-71a4830309cf">传统的IO：read、write</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#efc964e5-65c2-4e9d-a321-1a3f4b0aba47">sendfile？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#89968cc3-8de9-4811-aea9-e8011a0d72af">mmap？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e501db86-b0e0-4080-80c2-c9bec8ac3143">简述 mmap 的使用场景以及原理</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e3133016-2e69-4984-abd5-46bf6e40066a">简述操作系统中 malloc 的实现原理</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#18334ffd-af73-413e-a69c-2ff8aa3b2f68">IO</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7264e651-7e19-4029-987f-9b9b8beff56d">BIO、NIO 有什么区别？怎么判断NIO写文件时 Buffer 已经写满？简述 Linux 的 IO模型</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#64b6fa8e-0aca-4eaf-b170-a96dad066208">⭐️简述 select, poll, epoll 的使用场景以及区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a7dc76d8-1855-46c6-acc0-a3143c337f05">水平触发和边缘触发？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a9da24d5-6783-4f6e-abc4-c65105e30b27">缓存</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b7bd3c68-cccf-4b03-8f69-ef38cfd468ee">buff和cache的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07bc1acf-5ea8-44ac-ae92-616771539e8b">其它</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5b1e3521-790b-419b-a737-14dd43a0880a">软链接和硬链接的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#75f75e36-8a15-498c-881e-5b941e165179">什么是块设备？什么是字符设备？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ea72cb56-e0b5-4c90-9025-40f31aadb1e5">LVS 的 NAT、TUN、DR 原理及区别</a></div></nav><p id="ee1cc46f-7e41-4ded-b636-55420fc49aa6" class="">
+</p><p id="f44c44e6-a51a-4005-87fc-a5ab0a05b38f" class="">
+</p><p id="5593fae5-6235-4e17-9429-71c8aed994a8" class="">
+</p><h2 id="a0b4fcf4-543e-4897-9680-fc94c2e44112" class="">Linux命令</h2><h3 id="794f94dd-7fd4-442a-b71f-63af2e717c14" class="">说下常用的linux命令？他们的功能？</h3><p id="f9255853-c622-4f4c-abbb-a7485130815e" class="">ls, cd, pwd, mkdir, rm, rmdir, mv, cp, cat, more, less, head, tail</p><p id="932a9456-0da2-4c0c-b78a-dde61846bfa7" class="">time, 用于测算一个命令（即程序）的执行时间</p><p id="0123a560-097d-4052-af3a-9f4686dd1789" class="">再看一下cat、more、less</p><p id="7ca7b029-1ab8-48e5-acd9-e0e97f5a62f5" class="">
+</p><p id="25ee4ec2-7edc-45dd-b8cc-48fcf53e082f" class="">
+</p><h3 id="39a248bb-a4bf-4290-bdd2-af8d926c4ad1" class="">netstat可以看到tcp的哪些状态？</h3><p id="ab2ee29b-71db-47cd-8655-4a037427ab1a" class="">11种状态</p><p id="4f3cb380-7845-45fd-a17c-76d37eabffd1" class="">客户端：SYN_SENT, ESTABLISHED,  FIN_WAIT_1, FIN_WAIT_2, TIME_WAIT</p><p id="1465b650-bb09-4a73-a506-4f6f73217a00" class="">服务端：LISTEN, SYN_RCVD, ESTABLISHED, CLOSE_WAIT, LAST_ACK, CLOSED</p><p id="725706ac-64ff-41cb-8286-f24999f1fd68" class="">
+</p><h3 id="c6a9a991-f1fc-4c34-aeb3-40faccf7650c" class="">统计现在TCP连接time_wait状态的连接数？</h3><p id="f92105e6-4226-41fe-8857-cec5bf84ca29" class=""><code>netstat -nat|grep -i time_wait</code> ：查看time_wait状态的连接（其他状态的把time_wait换成其它就行了）</p><p id="01204bb2-5d57-44e9-8e9c-5d32cfcf3de9" class=""><code>netstat -nat|grep -i time_wait -c</code> ：统计行数</p><p id="17c6b6e8-29c9-45ba-b5b9-c99bdb24a530" class="">
+</p><p id="ae7eba2f-bd47-42f7-b51a-1b2dd9f3b5de" class="">
+</p><h3 id="34cdf20e-11fb-41ca-a8e3-48da4f7e8752" class="">查看当前进程状态、杀死某个进程用什么命令？</h3><p id="20d863a7-3a3b-4dee-b309-718d5e401b47" class=""><code>ps</code> </p><p id="7c0f518d-f923-40d9-ae72-135c06ab3630" class=""><code>ps -l</code> ：列出与本次登录有关的进程信息</p><p id="c6c538c2-7010-40f3-b1c9-3b61223d97dc" class=""><code>ps -aux</code> ：查询内存中进程信息</p><p id="0da6758f-4369-4e61-8e29-e7bb4712da9f" class=""><code>(ps -aux | grep [pid])</code> ：查询[pid]进程的动态信息</p><p id="b64526c1-8ae3-4110-8420-f0af13f33b97" class="">
+</p><p id="8c6fcef2-32d0-499d-b2a4-6f8b4b860f70" class=""><code>kill -9 [pid]</code> ：杀死进程</p><p id="f122e178-0b4f-43e6-b101-504af454ff11" class="">
+</p><h3 id="a80146bb-f7a8-4a6e-85a8-60f698eee119" class="">怎么看一个进程打开了哪些文件？</h3><p id="c1af8781-c2e6-4de2-a4b1-df23d0876573" class="">lsof可以列出文件信息</p><p id="75025b49-ee5e-41fd-8a5a-121c52be8200" class=""><code>lsof -p 进程号</code> ：通过某个进程号显示该进程打开的文件</p><p id="0e269e90-f583-41f1-87d0-e6dac5e7e305" class=""><code>lsof -u 用户名</code> ：列出某个用户打开的文件信息</p><figure id="e264acba-9385-4a9d-8f9b-e7ee2926d1dd"><a href="https://www.cnblogs.com/bonelee/p/7735479.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">linux命令 - lsof 查看进程打开那些文件 或者 查看文件给那个进程使用</div><div class="bookmark-description">可以列出被进程所打开的文件的信息。被打开的文件可以是 1.普通的文件，2.目录 3.网络文件系统的文件，4.字符设备文件 5.(函数)共享库 6.管道，命名管道 7.符号链接 8.底层的socket字流，网络socket，unix域名socket 9.在linux里面，大部分的东西都是被当做文件的.....还有其他很多 怎样使用lsof 这里主要用案例的形式来介绍lsof 命令的使用 1.列出所有打开的文件: lsof 备注: 如果不加任何参数，就会打开所有被打开的文件，建议加上一下参数来具体定位 2. 查看谁正在使用某个文件 lsof /filepath/file 3.递归查看某个目录的文件信息 lsof +D /filepath/filepath2/ 备注: 使用了+D，对应目录下的所有子目录和文件都会被列出 4. 比使用+D选项，遍历查看某个目录的所有文件信息 的方法 lsof | grep &#x27;/filepath/filepath2/&#x27; 5. 列出某个用户打开的文件信息 lsof -u username 备注: -u 选项，u其实是user的缩写 6. 列出某个程序所打开的文件信息 lsof -c mysql 备注: -c 选项将会列出所有以mysql开头的程序的文件，其实你也可以写成 lsof | grep mysql, 但是第一种方法明显比第二种方法要少打几个字符了 7.</div></div><div class="bookmark-href"><img src="https://www.cnblogs.com/favicon.ico" class="icon bookmark-icon"/>https://www.cnblogs.com/bonelee/p/7735479.html</div></div></a></figure><p id="dcfc1561-aa00-4271-81a9-72fae4eeae40" class="">
+</p><h3 id="1dc2bfba-af6b-4a15-a021-7e1d5059ca75" class="">Linux 下如何查看端口被哪个进程占用？</h3><p id="26fe10d7-ce43-4a4a-a337-003e42ecab18" class="">
+</p><h3 id="a5a13313-6a4c-4016-b4eb-e04fdf9562a9" class="">CPU占用高如何排查？</h3><p id="86030c6c-ea2d-4b87-9629-9fbb75176ee7" class="">
+</p><h3 id="1d658d31-6c4f-4ce4-bf32-6a0bb29942cf" class="">IO占用高如何排查？</h3><p id="f6a776da-a130-4448-ba3e-5920575bf40d" class=""><code>iotop -oP</code> ：找到IO占用高的进程</p><p id="341859a3-32b0-4a12-84cf-b31ff1f2e66c" class=""><code>iostat</code> ：用于查看及其磁盘IO情况</p><p id="06bcfe60-6373-4d5b-9204-314885254208" class="">
+</p><h3 id="0cf62e65-0823-4315-801e-efa598b71fdf" class="">Linux 下如何排查 CPU 以及 内存占用过多？</h3><ol id="99c42214-db70-48d6-ba45-1f2aa50e9c48" class="numbered-list" start="1"><li>top查看CPU占用高或内存占用高的进程，</li></ol><ol id="6c9d5b81-681b-40ee-b527-68be426d310f" class="numbered-list" start="2"><li>然后top -Hp [pid]，找到进程中消耗资源最高的进程</li></ol><ol id="3742eb23-9bf1-48b3-a477-480b4453ec10" class="numbered-list" start="3"><li> <code>echo &#x27;obase=16;[tid]&#x27; | bc或者printf &quot;%x\n&quot; [tid]</code> 将线程id转换为16进制</li></ol><ol id="1c25a1cf-b0e9-413e-ab5e-6318925ddf15" class="numbered-list" start="4"><li> <code>jstack [pid] | grep [tid的16进制] -A 10</code> 打印堆栈信息</li></ol><p id="2d21fc15-9f29-489c-bb25-f65bb07ef2ce" class="">emmmm，这个jstack好像是用于java的呀</p><p id="fa26ace6-1817-4901-a37b-96c2e8369a59" class="">
+</p><h3 id="844b1d9d-b6da-4a22-bd9c-f654d519c5cb" class="">Linux 下如何查看某个端口对应的进程？</h3><p id="6f4a9080-0f8b-4449-8ce7-6faa576f016c" class=""><code>lsof -i:端口号</code></p><p id="c5c269a8-d333-49c5-98cc-d1b569cc0db3" class=""><code>netstat -tunlp|grep 端口号</code></p><p id="d43eb66d-eb05-426e-af9a-ca6ae9c7984a" class=""><code>netstat -an | grep &#x27;:80&#x27;</code></p><p id="a43f5640-ab19-4906-b276-1de8b51485b4" class="">
+</p><p id="d020786d-9a19-429b-94db-945133c63e0f" class="">
+</p><h3 id="1dfd81a2-7186-434e-8600-af3be444a143" class="">linux怎么看CPU占用？</h3><p id="bd05198b-43ef-46a3-9445-4b733092c4f4" class="">（top）</p><p id="39976fda-8943-4c72-a690-34104aacf84e" class="">
+</p><h3 id="2577ef23-4931-40ec-b032-478add08db13" class="">top命令可以看到哪些信息？</h3><p id="0a3822e6-690c-4958-82e3-931ceef8c856" class="">top命令是Linux下常用的性能分析工具，能够<strong>实时显示系统中各个进程的资源占用状况</strong>，类似于Windows的任务管理器</p><figure id="a6c18e6e-85b6-40e9-aa53-a14feda7fa13" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled.png"><img style="width:1560px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled.png"/></a></figure><pre id="427ef71b-2c12-4073-950f-0634bb0fd820" class="code"><code>top - 01:06:48 up  1:22,  1 user,  load average: 0.06, 0.60, 0.48
+Tasks:  29 total,   1 running,  28 sleeping,   0 stopped,   0 zombie
+Cpu(s):  0.3% us,  1.0% sy,  0.0% ni, 98.7% id,  0.0% wa,  0.0% hi,  0.0% si
+Mem:    191272k total,   173656k used,    17616k free,    22052k buffers
+Swap:   192772k total,        0k used,   192772k free,   123988k cached
+
+PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+1379 root      16   0  7976 2456 1980 S  0.7  1.3   0:11.03 sshd
+14704 root      16   0  2128  980  796 R  0.7  0.5   0:02.72 top
+1 root      16   0  1992  632  544 S  0.0  0.3   0:00.90 init
+2 root      34  19     0    0    0 S  0.0  0.0   0:00.00 ksoftirqd/0
+3 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/0</code></pre><p id="2ccacae2-d59e-42bd-b0a8-12947d6a3b2b" class="">当前时间、任务队列的平均长度、</p><p id="51833bf1-1877-4012-ba3a-e6ae65b0ab24" class="">进程总数（正在运行的、睡眠的、停止的、僵尸）</p><p id="9088323c-07eb-45b3-b672-c90fd5fe4105" class="">CPU使用情况（用户占比、内核空间占比、空闲占比）</p><p id="333c1282-73cf-4087-b61e-7e87a53bfe29" class="">物理内存（总量、已使用、空闲）</p><p id="11b157be-81a3-4615-bda6-e3b4e7cb6953" class="">交换区（总量、）</p><p id="fe25d8ae-ed45-4eeb-89ad-55c36c88c4a4" class="">
+</p><p id="f34b198d-675c-4bc5-8629-87e921df35c2" class="">下面是各个进程的详细信息</p><pre id="cb38cbda-89e4-4c1e-b45d-cccb398e7b58" class="code"><code>序号  列名    含义
+a    PID     进程id
+b    PPID    父进程id
+c    RUSER   Real user name
+d    UID     进程所有者的用户id
+e    USER    进程所有者的用户名
+f    GROUP   进程所有者的组名
+g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?
+h    PR      优先级
+i    NI      nice值。负值表示高优先级，正值表示低优先级
+j    P       最后使用的CPU，仅在多CPU环境下有意义
+k    %CPU    上次更新到现在的CPU时间占用百分比
+l    TIME    进程使用的CPU时间总计，单位秒
+m    TIME+   进程使用的CPU时间总计，单位1/100秒
+n    %MEM    进程使用的物理内存百分比
+o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
+p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。
+q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
+r    CODE    可执行代码占用的物理内存大小，单位kb
+s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb
+t    SHR     共享内存大小，单位kb
+u    nFLT    页面错误次数
+v    nDRT    最后一次写入到现在，被修改过的页面数。
+w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)
+x    COMMAND 命令名/命令行
+y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名
+z    Flags   任务标志，参考 sched.h</code></pre><figure id="ea07da42-6602-48a0-9a1f-faaced06b2b4"><a href="https://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316399.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">linux的top命令参数详解 - ggjucheng - 博客园</div><div class="bookmark-description">top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。 top显示系统当前的进程和其他状况,是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止 ...</div></div><div class="bookmark-href"><img src="https://www.cnblogs.com/favicon.ico" class="icon bookmark-icon"/>https://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316399.html</div></div></a></figure><p id="1c8b00c6-88f8-4e03-9e04-f8adfad54a89" class="">
+</p><h3 id="144d7d22-837a-4819-b8fa-1797786a9efd" class="">查看进程命令？</h3><p id="cf843bd9-e751-4b6a-9476-a4244a55074a" class="">ps</p><p id="c0f35716-6905-46c5-8f52-5f7916fb6168" class="">top</p><p id="368977a0-03e1-4eec-a736-5fd19bd51192" class="">pstree</p><p id="b802d8d1-d73b-4da2-8cec-f70ca6c1f778" class="">pgrep</p><p id="94ee735c-5d02-4a85-a60a-11f030fd7a61" class="">
+</p><h3 id="ba69a12d-1248-4aeb-ad14-d79f480c158f" class="">Linux下load average是什么（平均可运行进程数量）？</h3><p id="73a6dff3-8eac-4f86-9e2f-597837d4bdc5" class="">linux系统中的Load对当前CPU工作量的度量。简单的说是进程队列的长度。</p><p id="20bbe6aa-8747-441b-a64e-ba2b4ae17c69" class="">系统平均负载被定义为在特定时间间隔内运行队列中的平均进程数。如果一个进程满足以下条件则其就会位于运行队列中：</p><ul id="fff0e962-edc9-4ce3-b5d2-1acce1f98277" class="bulleted-list"><li>它没有在等待I/O操作的结果</li></ul><ul id="a24c0ff1-aa0c-4bfe-8b94-6548f2f0d535" class="bulleted-list"><li>它没有主动进入等待状态(也就是没有调用&#x27;wait&#x27;)</li></ul><ul id="ef1bdb66-4fd1-4c2e-8fd3-ecdcd6226ffb" class="bulleted-list"><li>没有被停止(例如：等待终止)</li></ul><p id="6f84eaa3-1049-4786-8d9b-3e25d0afa6e4" class="">上面的输出，load average后面分别是1分钟、5分钟、15分钟的负载情况。数据是每隔5秒钟检查一次活跃的进程数，然后根据这个数值算出来的。如果这个数除以CPU 的数目，结果高于5的时候就表明系统在超负荷运转了。</p><p id="b98da607-6522-4c48-88b9-a890492d54ad" class=""><strong>1） 单核处理器</strong></p><p id="48072ae1-ff85-4ae2-9c88-84043be3bb18" class="">假设我们的系统是单CPU单内核的，把它比喻成是一条单向马路，把CPU任务比作汽车。当车不多的时候，load &lt;1；当车占满整个马路的时候 load=1；当马路都站满了，而且马路外还堆满了汽车的时候，load&gt;1</p><p id="7772cf60-178d-4f01-b391-0aba69a3367c" class=""><strong>2） 多核处理器</strong></p><p id="a17ca9dc-9ec3-428b-aefd-3b1e108430c6" class="">我们经常会发现服务器Load &gt; 1但是运行仍然不错，那是因为服务器是多核处理器（Multi-core）。假设我们服务器CPU是2核，那么将意味我们拥有2条马路，我们的Load = 2时，所有马路都跑满车辆。</p><p id="c8b88154-cb14-4e01-8516-c9df0f983846" class="">
+</p><h3 id="b19e18d5-d027-4edd-bec4-ce1d92229140" class="">Linux 如何查看实时的滚动日志？</h3><p id="6c530d01-a971-445d-ba20-bcc7c0f09bbe" class=""><code>tail -f filename</code> 会把 filename 文件里的最尾部的内容显示在屏幕上，并且不断刷新，只要 filename 更新就可以看到最新的文件内容。</p><p id="a0f2d1bd-7110-4135-aefd-42a3970216c4" class=""><code>tail notes.log</code> # 默认显示最后 10 行</p><p id="48a681c5-a18f-451a-83e1-e040809d39c6" class=""><code>tail -f notes.log</code> # 显示 notes.log 文件的最后 10 行。当将某些行添加至 notes.log 文件时，tail 命令会继续显示这些行。 显示一直继续，直到您按下（Ctrl-C）组合键停止显示。</p><p id="e20b157c-95ed-4564-9153-889dd1da0340" class="">
+</p><p id="c3b2fc93-6388-4b34-802f-14c697b6c9f5" class="">
+</p><h3 id="006942c9-3d81-4f8d-96b2-1d9cb630ac84" class="">如何调试服务器内存占用过高的问题？</h3><p id="5b4a7ca9-2257-49c6-8d6e-6307a4ba5af6" class="">
+</p><p id="3e8dda8d-4501-4e00-9696-a82f5a2a14f4" class="">
+</p><h3 id="555dc7ce-8b51-470e-9f89-472f801f3812" class="">Linux 页大小是多少？</h3><p id="307c717d-d9d9-44f9-9f0d-bc80568f7f3b" class=""><code>getconf PAGE_SIZE</code></p><p id="6ce131dc-66e5-4bb1-9e9c-f5544ae4db6f" class="">4096</p><p id="0fe4e5e0-f5f2-4278-966e-06885422fd9f" class="">即4kb</p><p id="4b9c5400-b876-42d4-9bdc-0610ed224a60" class="">
+</p><h3 id="79328e4f-e7ce-4006-9bcd-25363dafa546" class="">简述 traceroute 命令的原理</h3><p id="738ed546-8b56-4846-b5e3-89d12e91c0ee" class="">Traceroute是一种常规的网络分析工具，用来<strong>定位到目标主机之间的所有路由器</strong></p><p id="8fac8f3a-e86f-4d5d-b54b-716039aeb10b" class="">基于ICMP实现<div class="indented"><p id="57031870-d338-4192-a062-2769eed70848" class="">原理：TTL（报文生存时间）每经过一个路由器就会减1，因此表示能经过几个路由器。使其从1开始增加，直到到达目标主机，就可以得到每一跳路由器的ip。</p><p id="17510069-dd0c-490f-928d-1d9778d6c72f" class="">TTL过期，即中间路由，路由器会回复一个告警报文（类型11编码0）给源主机，包含了路由器的名字和它的ip地址，源主机另外还从定时器得到往返时延。</p><p id="2bfb1fa0-d573-4281-aa68-6390c4b547a9" class="">到达目标主机，目标主机会回复一个端口不可达（类型3编码3）的icmp报文，源主机就知道不用再发另外的探测分组了。</p><figure id="6eac154c-3ce4-4396-a6db-937916eeb5f5" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%201.png"><img style="width:631px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%201.png"/></a></figure><ol id="21ee3150-4c66-4e31-a59a-6dc187ce4c66" class="numbered-list" start="1"><li>客户端发送一个TTL为1的<strong>ICMP请求回显</strong>数据包，在第一跳的时候超时并返回一个<strong>ICMP超时数据包</strong>，得到第一跳的地址。</li></ol><ol id="0f3456ef-5c0e-48e5-b24c-e3459110d7ef" class="numbered-list" start="2"><li>客户端发送一个TTL为2的ICMP请求回显数据包，得到第二跳的地址。</li></ol><ol id="fbf7dd56-16f0-49a0-93a2-dbeb635a5a18" class="numbered-list" start="3"><li>...以此下去，直到到达目标主机，目标主机返回一个ICMP回显应答。</li></ol><ol id="2b2ff86c-5a55-4f37-a599-d6706eee769c" class="numbered-list" start="4"><li>客户端发送一个TTL为3的ICMP请求回显数据包，到达目标主机，目标主机返回一个<strong>ICMP回显应答</strong>，traceroute结束。</li></ol></div></p><p id="2c9a6023-6151-4872-9c94-84aa1691e2d8" class="">
+</p><h3 id="0bf0807d-03ec-41cc-8049-725091273add" class="">shell中$命令是什么含义？</h3><p id="24f3fd47-1587-4b2c-a812-f43be193ca4a" class="">
+</p><p id="04478530-0622-47e9-b14e-ca0fd91fbbc0" class="">
+</p><h3 id="fae2158d-0639-4cc5-85b3-92061ac882d0" class="">ELF可执行文件听过吗</h3><p id="f5159160-026b-4978-a87b-2edc8170c396" class="">ELF(Executable and Linking Format)是一种对象文件的格式，用于定义不同类型的对象文件（object files）中都放了什么东西、以及都以什么样的格式去放这些东西。ELF是构成众多xNIX系统的基础之一。</p><p id="f78c8e65-a611-445f-8d54-96b47fb5fda9" class="">
+</p><p id="6903e638-2b57-4029-8ff9-d95c30e21cb0" class="">
+</p><p id="77db6ad2-ba53-43b9-b42e-ae743a07bd3b" class="">
+</p><h2 id="c9ebaf36-d299-4091-a2b8-5cf51fecdc48" class="">零拷贝</h2><h3 id="08d0611f-1476-4d1e-a329-a15159e3d628" class="">简述 Linux 零拷贝的原理</h3><p id="d9eeda2c-cdb0-47d0-8fda-bdac74d5040d" class="">零拷贝技术是指计算机执行操作时，CPU不需要先将数据从某处内存复制到另一个特定区域，这种技术通常用于通过网络传输文件时节省CPU周期和内存带宽。</p><p id="4d887030-7050-4344-9d85-78de2a928079" class="">零拷贝技术：</p><ul id="8a12ef0d-bc49-4b5d-a582-fe395ab7b6b0" class="bulleted-list"><li>sendfile</li></ul><ul id="62a2e101-fb71-4722-af78-06689426c443" class="bulleted-list"><li>mmap+write</li></ul><ul id="a4b27e36-a4b4-4097-a78b-8554d33b01a3" class="bulleted-list"><li>splice</li></ul><ul id="0c3af560-822a-481b-906c-372f89330e8a" class="bulleted-list"><li>直接IO</li></ul><figure id="1b605482-33c6-4a44-90a1-76640994320a"><a href="https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&amp;mid=2648464590&amp;idx=1&amp;sn=55ca6c3b30c13b6213e7864856edf51d&amp;chksm=8766016bb011887d2c9fffe6098d8c78e297b31dbb6693e02c0669ac18d644a193c73d633b30&amp;scene=21#wechat_redirect" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">一文读懂零拷贝技术</div><div class="bookmark-description">通俗的说， 就是运行着用户编写的应用程序的虚拟内存空间。在32位的操作系统中，每个进程都有 4GB 独立的虚拟内存空间，而 0 ~ 3GB 的虚拟内存空间就是用户空间 。 就是运行着操作系统代码的虚拟内存空间，而 3GB ~ 4GB 的虚拟内存空间就是内核空间。 我们先来回忆一下，服务端发送一个文件给客户端一般需要进行什么操作。一般来说，服务端发送一个文件给客户端的步骤如下： 图2 就是数据的复制过程，首先会从文件中读取数据到内核的 页缓存（page cache） ，然后再从页缓存中复制到用户空间的缓冲区中。 而当调用 系统调用把用户空间缓冲区中的数据发送到客户端 Socket 时，首先会把缓冲区的数据复制到内核的 Socket 缓冲区中，网卡驱动会把 Socket 缓冲区的数据发送出去，如图 3 所示： 从上图可以看出，服务端发送文件给客户端的过程中需要进行两次数据复制，第一次是从内核空间的页缓存复制到用户空间的缓冲区，第二次是从用户空间的缓冲区复制到内核空间的 Socket 缓冲区。 仔细观察我们可以发现，上图中的页缓存其实可以直接复制到 Socket 缓冲区，而不需要复制到用户空间缓冲区的。如图 4 所示：</div></div><div class="bookmark-href"><img src="https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico" class="icon bookmark-icon"/>https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&amp;mid=2648464590&amp;idx=1&amp;sn=55ca6c3b30c13b6213e7864856edf51d&amp;chksm=8766016bb011887d2c9fffe6098d8c78e297b31dbb6693e02c0669ac18d644a193c73d633b30&amp;scene=21#wechat_redirect</div></div><img src="http://mmbiz.qpic.cn/mmbiz_jpg/ciab8jTiab9J45c8FcA2xEIMX0HhvGVO6lsBLDDuB7IvMGMqaB2y5rJJFxGviaR7A2YqtGgFKOdbAnJibabWwpNDog/0?wx_fmt=jpeg" class="bookmark-image"/></a></figure><p id="633f97d0-95e0-4eef-9046-4329cbf26c9c" class="">
+</p><p id="56aaa25f-a697-46cc-a456-a2cc18cae2e2" class="">
+</p><p id="bbe8639e-f39e-4777-ba48-03c7b1a08568" class="">
+</p><h3 id="3091fa67-9aec-4154-994b-71a4830309cf" class="">传统的IO：read、write</h3><p id="4d0978a0-9fce-428a-b3c2-93068b7e0cd8" class="">假设用read、write进行socket传输，当对一个文件进行传输时</p><p id="0f3897c8-27a7-491d-9e71-26415808d318" class="">read</p><ol id="88f5a88a-703e-4782-a0b9-055a103d695a" class="numbered-list" start="1"><li>调用read函数，文件数据拷贝到内核缓冲区</li></ol><ol id="6d991137-c081-4aca-be11-fbe0971aa82a" class="numbered-list" start="2"><li>read函数返回，文件数据从内核缓冲区拷贝到用户缓冲区</li></ol><p id="7cbe01c5-c567-4a4b-8bde-cfa174d7afe9" class="">write</p><ol id="8ec9d33c-de94-41ad-bc72-938cd3ddd5cc" class="numbered-list" start="1"><li>调用write函数，将文件数据从用户缓冲区拷贝到内核socket相关的缓冲区</li></ol><ol id="1e5fb3cc-d0d8-4548-ad97-6920cdc5c231" class="numbered-list" start="2"><li>将数据从socket缓冲区拷贝到相关协议引擎</li></ol><p id="4561ec10-8e14-446e-a018-322be1f6954d" class="">硬盘→内核→用户→socket缓冲区（内核）→协议引擎，共四次拷贝</p><p id="d8728a55-b449-447d-b5a6-a3c780ec3d39" class=""><strong>共4次用户态和内核态的上下文切换和4次拷贝</strong></p><figure id="c4eda1c2-d240-4e94-9664-7d0243fbd691" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%202.png"><img style="width:528px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%202.png"/></a></figure><p id="3a192d84-6e11-4e88-9612-a41e3c651265" class="">
+</p><h3 id="efc964e5-65c2-4e9d-a321-1a3f4b0aba47" class="">sendfile？</h3><p id="31c8161c-ed8b-4482-908e-50eac4455cb3" class="">sendfile是一种零拷贝技术。</p><p id="0f7de1b3-e039-45dd-a672-88fa4b863938" class="">在两个文件描述符之间传递数据，<strong>完全在内核中操作</strong>，从而避免了内核缓冲区和用户缓冲区之间的数据拷贝，效率很高。</p><figure id="f082b03b-fdb6-425f-a6a8-7c4c6a1313b5" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%203.png"><img style="width:576px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%203.png"/></a></figure><p id="c1c890bb-c875-4699-89e8-ab34a7c01f70" class=""><strong>共2次用户态和内核态的上下文切换和3次拷贝。</strong></p><figure id="2b38faa3-6d94-4f38-8b2b-b2020d510787"><a href="https://cloud.tencent.com/developer/article/1805566?from=information.detail.linux%20mmap使用场景" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">阿里二面：什么是mmap？</div><div class="bookmark-description">平时在面试中你肯定会经常碰见的问题就是：RocketMQ为什么快？Kafka为什么快？什么是mmap？ 这一类的问题都逃不过的一个点就是 零拷贝 ，虽然还有一些其他的原因，但是今天我们的话题主要就是零拷贝。 在开始谈零拷贝之前，首先要对传统的IO方式有一个概念。 基于传统的IO方式，底层实际上通过调用 read()和 write() 来实现。 通过 read()把数据从硬盘读取到内核缓冲区，再复制到用户缓冲区；然后再通过 write()写入到 socket缓冲区 ，最后写入网卡设备。 整个过程发生了 4次用户态和内核态的上下文切换和 4次拷贝 ，具体流程如下： 用户进程通过read()方法向操作系统发起调用，此时上下文从用户态转向内核态 DMA控制器把数据从硬盘中拷贝到读缓冲区 CPU把读缓冲区数据拷贝到应用缓冲区，上下文从内核态转为用户态，read()返回 用户进程通过write()方法发起调用，上下文从用户态转为内核态 CPU将应用缓冲区中数据拷贝到socket缓冲区 DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，write()返回 那么，这里指的 用户态、 内核态 指的是什么？上下文切换又是什么？ 简单来说，用户空间指的就是用户进程的运行空间，内核空间就是内核的运行空间。 如果进程运行在内核空间就是内核态，运行在用户空间就是用户态。 为了安全起见，他们之间是互相隔离的，而在用户态和内核态之间的上下文切换也是比较耗时的。 从上面我们可以看到，一次简单的IO过程产生了4次上下文切换，这个无疑在高并发场景下会对性能产生较大的影响。 那么什么又是 DMA 拷贝呢？ 因为对于一个IO操作而言，都是通过CPU发出对应的指令来完成，但是相比CPU来说，IO的速度太慢了，CPU有大量的时间处于等待IO的状态。 因此就产生了DMA（Direct Memory Access）直接内存访问技术，本质上来说他就是一块主板上独立的芯片，通过它来进行内存和IO设备的数据传输，从而减少CPU的等待时间。 但是无论谁来拷贝，频繁的拷贝耗时也是对性能的影响。 零拷贝技术是指计算机执行操作时，CPU不需要先将数据从某处内存复制到另一个特定区域，这种技术通常用于通过网络传输文件时节省CPU周期和内存带宽。 那么对于零拷贝而言，并非真的是完全没有数据拷贝的过程，只不过是减少用户态和内核态的切换次数以及CPU拷贝的次数。 这里，仅仅有针对性的来谈谈几种常见的零拷贝技术。 mmap+write简单来说就是使用 mmap 替换了read+write中的read操作，减少了一次CPU的拷贝。 mmap 主要实现方式是将读缓冲区的地址和用户缓冲区的地址进行映射，内核缓冲区和应用缓冲区共享，从而减少了从读缓冲区到用户缓冲区的一次CPU拷贝。 整个过程发生了 4次用户态和内核态的上下文切换和 3次拷贝 ，具体流程如下： 用户进程通过mmap()方法向操作系统发起调用，上下文从用户态转向内核态 DMA控制器把数据从硬盘中拷贝到读缓冲区 上下文从内核态转为用户态，mmap调用返回 用户进程通过write()方法发起调用，上下文从用户态转为内核态 CPU将读缓冲区中数据拷贝到socket缓冲区 DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，write()返回 mmap 的方式节省了一次CPU拷贝，同时由于用户进程中的内存是虚拟的，只是映射到内核的读缓冲区，所以可以节省一半的内存空间，比较适合大文件的传输。 相比 mmap来说， sendfile 同样减少了一次CPU拷贝，而且还减少了2次上下文切换。 sendfile是Linux2.1内核版本后引入的一个系统调用函数，通过使用 sendfile数据可以直接在内核空间进行传输，因此避免了用户空间和内核空间的拷贝，同时由于使用 sendfile替代了 read+write 从而节省了一次系统调用，也就是2次上下文切换。 整个过程发生了 2次用户态和内核态的上下文切换和 3次拷贝 ，具体流程如下： 用户进程通过sendfile()方法向操作系统发起调用，上下文从用户态转向内核态 DMA控制器把数据从硬盘中拷贝到读缓冲区 CPU将读缓冲区中数据拷贝到socket缓冲区 DMA控制器把数据从socket缓冲区拷贝到网卡，上下文从内核态切换回用户态，sendfile调用返回 sendfile 方法IO数据对用户空间完全不可见，所以只能适用于完全不需要用户空间处理的情况，比如静态文件服务器。 Linux2.4内核版本之后对 sendfile 做了进一步优化，通过引入新的硬件支持，这个方式叫做DMA ...</div></div><div class="bookmark-href">https://cloud.tencent.com/developer/article/1805566?from=information.detail.linux%20mmap使用场景</div></div></a></figure><p id="1ca233b1-35ca-4b02-b183-eee154d05af7" class="">
+</p><h3 id="89968cc3-8de9-4811-aea9-e8011a0d72af" class="">mmap？</h3><p id="ac54f007-2c47-4478-bbcc-730591c6fc78" class="">mmap用来在进程虚拟内存地址空间中分配地址空间，创建和物理内存的映射关系。（其实也是一种零拷贝技术）</p><p id="6a42b16a-ed9f-4704-b69d-d95be7c1d03f" class="">两种映射关系：</p><ol id="1fa1b31a-c06e-4781-b068-3d45b3b42070" class="numbered-list" start="1"><li>文件映射<ol id="1780a9b8-ec00-4491-8011-284c614912d7" class="numbered-list" start="1"><li>共享文件映射（常用于进程间通信）</li></ol><ol id="76a40b3b-ea15-4b6a-ae56-348c519b3b92" class="numbered-list" start="2"><li>私有文件映射</li></ol></li></ol><ol id="4fdbbad9-d617-40cd-9562-58564dac49b5" class="numbered-list" start="2"><li>匿名映射<ol id="31ca1278-9387-4c10-93cf-479d113619ed" class="numbered-list" start="1"><li>共享匿名映射（也用于进程间通信，通常是父子进程）</li></ol><ol id="a51a7363-cd7d-4709-b136-88fb79bf8f53" class="numbered-list" start="2"><li>私有匿名映射（malloc分配大内存时）</li></ol></li></ol><p id="41a04bfa-cd96-4460-bc1b-9db05505f5cd" class=""><strong>mmap只是在虚拟内存分配了地址空间，只有在第一次访问虚拟内存的时候才分配物理内存。</strong></p><p id="931f8949-2cdd-4b08-ae5e-099d1e44d6af" class="">对于文件映射，mmap是一种内存映射文件的方法，将一个文件映射到进程的地址空间，这样就可以直接采用指针方式读写操作这一段内存，不需要再调用read、write等系统调用函数。</p><p id="d6425054-790e-4173-abe9-c59bfbcf5e30" class="block-color-yellow_background">⭐️<strong>映射原理：</strong><div class="indented"><ol id="18724032-4b32-49bd-be7d-bd8bf4ccbe5e" class="numbered-list" start="1"><li>进程启动映射过程，并在进程的虚拟地址空间中<del>为映射</del>创建虚拟映射区域</li></ol><ol id="94929c7b-ad29-404a-946e-f0bd09d4c895" class="numbered-list" start="2"><li><del>调用内核空间的系统调用函数mmap（不同于用户空间函数），</del>实现文件物理地址（<del>应该是指物理内存的地址吧？</del>）（应该是磁盘上的地址吧？）和进程虚拟地址的一一映射关系</li></ol><ol id="e3dd679c-9e87-4a2e-ace3-45ecadd1a562" class="numbered-list" start="3"><li>进程第一次对这片映射空间的访问，引发缺页异常，实现文件内容到物理内存（主存）的拷贝</li></ol></div></p><p id="481bbc4f-226d-42fc-b97b-765de316ab10" class="">
+</p><p id="b1fd4a45-5957-4b73-a9ad-32f6e92aa9c8" class=""><strong>优点：</strong></p><p id="b7956b1c-f47f-48fd-940f-0ee9b2f92100" class="">1、对文件的读取操作跨过了页缓存（即内核空间的缓冲区？），减少了数据的拷贝次数，用内存读写取代I/O读写，提高了文件读取效率。（常规文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝。而mmap操控文件，只需要从磁盘到用户主存的一次数据拷贝过程。）</p><p id="65e4218a-835c-43bb-9436-5a3ebc714ba8" class="">2、实现了用户空间和内核空间的高效交互方式。两空间的各自修改操作可以直接反映在映射的区域内，从而被对方空间及时捕捉。</p><p id="9ae8e35e-1713-4510-ba78-70ea89c06697" class="">3、提供进程间共享内存及相互通信的方式。不管是父子进程还是无亲缘关系的进程，都可以将自身用户空间映射到同一个文件或匿名映射到同一片区域。从而通过各自对映射区域的改动，达到进程间通信和进程间共享的目的。</p><p id="88812eb3-6403-437e-8608-787f195bef49" class="">4、可用于实现高效的大规模数据传输。内存空间不足，是制约大数据操作的一个方面，解决方案往往是借助硬盘空间协助操作，补充内存的不足。但是进一步会造成大量的文件I/O操作，极大影响效率。这个问题可以通过mmap映射很好的解决。换句话说，但凡是需要用磁盘空间代替内存的时候，mmap都可以发挥其功效。</p><p id="ecec711e-5078-4ee8-936e-0dac18d04b18" class="">
+</p><p id="b66b0fc1-f271-4617-a7ed-b376f3ec003d" class=""><strong>mmap回写时机：</strong></p><p id="808686e0-2be5-410d-8208-f13bb76ad89a" class="">Linux 内核并不会主动把 <code>mmap</code> 映射的 <code>页缓存</code> 同步到磁盘，而是需要用户主动触发。同步 <code>mmap</code> 映射的内存到磁盘有 4 个时机：</p><ul id="7daefd4d-4f49-49d6-b57c-c2a0dcd89a9d" class="bulleted-list"><li>调用 <code>msync</code> 函数主动进行数据同步（主动）。</li></ul><ul id="21981c10-e262-4c20-a481-0e683a9d2192" class="bulleted-list"><li>调用 <code>munmap</code> 函数对文件进行解除映射关系时（主动）。</li></ul><ul id="1d1e6a37-c3b6-468b-967f-124c42cda82f" class="bulleted-list"><li>进程退出时（被动）。</li></ul><ul id="8aba4bf2-190a-43cd-b2d5-0d06d1282f92" class="bulleted-list"><li>系统关机时（被动）。</li></ul><ul id="d0a909e1-b08e-48d2-a63c-26b7389e63bc" class="bulleted-list"><li>内存不足（这个会不会？）</li></ul><p id="fa950667-bfa8-4b49-9dc9-66195cc8800a" class="">
+</p><figure id="8de55fae-58ad-4694-82f6-6861f0d69c32"><a href="https://www.cnblogs.com/huxiao-tee/p/4660352.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">认真分析mmap：是什么 为什么 怎么用</div><div class="bookmark-description">由上图可以看出，进程的虚拟地址空间，由多个虚拟内存区域构成。虚拟内存区域是进程的虚拟地址空间中的一个同质区间，即具有同样特性的连续地址范围。上图中所示的text数据段（代码段）、初始数据段、BSS数据段、堆、栈和内存映射，都是一个独立的虚拟内存区域。而为内存映射服务的地址空间处在堆栈之间的空余部分。 ...</div></div><div class="bookmark-href"><img src="https://www.cnblogs.com/favicon.ico" class="icon bookmark-icon"/>https://www.cnblogs.com/huxiao-tee/p/4660352.html</div></div><img src="https://images0.cnblogs.com/blog2015/571793/201507/200501092691998.png" class="bookmark-image"/></a></figure><p id="1568f59b-c848-4f7c-8d90-8c3d92c79458" class="">
+</p><p id="9c41e6bf-8a9b-4e19-b6d5-65086b82a3c8" class="">
+</p><p id="ce4dbe26-3a98-4a55-b9dd-e20db094b3cb" class="">
+</p><p id="3842fbe1-ea4e-487a-9e0c-da59d8e50e1f" class="">
+</p><h3 id="e501db86-b0e0-4080-80c2-c9bec8ac3143" class="">简述 mmap 的使用场景以及原理</h3><ul id="2010b2bc-407f-45d0-a783-fe009c7a9884" class="bulleted-list"><li>更快地操作文件？（少了磁盘到内核空间缓冲区的一次拷贝）</li></ul><ul id="299d3382-6442-48db-a80e-6751171f9688" class="bulleted-list"><li>malloc分配大内存</li></ul><ul id="16fb87dc-f405-46e7-9c00-a68b8890e704" class="bulleted-list"><li>IPC（进程间通信，共享内存）</li></ul><ul id="2a5ca5e3-49bc-4237-9e69-9f78ad9c68f2" class="bulleted-list"><li>零拷贝</li></ul><p id="22cda23b-c56f-4142-901d-e2879d6ac012" class="">
+</p><p id="8e7fa507-ca7a-4078-acd1-00ab249f58d7" class="">
+</p><p id="4fe837a2-699e-46ea-86ef-313e1c10bb55" class="">
+</p><h3 id="e3133016-2e69-4984-abd5-46bf6e40066a" class="">简述操作系统中 malloc 的实现原理</h3><p id="1c1a8fe2-ba21-4a98-b54c-842195b66a07" class="">采用内存池，类似于STL空间配置器，先申请一大块内存，然后将内存分成不同大小的内存快，用户申请内存时，直接从内存池中选择一块相近的内存块即可。</p><p id="3e94eecf-663d-40f5-b0e7-e5be6d8e0b03" class="">malloc基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()才推进brk指针来申请内存空间。（有点类似于STL中的空间配置器的内存池？）然后如果申请大内存，会用mmap来申请内存。
+搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p><ol id="7c00e7ab-4889-4d5c-af3f-8dd795bbea05" class="numbered-list" start="1"><li>当开辟的空间小于128k时，调用brk()函数，malloc的底层实现是系统调用函数brk()，其主要移动指针 _enddata(此时的 _enddata 指的是 Linux 地址空间中堆段的末尾地址，不是数据段的末尾地址)</li></ol><ol id="c789af32-f60b-4e8c-b540-0dbf1e8307da" class="numbered-list" start="2"><li>当开辟的空间大于128k时，mmap()系统调用函数在虚拟地址空间中（堆和栈中间，成为“文件映射区域”的地方）找一块空间来开辟。</li></ol><p id="3726c02e-23d5-445d-800a-4116a8fd0386" class=""><strong>两种方式分配的都是虚拟内存，没有分配物理内存，在第一次访问已分配的虚拟地址空间时，发生缺页中断，操作系统负责分配物理内存，然后建立虚拟内存和物理内存之间的映射关系。</strong></p><p id="48d6f55b-5c35-45dd-a2c6-2c8766d93c01" class="">为啥要分两种情况呢？因为brk分配的内存需要等到高地址内存释放以后才能释放（因为只有一个_edata 指针，这就是内存碎片产生的原因），而mmap分配的内存可以单独释放。</p><p id="f1e4bf8e-e643-4589-963b-5acc5799e533" class="">
+</p><p id="fd080a34-69e7-4e63-9fee-d234e179d8b2" class="">
+</p><p id="9f8ace1f-be41-437e-8051-c00172dc50ef" class="">
+</p><p id="8c325bb5-fcce-482a-aa9f-b2c72610d14b" class="">
+</p><div id="1bdd7079-1eff-490c-bca1-fe6bac2590e1" class="column-list"><div id="38ae4181-34aa-4752-8244-2ad703fa42d3" style="width:50%" class="column"><p id="2dc73ab2-1842-44a0-a265-f280915d8895" class="">
+</p></div><div id="d90e6533-c033-41f4-a6ad-56c3554d6d32" style="width:50%" class="column"><p id="0eaf9958-8848-4656-b2c1-b4fbdd679520" class="">
+</p></div></div><h2 id="18334ffd-af73-413e-a69c-2ff8aa3b2f68" class="">IO</h2><h3 id="7264e651-7e19-4029-987f-9b9b8beff56d" class="">BIO、NIO 有什么区别？怎么判断NIO写文件时 Buffer 已经写满？简述 Linux 的 IO模型</h3><p id="5eaa7df7-c22e-46a4-af2b-d41b335fcc16" class="">BIO ( Blocking I/O) ：同步阻塞I/O</p><p id="e05a1862-330e-42cd-a8b7-2dc03d541506" class="">NIO ( New I/O) ：同时支持阻塞与非阻塞模式</p><figure id="87804e34-48b0-4587-9049-88b7e6057227" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%204.png"><img style="width:416px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%204.png"/></a></figure><p id="71d127bc-7687-4fe3-b449-32b124df7561" class=""><strong>区别：</strong></p><ul id="0aab1585-7d1c-4fc9-88bc-91aec60d7982" class="bulleted-list"><li>BIO在IO系统调用后，如果没有数据，会阻塞等待返回结果；NIO如果没有数据，会立即返回，如果有数据会阻塞等待数据拷贝完成。</li></ul><ul id="484fc7e4-3091-47b0-92e7-56b687d2dd1a" class="bulleted-list"><li>相对于BIO的流，NIO抽象出了新的通道（Channel）作为输入输出的通道，并且提供了缓存（Buffer）的支持，在进行读操作时，需要使用Buffer分配空间，然后将数据从Channel中读入Buffer中，对于Channel的写操作，也需要现将数据写入Buffer，然后将Buffer写入Channel中。</li></ul><div id="3a02b727-c535-4814-af43-fe568e996304" class="column-list"><div id="a4f5c71d-2453-454c-b43a-74bd5acb4b8d" style="width:50%" class="column"><figure id="2bdba545-dd90-43d4-975c-717fedfeceb0" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%205.png"><img style="width:780px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%205.png"/></a></figure></div><div id="4d3f0243-6bff-44af-9112-d92998dd05cd" style="width:50%" class="column"><figure id="305af9db-fb8b-42db-b27e-3f8665eb4301" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%206.png"><img style="width:828px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%206.png"/></a></figure></div></div><p id="d48f89b3-dd09-4618-b94d-f2aa745705a5" class="">IO模型详见<a href="%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%2081881facccd1463e9644fb3b25c0163a/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7.html">文件系统</a> </p><p id="c0848cdd-17bf-4ba6-b883-ccb4a28b20e3" class="">
+</p><p id="09e4e106-0a30-4e47-9f24-6e448a8853a8" class="">
+</p><h3 id="64b6fa8e-0aca-4eaf-b170-a96dad066208" class="">⭐️简述 select, poll, epoll 的使用场景以及区别？</h3><p id="30b42d73-42dc-4859-b6d6-8120f997c51b" class="">它们都属于IO多路复用，本质是通过一种机制（系统内核缓冲IO数据），让单个进程可以监视多个文件描述符，一旦某个描述符就绪，能够通知程序进行相应的读写操作。</p><p id="a8b0d8c0-0b48-443a-9a69-9532afaba9de" class="">IO多路复用的优势：<div class="indented"><p id="8f3986be-3a32-4c1f-97ed-5e39c567cb2a" class="">I/O多路复用技术的最大优势是系统开销小，系统不必创建进程/线程，也不必维护这些进程/线程，从而大大减小了系统的开销。</p></div></p><p id="c67ced97-9d3b-456e-90af-db04fc7f5655" class="">
+</p><p id="b0346762-f869-4f3f-8116-8cc56212e3b1" class=""><strong>介绍</strong></p><ol id="400794dd-bcc7-4c5e-80fc-3424ad7c8e79" class="numbered-list" start="1"><li>select 时间复杂度O(n)<p id="80661455-e1af-45ad-8dff-9af06bff2e9b" class=""><strong>每次调用时都会对连接进行线性遍历，所以随着FD的增加会造成遍历速度慢的“线性下降性能问题”。</strong></p><p id="19bef3e7-dfae-46c0-ae8d-f28e8869a075" class="">它仅仅知道了，有I/O事件发生了，却并不知道是哪那几个流（可能有一个，多个，甚至全部），我们只能无差别轮询所有流，找出能读出数据，或者写入数据的流，对他们进行操作。所以select具有O(n)的无差别轮询复杂度，同时处理的流越多，无差别轮询时间就越长。</p></li></ol><ol id="da1708d8-a8cd-4f33-a7f1-7bdec3198663" class="numbered-list" start="2"><li>poll 时间复杂度O(n)<p id="2dd8408d-af8f-4326-a5df-10e3b6395d56" class="">poll本质上和select没有区别，它将用户传入的数组拷贝到内核空间，然后查询每个fd对应的设备状态， <strong>但是它没有最大连接数的限制，原因是它是基于链表来存储的。</strong></p></li></ol><ol id="d25900d9-7e70-49ce-99dc-4dfc63f1f510" class="numbered-list" start="3"><li>epoll 时间复杂度O(1)<p id="40cfb676-cac8-4fe3-ab04-23387b323209" class="">给套接字注册某个回调函数，当他们活跃时，自动完成相关操作，那就<strong>避免了轮询</strong></p><p id="fa2f412e-0dd7-4b99-b875-c0cfad810d13" class="">epoll会把哪个流发生了怎样的I/O事件通知我们。所以我们说epoll实际上是<strong>事件驱动（每个事件关联上fd）</strong>的，此时我们对这些流的操作都是有意义的。（复杂度降低到了O(1)）</p><p id="0adaf7f4-b264-4425-989c-82c330d2c65d" class="">
+</p></li></ol><p id="995e52e9-7b29-4ad2-86b7-50d7c42f119e" class=""><strong>区别：</strong></p><ol id="e5da86da-e4e6-4668-a2d3-376b34b09d64" class="numbered-list" start="1"><li>支持一个进程所能打开的最大连接数不同<p id="bee39460-f57e-49db-a75a-c744c9619274" class="">select上限是单个进程所能打开的最大连接数（由FD_SETSIZE设置，默认一般为1024），poll和epoll几乎没有上限，所支持的FD上限是最大可以打开文件的数目，很大（1G的内存上能监听约10万个端口，13服务器上是6538398， <code>cat /proc/sys/fs/file-max</code> 查看）</p></li></ol><ol id="79bf7f60-3175-4786-a4fa-c408ade2e018" class="numbered-list" start="2"><li>fd剧增后带来的IO效率<p id="447bab1a-ca7f-48b2-9c7d-3f98ac992183" class="">select和poll随着fd的增加会造成遍历速度慢；epoll只有活跃的socket才会主动调用callback，所以在活跃socket较少的情况下，没有性能下降问题</p></li></ol><ol id="4eecf259-11a7-458d-91e8-283492e89196" class="numbered-list" start="3"><li>消息传递方式<p id="2674e6f9-3d6f-4b4f-b6b5-61c958e53007" class="">select和poll的消息传递需要内核将消息拷贝到用户空间；epoll通过内核和用户空间共享一块内存来实现。</p></li></ol><figure id="314db1a6-6f6e-4d29-b74d-e1c1405965b9" class="image"><a href="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%207.png"><img style="width:576px" src="Linux%20d2924cc12ccf4d86b410745484c09c40/Untitled%207.png"/></a></figure><p id="5fb6b4af-828e-47fa-bea2-bca56357f828" class="">
+</p><p id="1d13f0a0-50e4-46bb-ba19-a7cffda61e7c" class=""><strong>epoll的优点：</strong></p><ol id="febef236-ca99-4143-9502-10154ed3136b" class="numbered-list" start="1"><li>效率提升，只有活跃可用的fd才会调用callback函数。<mark class="highlight-red"><strong>Epoll最大的优点就在于它只管你“活跃”的连接，而跟连接总数无关，因此在实际的网络环境中，Epoll的效率就会远远高于select和poll。</strong></mark></li></ol><ol id="cf0f0012-6c9a-4646-a8f0-b5b3ec47bd40" class="numbered-list" start="2"><li>几乎没有最大并发连接的限制，能打开的FD的上限远大于1024（1G的内存上能监听约10万个端口）</li></ol><ol id="ac8d171a-5694-4d44-9f41-c7a978c9f8d3" class="numbered-list" start="3"><li>利用mmap减少复制开销，（内核和用户空间mmap同一块内存）</li></ol><p id="fedcc04a-e4cf-4b28-b0bc-1d3fbe279c44" class="">但是如果socket都很活跃，那也会有性能问题，毕竟epoll的通知机制需要很多函数回调。</p><p id="f42c2e5f-0bda-4af3-8bb2-b5e45efd5ea2" class="">
+</p><p id="e02240f1-2011-43c4-bde3-406487898844" class=""><strong>使用场景：</strong></p><ul id="81ec8f74-9d09-4f86-a289-93e65469f615" class="bulleted-list"><li>select和poll适用于连接数较少，并且连接都比较活跃的情况下</li></ul><ul id="71ef1c27-7933-4415-a710-de978526acd8" class="bulleted-list"><li>epoll适用于连接数多，且活跃连接较少的情况下</li></ul><p id="51196d4f-0f1f-4456-9d0d-51437530cc56" class="">
+</p><figure id="b0d1b3ca-59f9-439f-b994-defde1a630ed"><a href="https://www.cnblogs.com/aspirant/p/9166944.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">select、poll、epoll之间的区别(搜狗面试)</div><div class="bookmark-description">(1)select==&gt;时间复杂度O(n) 它仅仅知道了，有I/O事件发生了，却并不知道是哪那几个流（可能有一个，多个，甚至全部），我们只能无差别轮询所有流，找出能读出数据，或者写入数据的流，对他们进行操作。所以 select具有O(n)的无差别轮询复杂度 ，同时处理的流越多，无差别轮询时间就越长。 (2)poll==&gt;时间复杂度O(n) ...</div></div><div class="bookmark-href"><img src="https://www.cnblogs.com/favicon.ico" class="icon bookmark-icon"/>https://www.cnblogs.com/aspirant/p/9166944.html</div></div><img src="https://images2018.cnblogs.com/blog/137084/201806/137084-20180611142415772-1018872947.png" class="bookmark-image"/></a></figure><p id="d5e9d78b-5070-4f24-abc7-b5637d513c92" class="">所以红黑树是干啥的呢？？？</p><p id="9818ed48-8226-419b-b497-4a4a8dab6349" class="">
+</p><h3 id="a7dc76d8-1855-46c6-acc0-a3143c337f05" class="">水平触发和边缘触发？</h3><p id="84481c88-5f4d-4061-83fe-738d2a17064b" class="">epoll有EPOLLLT（水平触发）和EPOLLET（边缘触发）两种触发模式。LT是默认的模式，ET是“高速”模式。</p><ul id="b21f3c74-ebe9-4022-89da-7980bd31f87c" class="bulleted-list"><li>LT模式下，只要这个fd还有数据可读，每次 epoll_wait都会返回它的事件，提醒用户程序去操作</li></ul><ul id="11f1886e-b065-48d8-900a-2c092c8dda8a" class="bulleted-list"><li>ET模式中，它只会提示一次，直到下次再有数据流入之前都不会再提示了，无论fd中是否还有数据可读。所以在ET模式下，read一个fd的时候一定要把它的buffer读光，也就是说一直读到read的返回值小于请求值，或者 遇到EAGAIN错误。</li></ul><p id="156d3088-2651-4be5-b785-2f6b519e121d" class="">为什么要有ET模式呢？</p><p id="d9c65366-cecb-420f-8f90-490c005b8fe3" class=""><strong>如果采用EPOLLLT模式的话，系统中一旦有大量你不需要读写的就绪文件描述符，它们每次调用epoll_wait都会返回，这样会大大降低处理程序检索自己关心的就绪文件描述符的效率。</strong>而采用EPOLLET这种边沿触发模式的话，当被监控的文件描述符上有可读写事件发生时，epoll_wait()会通知处理程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用epoll_wait()时，它不会通知你，也就是它只会通知你一次，直到该文件描述符上出现第二次可读写事件才会通知你！！！</p><p id="14a5916c-24f1-4306-bb45-33cca408fa31" class=""><strong>边缘触发模式比水平触发效率高，系统不会充斥大量你不关心的就绪文件描述符。</strong></p><p id="53173972-6ba0-4edf-bd2c-a10876280b51" class="">
+</p><p id="8434071d-56eb-4c36-9aef-9cdaf8c2a47d" class="">
+</p><p id="50290b6a-85b1-4739-bd94-ef53a022bae0" class="">
+</p><p id="1cc3528c-7960-4118-bccb-5c1dda5be1a4" class="">
+</p><h2 id="a9da24d5-6783-4f6e-abc4-c65105e30b27" class="">缓存</h2><h3 id="b7bd3c68-cccf-4b03-8f69-ef38cfd468ee" class="">buff和cache的区别？</h3><p id="8bd26ad1-cd6c-4757-b2e8-4b282c494339" class="">buffer是缓冲，cache是缓存。Cache 的存在原因是对资源调用的<strong>局部性</strong>；Buffer 的存在原因是生产者和消费者对资源的<strong>生产/消耗速率不一致</strong>。</p><ol id="34fe3dc5-1910-423d-9414-52ca52c8434c" class="numbered-list" start="1"><li><strong>Buffer</strong>（缓冲区）是系统两端处理<strong>速度平衡</strong>（从长时间尺度上看）时使用的。它的引入是为了减小短期内突发I/O的影响，起到<strong>流量整形</strong>的作用。比如生产者——消费者问题，他们产生和消耗资源的速度大体接近，加一个buffer可以抵消掉资源刚产生/消耗时的突然变化。</li></ol><ol id="f4d9ec66-6128-44f5-9558-37dcd619949d" class="numbered-list" start="2"><li><strong>Cache</strong>（缓存）则是系统两端处理<strong>速度不匹配</strong>时的一种<strong>折衷策略</strong>。因为CPU和memory之间的速度差异越来越大，所以人们充分利用数据的局部性（locality）特征，通过使用存储系统分级（memory hierarchy）的策略来减小这种差异带来的影响。</li></ol><ol id="3ff32a88-431d-4327-96b1-a2fc4f247f8f" class="numbered-list" start="3"><li>假定以后存储器访问变得跟CPU做计算一样快，cache就可以消失，但是buffer依然存在。比如从网络上下载东西，瞬时速率可能会有较大变化，但从长期来看却是稳定的，这样就能通过引入一个buffer使得OS接收数据的速率更稳定，进一步减少对磁盘的伤害。</li></ol><ol id="9e431f97-c7ec-4ab3-ad93-694241a252a8" class="numbered-list" start="4"><li>TLB（Translation Lookaside Buffer，翻译后备缓冲器）（快表）名字起错了，其实它是一个cache.</li></ol><p id="df82260e-95e6-436c-bc61-79255fa240a3" class="">
+</p><p id="aaa9f835-f0d4-4d0b-b9dd-f459c462e546" class="">
+</p><h2 id="07bc1acf-5ea8-44ac-ae92-616771539e8b" class="">其它</h2><h3 id="5b1e3521-790b-419b-a737-14dd43a0880a" class="">软链接和硬链接的区别？</h3><p id="c34e8310-9211-4097-a160-ed0cfa50b24b" class="">硬链接两者其实就是同一个文件，inode也是相同的（文件名和inode号码是&quot;一一对应&quot;关系,每个inode号码对应一个文件名），类似于两个智能指针指向了同一块内存，一个文件修改了，另一个文件也修改了。事实上文件系统会维护一个引用计数，只要有文件指向这个区块，它就不会从硬盘上消失。</p><p id="1c9fca7b-19f9-4df8-b438-6efdce299c84" class="">然而软链接的 inode 所指向的内容实际上是保存了一个绝对路径，当用户访问这个文件时，系统会自动将其替换成其所指的文件路径。所以当源文件删除后，软链接也会失效，但是这时再向软链接写入东西，源文件又会出现在路径中（因为自动替换文件路径）</p><p id="f1768dd7-f84f-49c9-90a0-7dcc2dceea57" class="">
+</p><p id="d4ccda2c-a750-4059-a896-2820806b834e" class="">
+</p><p id="0a2b94bd-00c6-48d5-a5b5-18e2d736f009" class="">
+</p><p id="e7492bac-ccf1-44ee-9013-8b1a3440d731" class="">
+</p><h3 id="75f75e36-8a15-498c-881e-5b941e165179" class="">什么是块设备？什么是字符设备？</h3><p id="9d8343db-5999-43a7-b7ab-6a1b476aabff" class=""><strong>块设备</strong></p><p id="b2ec5e6e-a625-4e5c-8c94-c9d0cc6ae5e9" class="">系统中能够<strong>随机（不需要按顺序）访问固定大小数据片（chunks）</strong>的设备被称作块设备，这些数据片就称作块。最常见的块设备是硬盘，除此以外，还有软盘驱动器、CD-ROM驱动器和闪存等等许多其他块设备。注意，它们都是以安装文件系统的方式使用的——这也是块设备的一般访问方式。</p><p id="7d5fb630-7231-4e76-8d32-db3e6ce9e903" class=""><strong>字符设备</strong></p><p id="bead5afd-1242-458d-8b30-854e1d84450e" class=""><span style="border-bottom:0.05em solid">指在I/O传输过程中以字符为单位进行传输的设备。</span></p><p id="976a2693-a19c-45a2-9087-cc11a370d8fa" class="">字符设备按照字符流的方式被<strong>有序访问</strong>，像<strong>串口和键盘</strong>就都属于字符设备。如果一个硬件设备是以字符流的方式被访问的话，那就应该将它归于字符设备；反过来，如果一个设备是随机（无序的）访问的，那么它就属于块设备。</p><p id="eb29f072-3187-40ec-8d8e-92bf93ca9118" class="">
+</p><p id="dd001c6d-558d-493f-bdd3-46032692100b" class="">
+</p><h3 id="ea72cb56-e0b5-4c90-9025-40f31aadb1e5" class="">LVS 的 NAT、TUN、DR 原理及区别</h3><p id="bd2f9c7d-69be-4d5b-be8c-2aff894ecf29" class="">
+</p></div></article></body></html>

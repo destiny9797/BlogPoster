@@ -6,8 +6,10 @@
 #define MYWEBSERVER_HTTPPARSER_H
 
 #include "Buffer.h"
+//#include "MysqlConnPool.h"
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 //主状态机的两种状态：当前正在分析请求行，当前正在分析头部字段
 enum CHECK_STATE{ CHECK_STATE_REQUESTLINE=0, CHECK_STATE_HEADER, CHECK_STATE_BODY, FINISH };
@@ -20,8 +22,14 @@ enum HTTP_CODE{ NO_REQUEST, GET_REQUEST, BAD_REQUEST, INTERNAL_ERROR};
 
 //enum REQ_CODE{ NO_REQ, REQ_GET, REQ_POST };
 
+
+
+// HttpParse的任务：
+// 接收请求，如果是POST，会判断请求是否合法，直接将url定位到对应页面，从而避免bodycontent的拷贝
 class HttpParser{
 public:
+//    typedef MysqlConnPool::spConnection spSqlconn;
+
     HttpParser();
 
     ~HttpParser();
@@ -35,7 +43,11 @@ public:
 
     const std::string& getUrl(){ return url; }
 
+    const std::string& getPost(){ return body; }
+
     bool isKeepalive(){ return keepalive; }
+
+//    void parsePost();
 
 
 private:
@@ -50,6 +62,10 @@ private:
 
     //分析数据字段
     void parseBody(std::string& line);
+
+    void parseUrl(std::string& url);
+
+    void urldecode(char *dst, const char *src);
 
 private:
 
@@ -70,6 +86,8 @@ private:
     int content_len;
 
     bool keepalive;
+
+    static const std::unordered_set<std::string> DEFAULT_HTML;
 
 };
 

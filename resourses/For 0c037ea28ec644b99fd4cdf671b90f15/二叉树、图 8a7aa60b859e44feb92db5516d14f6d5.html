@@ -1,0 +1,707 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>二叉树、图</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8a7aa60b-859e-44fe-b92d-b5516d14f6d5" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌲</span></div><h1 class="page-title">二叉树、图</h1></header><div class="page-body"><hr id="cb3901aa-4941-4f64-b4d5-2501e6fe5624"/><p id="503ffebb-0a0f-4285-b29a-3a16b7486bef" class="">
+</p><p id="11980f74-32b6-4bfe-8fd5-ab15fee66e3c" class="">二叉树的种类：</p><ul id="538995eb-5a32-4c2c-9340-5f8a403c56f9" class="bulleted-list"><li>满二叉树：深度为k，有2^k-1个节点的二叉树，即除了最下一层的节点度为0，其余节点度都为2</li></ul><ul id="302e3196-1e89-4a02-ae40-d9a4a49c60f9" class="bulleted-list"><li>完全二叉树：只可能最底层的节点没填满，且最底层的节点一定都集中在左边<p id="b336163d-e456-430d-b23d-4c59707e6694" class="">堆是完全二叉树和排序的结合，父节点一定≥子节点，它不是平衡二叉搜索树。</p></li></ul><ul id="867e5601-5911-48e9-a78a-1a632e232652" class="bulleted-list"><li>二叉搜索树：若左子树不空，则左子树上的所有节点上的值都小于它根节点；若右子树不空，则右子树上的所有节点上的值都大于它根节点的值</li></ul><ul id="6bee2620-9751-475d-8cc1-ef19b3ebec1a" class="bulleted-list"><li>平衡二叉搜索树（AVL）：每一个节点的左右子树的高度差不超过1<p id="e6b7011f-900d-43ed-bea8-bdac59d145b5" class="">「C++中 <code>map、set、multimap，multiset</code> 的底层实现都是平衡二叉搜索树，也即红黑树」，所以map、set的增删操作时间时间复杂度是<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">log n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span>，注意unordered_map、unordered_map底层实现是哈希表。</p></li></ul><p id="91f03384-ed7e-47ef-a751-9e84886c3dc8" class="">
+</p><p id="1e389136-f936-4c9a-a999-eb15cc1f66dc" class="">二叉树的存储：</p><ul id="57eb6d19-92ff-4bcb-92ea-03f845a1c748" class="bulleted-list"><li>链式存储</li></ul><ul id="5f4dcaf6-c509-443d-b64d-e0286d80c892" class="bulleted-list"><li>顺序存储：如果一个节点的下标是i，则它的左孩子是2*i+1，右孩子是2*i+2</li></ul><p id="9cd503af-3f92-4f8d-a62d-de5327393bad" class="">
+</p><p id="4bcdbb5d-2fd5-48f9-b30e-688bfa1170af" class="">二叉树的遍历：<div class="indented"><p id="25ebc197-c846-4fc0-9cc4-11bd04294e30" class="">遍历二叉树的时间复杂度为O(n)</p></div></p><ul id="03f51984-4a58-449b-ac07-dedac133955e" class="bulleted-list"><li>深度优先遍历<ul id="40b4f96a-8e26-4ee7-9a76-86386ffa0772" class="bulleted-list"><li>前序遍历（递归或迭代）144</li></ul><ul id="0094d053-7489-4b4b-b3c1-c45fd4ff2f1a" class="bulleted-list"><li>中序遍历（递归或迭代）145</li></ul><ul id="0b4b6d40-b004-4bef-a1de-de327a4ead08" class="bulleted-list"><li>后序遍历（递归或迭代）94</li></ul><p id="816173dc-10ed-4137-a3cb-d9ed1ee8c438" class=""><em>递归相当于栈</em></p></li></ul><ul id="b4fe56d2-c019-4baf-9285-73a1473f23eb" class="bulleted-list"><li>广度优先遍历<ul id="0bda3c7c-01eb-42f1-89a3-b9036c70c8e5" class="bulleted-list"><li>层次遍历（迭代）</li></ul><p id="e23181d3-9ff4-4d55-9a84-7e024c881aaa" class=""><em>BFS用队列来实现</em></p></li></ul><p id="e222ea5a-f2f0-4ec3-b215-01620a5ac3d2" class="">
+</p><p id="13752c39-0641-4ce5-91e5-09305d6c389b" class=""><strong>递归的三步法：</strong></p><ol id="4e1651f1-ab45-4443-9cd3-d88da7891dd9" class="numbered-list" start="1"><li>确定递归函数的参数和返回值</li></ol><ol id="538e6f0c-468a-4ead-8888-d815cc96e0b3" class="numbered-list" start="2"><li>确定终止条件<p id="f24ba723-d861-48e5-9228-db52f2c9a6fc" class="">例如节点为空则返回</p></li></ol><ol id="dd66eed1-8c54-47ba-bb65-e82795db4937" class="numbered-list" start="3"><li>确定单层递归的逻辑<p id="395e3978-f604-427b-9e93-02ffd0fbd9f2" class="">例如前序遍历：先把当前节点值放入vector，再递归左节点，再递归右节点</p></li></ol><p id="7f214975-6be3-46f3-99dd-edad77cab4a9" class=""><strong>迭代方法：</strong></p><p id="97517220-9903-417e-9c91-cfcca13309e0" class="">按照递归走，要把终止条件（返回条件）加进去，加入vec的地方也是跟递归一致的。后序遍历复杂一些。</p><pre id="d6a479db-7e6a-4a32-9cd1-0850335a9ab8" class="code"><code>//以下是迭代方法
+//前序遍历
+vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+    vector&lt;int&gt; result;
+    stack&lt;TreeNode*&gt; stk;
+    TreeNode* node = root;
+    while (!stk.empty() || node!=nullptr){
+        while (node!=nullptr){
+            result.emplace_back(node-&gt;val);
+            stk.emplace(node);
+            node = node-&gt;left;
+        }
+        node = stk.top();
+        stk.pop();
+        node = node-&gt;right;
+    }
+    
+    return result;
+}
+//后序遍历
+vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+    vector&lt;int&gt; result;
+    stack&lt;TreeNode*&gt; stk;
+    TreeNode* node = root;
+    TreeNode* prev = nullptr;
+    while (!stk.empty() || node!=nullptr){
+        while (node!=nullptr){
+            stk.emplace(node);
+            node = node-&gt;left;
+        }
+        node = stk.top();
+        stk.pop();
+				//需要用prev来记录，右子树是不是已经遍历过了
+        if (node-&gt;right==nullptr || node-&gt;right==prev){
+            result.emplace_back(node-&gt;val);
+            prev = node;
+						//这里置为nullptr是告诉下一次迭代，左子树已经遍历过了
+            node = nullptr;
+        }
+        else{
+            stk.emplace(node);
+            node = node-&gt;right;
+        }
+    }
+    return result;
+}</code></pre><p id="91db7864-6c81-42fe-996a-4214f2fa2a7e" class="">
+</p><p id="9a6b8875-3646-4eee-bef5-07874a12b481" class="">
+</p><p id="9c461a36-3585-434a-b81d-508640e46bc4" class="">递归法返回的数据类型，如果涉及深度、高度，一般为int，如果要判断是否平衡，可以用返回-1表示不平衡。</p><p id="7a5f4fa3-a82e-4896-ae1d-96c28e596bc4" class="">
+</p><p id="707c0039-b68c-4752-a5fb-2f3095587c27" class=""><strong>递归函数什么时候要有返回值？</strong></p><ul id="2e5698ca-8617-4916-a8b2-0623e2685aa7" class="bulleted-list"><li>「如果需要遍历整颗树，递归函数就不能有返回值。如果需要遍历某一条固定路线，递归函数就一定要有返回值！还有一种就是后序遍历需要根据左右递归的返回值推出中间节点的状态，这种需要有返回值。」</li></ul><ul id="d0b424c2-acd3-4597-8a24-ba0fb290ca9d" class="bulleted-list"><li>可以通过返回TreeNode*节点，向树添加新节点</li></ul><ul id="277871b6-132b-442f-b47e-a7527bf006cb" class="bulleted-list"><li>求高度传入节点就行，返回当前节点的高度，然后上一层节点累加上去；求深度返回为空，传入参数要有当前深度，用全局变量记录最大的深度。</li></ul><p id="ba469e67-5807-4ff6-ae18-fbb19ebcfab5" class="">回溯是一种复杂的迭代？</p><p id="027cc918-d20a-4aa5-bf86-7cd69a2c75cd" class="">
+</p><p id="3d8ed8eb-9a34-4731-8174-b4c917dcffb6" class="">用迭代法求数的深度、节点个数的时候，要注意边界条件（返回条件）是只看那一个节点就行，例如节点为空，则返回深度为0，或返回节点个数为0。</p><p id="1f1f0f6a-ab39-48f0-8a13-988855947136" class="">
+</p><p id="6ad254b3-897d-4f30-abe6-8e3cdfa1828f" class="">二叉搜索树总结：</p><ul id="75e656b7-e5d6-4272-9cf0-de29a2d4a2d5" class="bulleted-list"><li>大多数题目都可以用中序遍历将一个二叉搜索树变成一个数组，再进行处理。</li></ul><ul id="9325ca87-1371-4f4c-986b-27c2c5343f1e" class="bulleted-list"><li>如果可以用有序数组做，就可以用递归遍历，可以在递归遍历的时候用pre指针指向前一个节点，一边遍历一边处理。</li></ul><p id="8c086ec2-7df3-4c4e-9243-13f858e3242d" class="">
+</p><p id="7a9b98c2-fb91-4a16-b76c-743aa2221bcb" class="">删除节点的方法：</p><ul id="3662e23f-826d-43c0-9089-96dd9122bf04" class="bulleted-list"><li>如果是普通二叉树，要删除某一个节点，把它的值跟左/右子树某个叶子节点的值交换，然后再次遍历到该值时，删除即可。</li></ul><ul id="06f0f67b-9915-4d4b-908b-48fe5d9f8de5" class="bulleted-list"><li>如果是二叉搜索树，两种方法<ul id="9164b23b-5731-4664-9135-dbe96a3afaf4" class="bulleted-list"><li>把它的值跟右子树最左边节点的值交换，再次遍历到该值时，就是右子树最左边的节点了，此时如果右子树为空，直接返回左子树，如果右子树不为空，再次跟右子树最左边节点交换。。。如此往复。</li></ul><ul id="c97e49ee-be0c-4e5c-926f-a8c72045c154" class="bulleted-list"><li>把它左子树放到右子树最左边节点的左孩子处，返回右子树 / 或者把右子树放到左子树最右边节点的右孩子处，返回左子树  即可</li></ul></li></ul><p id="edacbdf9-7b04-42f5-8f45-32d94dd47227" class=""><strong><em>记得delete要删除的节点</em></strong></p><p id="956ff898-23e1-406b-a1de-e72290967ebb" class="">
+</p><p id="d3183520-eacb-4bcd-9bac-d463f16550d9" class="">注意点：</p><ul id="a6bf36f8-e349-49fb-a8cc-3afcf9f170da" class="bulleted-list"><li>如果提到叶子结点，判断一定要是 <code>node-&gt;left==nullptr &amp;&amp; node-&gt;right==nullptr</code> ，而不能是 <code>node==nullptr</code> 。</li></ul><ul id="1afae1d4-edd4-457e-9a14-dfb422829ef6" class="bulleted-list"><li>关于二叉树中的指针，如果是指针指向的值，如 <code>node-&gt;val</code> <code>node-&gt;left</code> <code>node-&gt;right</code> ，可以直接传入指针即可修改，如果是指针本身的值，如 <code>*node1 = *node2</code> ，令指针1指向指针2，则要传入指针的指针。</li></ul><ul id="d747e320-5acf-4af2-944e-22ddc704aae7" class="bulleted-list"><li>对于要从底向上搜索的问题，要用后序遍历。</li></ul><ul id="cd84f922-78b9-409b-ab9a-9d333593f726" class="bulleted-list"><li>可以通过返回TreeNode*节点，向树添加新节点，或者删除节点</li></ul><ul id="70024ac0-85ac-4954-a21e-d42a23406290" class="bulleted-list"><li>二叉树的题目，多想想递归，少想想像排列组合那样的回溯</li></ul><p id="17545987-cfc2-49d3-b9ae-b09e738a1067" class="">
+</p><p id="0de33e7e-b35c-4410-acb8-35db7c035aa1" class="">
+</p><p id="572645ad-de48-40b2-b53b-c290ee09eaa7" class="">
+</p><p id="70f0da42-a367-4fbe-8762-a68d95d71648" class="">统计最高出现频率的元素的集合的方法：</p><ul id="ef865957-a9be-445d-82e4-1073fd4cfe30" class="bulleted-list"><li>对于非排序数组，<p id="4c237412-d99c-4fb6-b5b6-f1b925087fc7" class="">用map统计每个元素出现次数，key是元素，value是出现次数，然后将map对出现次数进行排序，这个排序可以用sort函数，但是第三个参数比较方式的函数对象要自己定义。排好之后，取第一个元素或前n个元素即可。</p></li></ul><ul id="7424becd-3210-41b3-a0cd-ec8a11e6f7ea" class="bulleted-list"><li>对于排序数组，<p id="3ee34c4d-fcb9-409b-ae60-dac7b6a4258d" class="">先遍历一遍寻找最大频率，再遍历一遍加入该频率的元素们，如果不是集合（只需要一个），则遍历一遍就够了。</p></li></ul><p id="aaad4635-824d-4560-bd2a-a925ae47f85c" class="">
+</p><p id="85e96c81-708f-41b3-a536-0bf18ac876ca" class="">
+</p><p id="5e5b905e-96a5-484e-9318-847ff692b7e0" class="">
+</p><p id="b397e6a1-8b83-496d-8c53-3b3100c9d535" class="">
+</p><p id="522495cb-bf81-4050-86ba-f14dc988adcf" class="">
+</p><p id="6bb27f3a-0f65-49db-9038-fb9449591dfd" class="">
+</p><p id="b95746a7-a811-403f-9d1f-9618dd2dbebe" class="">
+</p><p id="332631d3-f07c-4489-8f23-8485645230f6" class="">
+</p><p id="2e42d178-c583-4a7c-82c0-f1d5dabe2372" class="">
+</p><p id="ec231c60-f406-4463-88a9-f927ccbe4103" class="">
+</p><p id="63501856-4794-440a-9f1c-214d12ddde46" class="">
+</p><p id="84b899be-2c4d-41bb-8bfc-2ed4bf4c4304" class="">
+</p><p id="fbaca5aa-749d-483e-957f-eeea7a222024" class="">
+</p><p id="298a994d-fcd9-4ee0-b493-3e279a9ee81a" class="">
+</p><p id="2200bb24-6d3b-4154-9700-389e827680f7" class="">
+</p><p id="d165c4f5-2a7c-45fe-a30a-bd16af3c50bc" class="">
+</p><p id="cb8a5483-c577-4935-bf5d-b09f1183a28b" class="">
+</p><p id="297bc412-9ef3-4f2b-ad33-6c7d3dcea268" class="">
+</p><p id="4926e60b-3337-4ffb-812c-d6979755ee88" class="">
+</p><h1 id="67882b4c-56c4-4886-beb7-d9f5635e964d" class="">深度优先遍历（BFS）和广度优先遍历（DFS）</h1><p id="bba3323d-3223-4752-8031-e045008f7679" class="">基本用法看下面这篇就能大致了解。</p><figure id="534925b9-6b76-4cc3-bed6-63e6179283cb"><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/solution/bfs-de-shi-yong-chang-jing-zong-jie-ceng-xu-bian-l/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">力扣</div></div><div class="bookmark-href"><img src="https://leetcode-cn.com/favicon.ico" class="icon bookmark-icon"/>https://leetcode-cn.com/problems/binary-tree-level-order-traversal/solution/bfs-de-shi-yong-chang-jing-zong-jie-ceng-xu-bian-l/</div></div></a></figure><p id="9aea8287-dee1-4e5a-ab64-cceb6ab04473" class="">大多数情况下，DFS用得多，但是对于层序遍历和图最短路径的情况，只能用BFS。DFS一般用递归，隐含的栈结构，BFS一般用队列来维护一个需要访问的节点列表。</p><p id="4f2beb8b-fea2-46bb-9ac5-2ceca6d1b86f" class="">一般涉及到图，就会用到BFS或者DFS，图比树复杂，一般会用一个visited矩阵来表示有没有访问过某个节点。如下面这道朋友圈，是比较简单的图搜索题。</p><figure id="ad493bca-bca6-4bbc-9840-9e8a335656df"><a href="https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">力扣</div></div><div class="bookmark-href"><img src="https://leetcode-cn.com/favicon.ico" class="icon bookmark-icon"/>https://leetcode-cn.com/problems/friend-circles/solution/peng-you-quan-by-leetcode/</div></div></a></figure><p id="953c84f9-4c2f-4f9c-95b4-3b189d493a49" class="">并查集</p><figure id="636ff1e0-e501-428c-a3ce-e458d95a8d55"><a href="https://leetcode-cn.com/problems/friend-circles/solution/union-find-suan-fa-xiang-jie-by-labuladong/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">力扣</div></div><div class="bookmark-href"><img src="https://leetcode-cn.com/favicon.ico" class="icon bookmark-icon"/>https://leetcode-cn.com/problems/friend-circles/solution/union-find-suan-fa-xiang-jie-by-labuladong/</div></div></a></figure><p id="ae976476-7486-4d37-95a1-9e2436c0537c" class="">
+</p></div></article></body></html>

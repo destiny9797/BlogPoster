@@ -44,40 +44,46 @@
 
 
 HttpResponse::HttpResponse()
-    : _code(200)
+    : _code(200),
+      _filefd(0),
+      _offset(0)
 {
     char* curpath = getcwd(NULL, 0);
     if (curpath==nullptr){
         perror("getcwd wrong:");
     }
     else{
-        _pathdir = std::string(curpath) + "/../resourse";
+        _pathdir = std::string(curpath) + "/../resourses";
     }
 
 }
 
 HttpResponse::~HttpResponse() {
-    if (_filefd > 4){
-        close(_filefd);
-    }
+//    if (_filefd > 4){
+//        close(_filefd);
+//    }
+
 }
 
 void HttpResponse::init() {
-    close(_filefd);
+    //防止重复关闭
+    if (_filefd>2){
+        if (close(_filefd)<0){
+            perror("close file wrong");
+        }
+    }
+
     _code = 200;
-    _method = "";
+//    _method = "";
     _url = "";
     std::memset(&_fileinfo, 0, sizeof(_fileinfo));
     _filefd = 0;
     _offset = 0;
 }
 
-void HttpResponse::setStatus(const std::string &method, const std::string &url) {
-    _method = method;
+void HttpResponse::setStatus(int code, const std::string &url) {
+    _code = code;
     _url = url;
-    if (_url=="/"){
-        _url = "/index.html";
-    }
 }
 void HttpResponse::setResponse(Buffer &buffer) {
     addResponseLine(buffer);
@@ -87,7 +93,10 @@ void HttpResponse::setResponse(Buffer &buffer) {
 //    addBody(buffer);
     std::string filepath = _pathdir + _url;
     _filefd = open(filepath.c_str(),O_RDONLY);
-    std::cout << "filepath=" << filepath << std::endl << "_filefd=" << _filefd << std::endl;
+    if (_filefd<=0){
+        perror("open file wrong:");
+    }
+    std::cout << "filepath=" << filepath.c_str() << std::endl << "_filefd=" << _filefd << std::endl;
 }
 
 void HttpResponse::addResponseLine(Buffer &buffer) {

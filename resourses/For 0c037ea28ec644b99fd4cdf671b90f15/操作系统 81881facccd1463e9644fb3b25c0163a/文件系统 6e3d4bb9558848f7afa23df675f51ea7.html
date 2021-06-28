@@ -1,0 +1,647 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>文件系统</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6e3d4bb9-5588-48f7-afa2-3df675f51ea7" class="page sans"><header><h1 class="page-title">文件系统</h1></header><div class="page-body"><hr id="29dcb831-0c04-46bc-9e14-15c050bae915"/><p id="b50c9d06-25db-4aae-91d6-96843df0f373" class="">
+</p><nav id="d8a313fb-0e04-4d0a-9fcf-8961d43e748d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#da312db6-23dc-468f-9ac5-8a446b6e0632">⭐️谈一谈同步和异步？阻塞和非阻塞？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3ce282db-fd0c-496f-9eba-6b09b4c025e9">同步和异步机制？半同步和完全异步的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#00a68740-4236-47fa-a5ca-4bd67e4fbfa6">半同步/半异步是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#82514422-1f6d-4fdc-ad33-3eb088e7b9b4">阻塞IO和非阻塞IO的区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e13fd92-72d2-47f1-833b-75107a5e0afb">IO多路复用技术？原理？区别？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#876c29a9-59bf-407d-ad58-c461e3963704">⭐️零拷贝是什么？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#80b53744-fc06-40f3-a320-d9ca44884ada">⭐️完整介绍IO模型</a></div></nav><p id="be85bbbc-64fc-459b-95d8-1c1533bd6179" class="">
+</p><p id="8a031de9-5430-424f-8b1f-8065e5226bb1" class="">
+</p><p id="c83f2536-ca07-4374-886d-fe8f8bc7be21" class="">
+</p><h3 id="da312db6-23dc-468f-9ac5-8a446b6e0632" class="">⭐️谈一谈同步和异步？阻塞和非阻塞？</h3><p id="db7c0d65-1503-45c5-8608-a28a004215ab" class=""><strong>同步和异步</strong></p><ul id="45ef4470-3ea6-4c43-94c3-178084775b4c" class="bulleted-list"><li>同步IO<p id="978f2bee-6df8-4b7a-915d-7f9eb164900b" class="">当一个同步调用发出后，调用者需要得到返回结果，才能进行后续的执行</p><p id="e90600da-b19f-4b32-a894-0908d7782769" class="">包括同步阻塞IO和同步非阻塞IO</p></li></ul><ul id="9beac577-17de-4744-b206-63aa3706c266" class="bulleted-list"><li>异步IO<p id="1e40a1cf-8446-4004-8a60-b8aa384dd37f" class="">当一个异步调用后，调用者不能立刻得到返回结果。实际处理这个调用的部件在完成后，通过状态、通知和回调来通知调用者。</p><p id="972ad7d5-084b-41d4-b8d8-88be4fd7554b" class="">异步IO是<strong>asynchronous非阻塞IO</strong>，</p><p id="b9869845-0a14-4530-a6c6-347c93dd7ee0" class="">实现原理：—— 理论上是这样的，但是目前的实现不尽如人意</p><ol id="3d144dee-5bed-4496-8aae-18cfe08e2cc4" class="numbered-list" start="1"><li>用户进程发起read操作后立即返回去做其他事,kernel收到asynchronous read后也立刻返回</li></ol><ol id="ae2ca4ac-865f-4bef-ae9b-e85e25b782ef" class="numbered-list" start="2"><li>在数据准备完成后,kernel将数据拷贝到用户内存,并发送给用户signal</li></ol><figure id="3b21bb99-7d87-46be-ae5d-a3311f6699fe" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled.png"><img style="width:572px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled.png"/></a></figure></li></ul><p id="c9e72619-bc89-4f07-afd3-fe170a63175b" class=""><strong>阻塞和非阻塞</strong></p><ul id="c6687419-4ff5-4afc-88b8-11ed0822b988" class="bulleted-list"><li>阻塞<p id="b4e7076c-84a0-40aa-9ad2-8d4403d21f0b" class="">是指调用结果返回前，当前线程会被挂起。</p></li></ul><ul id="13933128-674a-4d40-ae3e-34bd836fa1aa" class="bulleted-list"><li>非阻塞<p id="ec1de561-7a00-4d01-816d-395e7b8fadab" class="">即使调用结果没有返回，也不会阻塞当前线程。</p></li></ul><p id="e66c6ea3-9071-4710-9ff5-8956487bf6e1" class="">
+</p><p id="355407df-e0f7-487a-a6a5-fd4e73922219" class="">同步/异步是“任务完成消息”的<strong>通知方式（机制）</strong>，阻塞/非阻塞是<strong>等待“任务完成消息”通知过程中的状态（能不能做其他任务）</strong>。</p><p id="f274f8a9-a00d-497b-867d-634c1d475199" class=""><strong>同步和异步的区别：</strong><div class="indented"><p id="522afbc3-2d48-47a7-b459-926044776cd9" class="">同步调用，例如需要获取数据，那么调用者会主动去等待获取到数据</p><p id="4903b75c-9589-46c9-8d87-2c7510ecc823" class="">而异步，调用会直接返回，不会立即得到结果，而是将这个任务交给内核，当任务完成之后（数据拷贝完成）会通知用户</p></div></p><p id="f99e123d-671b-4963-a48f-c331c3561a1e" class=""><strong>阻塞和非阻塞的区别：</strong><div class="indented"><p id="8f616b2d-a85e-4060-a7f1-d43db23cf53c" class="">区别在于在等待数据的过程中的状态，能不能做其他事。</p><p id="e65db03b-bba0-4cb5-a3b6-d4e102e0b732" class="">阻塞必须等待直到有数据返回了，不能做别的事</p><p id="188640d9-921d-4808-a967-86caadd02880" class="">非阻塞调用会立即返回结果，不会阻塞当前线程（用户可以选择继续不停的查看有无数据，或者干点别的。）</p></div></p><p id="1fd9b051-e927-4fc9-b9f7-8e7b6c4ce936" class="">
+</p><p id="85dc60d9-7ef3-40fb-ae0e-0bf6ac287369" class="block-color-yellow_background"><mark class="highlight-red_background">个人理解：同步异步和阻塞非阻塞是不同层面的概念。阻塞非阻塞更偏向于进程线程层面，看的是进行某一个操作的时候是否要等在那；而同步异步更加宏观，看的是在完成任务的整个过程中，是否是一个一个任务按序完成的。他们之间并不是完全的独立，存在交叉关系，可以进行一些组合。</mark></p><p id="2364270e-e457-443c-8e1e-6c068fc20d4a" class="block-color-yellow_background">例如，你要从书店买到一本书，从而可以学习，最终目的是找工作。</p><p id="4b4b77c0-4b9c-463a-bb53-d9b65b740e3c" class="block-color-yellow_background">那你先打电话问书店老板有没有这本书，老板说没有。这个时候你如果一直占着电话不干别的，直到老板说书到了，那就是你买书过程被阻塞了；如果你挂了电话，隔段时间再打过去问，或者让老板书到了打电话通知你，那就是没有被阻塞。假设你没有被阻塞，但是你还没有拿到书，这个时候你可以做点别的，例如先看别的书学习，那从你看书学习的角度来看，你就是异步完成的，但是从最终找到工作的角度来看，你必须先看完所有的书才能找到工作，不可能先找到工作才开始看书，这又是同步的。</p><p id="c38a049d-e565-42d1-8491-adfd1ff25767" class="">
+</p><p id="3dd21f77-4448-458f-8cfa-36e96bc31f3b" class="">
+</p><h3 id="3ce282db-fd0c-496f-9eba-6b09b4c025e9" class="">同步和异步机制？半同步和完全异步的区别？</h3><p id="41311698-a63a-4477-a810-fbb5bfba1f11" class="">
+</p><h3 id="00a68740-4236-47fa-a5ca-4bd67e4fbfa6" class="">半同步/半异步是什么？</h3><p id="2c567a74-9de3-4ad5-843a-6c5a69ada4b7" class="">出现原因：</p><p id="4437d341-80f1-47ee-b69e-c83edd80df3d" class="">异步线程执行效率高，实时性强，但是程序相对负责，难以调试和扩展，不适合于大量的并发。</p><p id="2f80b806-d73a-473e-9b7f-a7bd47784359" class="">同步线程效率相对较低，实时性较差，但逻辑简单。</p><p id="7f2d4368-8c32-465d-a89b-3a35ebafe7f1" class="">像服务器这种既要求较好的实时性，又要能同时处理多个客户请求的应用程序，就要同时使用同步线程和异步线程来实现，即半同步/半异步模式。</p><p id="9668d2f2-56d8-4fd6-87a1-334ecc5c7b18" class="">半同步/半异步模式中，同步线程用于处理客户逻辑，即逻辑单元；异步线程用于处理I/O事件，即I/O处理单元。</p><p id="f5cffc1a-3e0c-4877-900b-19739bef0d2e" class="">
+</p><h3 id="82514422-1f6d-4fdc-ad33-3eb088e7b9b4" class="">阻塞IO和非阻塞IO的区别？</h3><p id="a2648a4c-314a-4dce-bf21-50070ee948f7" class=""><strong>synchronous阻塞IO</strong>在请求后的等待阶段1和拷贝阶段2都是阻塞的。整个过程只有一次系统调用。</p><figure id="5da3c09c-e4d3-483d-aa48-ecdac726b447" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%201.png"><img style="width:552px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%201.png"/></a></figure><p id="08e36497-b0be-44bd-8fab-ef40f56233e8" class=""><strong>synchronou非阻塞IO</strong>在等待阶段1不阻塞，在拷贝阶段2阻塞。需要两次有效的系统调用。</p><ol id="fe9f26df-cb5e-49df-b3c8-ffa80c88b369" class="numbered-list" start="1"><li>用户进程轮询请求数据，没有数据时kernel返回错误状态，用户进程收到后会重试。</li></ol><ol id="aa1bbe14-5f6e-476e-82c2-47a6216bc208" class="numbered-list" start="2"><li>某次请求后如果数据到达，kernel返回数据到达状态，<code>阶段1结束</code> ，用户进程调用read，将数据从kernel拷贝到用户内存。</li></ol><figure id="5f2033ff-1317-4525-a1b6-77da72d54dbd" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%202.png"><img style="width:603px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%202.png"/></a></figure><p id="494d8454-38c5-4408-b3e6-4602b4529a1c" class="">
+</p><h3 id="9e13fd92-72d2-47f1-833b-75107a5e0afb" class="">IO多路复用技术？原理？区别？</h3><p id="e72732e7-c88e-4843-a0ff-d4801671ddd0" class="">是<span style="border-bottom:0.05em solid">synchronous阻塞IO</span>，区别在于一个用户进程负责多个socket。</p><p id="7e59f5ed-ff3b-4cb0-ae79-3065882f0b57" class="">基本原理：</p><ol id="42c43315-d105-4f37-8ab1-c284648b131e" class="numbered-list" start="1"><li>select、poll、epoll请求数据，在阶段1被阻塞，当某个socket有数据到达了就通知用户进程</li></ol><ol id="666846f3-48b0-48aa-889f-fd6a06093849" class="numbered-list" start="2"><li>用户进程调用read操作，将数据从kernel拷贝到用户内存，在阶段2被阻塞</li></ol><figure id="762dc221-9fd3-424a-a6d1-685e614c2225" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%203.png"><img style="width:609px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%203.png"/></a></figure><p id="70e04ded-13cd-4491-b529-75c41f1eada2" class=""><mark class="highlight-red"><strong>阻塞IO只需要一次系统调用，IO多路复用需要两次，如果连接数不是很高时 select/epoll不一定比multi-threading+blocking IO更快</strong></mark></p><p id="ab5166c4-f15b-4837-963e-599d632c955e" class="">
+</p><p id="aa2dae78-800b-4864-acbd-de218c32df98" class=""><strong>IO多路复用的实现（应用）</strong></p><ul id="10fd5237-3943-41d6-843e-5c1e7535286e" class="bulleted-list"><li>select<p id="0b64b465-f4e2-4dfc-9cb6-684b10164a20" class="">select和poll都需要在返回后遍历文件描述符来获取已经就绪的socket，描述符越多效率越低，两者异同为</p></li></ul><ul id="20c6568a-0657-4735-80d1-d412cac6810b" class="bulleted-list"><li>poll<p id="658dea01-b1a0-421d-abca-95d3997dfee8" class="">select和poll都需要在返回后遍历文件描述符来获取已经就绪的socket，描述符越多效率越低，两者异同为</p></li></ul><ul id="fb9ae7fb-8475-4474-89c6-1a1bc491fd97" class="bulleted-list"><li>epoll<p id="2ca8b3c0-f373-4376-bc02-6bf1516d9085" class="">epoll是select和poll的增强版，epoll通过epoll_ctl()来注册一个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似callback的回调机制，迅速激活这个文件描述符，当进程调用epoll_wait()时便得到通知(<code>不再需要遍历文件描述符,通过监听回调的机制,也是epoll的魅力</code>)</p><p id="15234393-a3dd-4539-882c-ce65472cf405" class=""><strong>为什么epoll更高效呢？</strong>——因为同时连接的大量客户端在同一时刻可能只有很少处于就绪状态。</p></li></ul><p id="fd30d1e4-2426-4e84-958c-743cb74ecfd5" class="">
+</p><h3 id="876c29a9-59bf-407d-ad58-c461e3963704" class="">⭐️零拷贝是什么？</h3><p id="5c68c72e-0328-499f-9cc5-61758dc1b57c" class="">零拷贝就是一种<strong>避免 CPU 将数据从一块存储拷贝到另外一块存储的技术</strong>。零拷贝技术可以减少数据拷贝和共享总线操作的次数。
+例如C++中的emplace_back()就用了零拷贝技术。与push_back()的区别在于：使用push_back()函数需要调用拷贝构造函数和转移构造 函数，而使用emplace_back()插入的元素原地构造，不需要触发拷贝构造和转移构造，效率更高。</p><p id="8a24adc3-1c4c-4117-895a-4df6f894fed3" class="">详见</p><figure id="d2924cc1-2ccf-4d86-b410-745484c09c40" class="link-to-page"><a href="../Linux%20d2924cc12ccf4d86b410745484c09c40.html"><span class="icon">💿</span>Linux</a></figure><p id="6ab50bf8-b8e5-4760-a119-ef474f0a59d1" class="">
+</p><p id="9d6d4e0d-7e70-4498-a67a-3dd5ef21a188" class="">
+</p><p id="89707ca2-f4f8-4c9a-85b0-3ff5e42dc586" class="">
+</p><h3 id="80b53744-fc06-40f3-a320-d9ca44884ada" class="block-color-yellow_background">⭐️完整介绍IO模型</h3><p id="00096e7c-31ce-4e05-a9a3-745fec2a8092" class=""><strong>同步</strong></p><ol id="fb974f67-62ac-49e4-bb59-13ea384d78ec" class="numbered-list" start="1"><li><strong>阻塞IO模型 （BIO）</strong><p id="bd6cc99b-b7be-4b3d-adce-5a249dcf1f70" class="">线程发起IO系统调用后会被阻塞，转到内核空间处理，整个IO处理完毕后返回数据。</p><figure id="78b08efb-c773-4879-b1e5-3e3611ce4cf3" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%204.png"><img style="width:576px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%204.png"/></a></figure><p id="07f94a54-3804-4d18-a28b-93733b7343e1" class="">优缺点：一般需要给每个IO请求分配一个IO线程，因此系统开销大。</p><p id="a1366050-b0c7-433c-ac1e-552a9496b1d4" class="">典型应用：阻塞socket</p></li></ol><ol id="a72a751b-7346-422f-8cbd-1cfa20633fc5" class="numbered-list" start="2"><li><strong>非阻塞IO模型 （NIO）</strong><p id="c2df125b-d5a0-43bf-99fe-f7cc10a63d85" class="">线程不断轮询读取内核IO设备缓冲区，如果没数据立即返回，如果有数据则拷贝数据。</p><figure id="ad3ce7bd-a6af-49dd-b218-fc73c7965705" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%205.png"><img style="width:828px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%205.png"/></a></figure><p id="97ff3db9-4ed3-4715-b8e5-1fcc96a628c4" class="">优缺点：CPU消耗多，无效IO多。</p><p id="69178476-9554-4405-97c0-033442347b66" class="">典型应用：非阻塞socket（设置为NONBLOCKING）</p></li></ol><ol id="41fef7eb-819f-485e-8915-fda1127b6873" class="numbered-list" start="3"><li><strong>IO多路复用模型</strong><p id="916eaaed-07ee-4db9-8792-70299b887d02" class="">线程调用select/poll/epoll传入多个设备fd，然后阻塞或者轮询等待。如果有IO设备准备好则返回可读条件，用户主动调IO读写，如果没有则继续阻塞。<strong>关键在于：能同时对多个IO端口进行监听。</strong></p><figure id="69de8e6c-cb7c-4b0c-97fc-5a413bbfde2d" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%206.png"><img style="width:887px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%206.png"/></a></figure><p id="603d6d10-f5f9-48ee-acf3-a7e894e72eb6" class="">优缺点：可以监听多个IO设备，所以一个线程内可以处理多个网络请求。</p><p id="0283c033-c0a7-40ad-85d1-61742f1e6f15" class="">典型应用：select、poll、epoll</p></li></ol><ol id="9a1fe76a-64a3-4fa2-9463-5c476eb0e89c" class="numbered-list" start="4"><li><strong>信号驱动IO模型</strong><p id="94e9e9a6-9997-48c2-919a-ad4dfaf68af3" class="">利用linux信号机制，用sigaction函数将SIGIO读写信号以及handler回调函数存在内核队列中。当设备IO缓冲区可写或可读时触发SIGIO中断，返回设备fd并回调handler。</p><figure id="2cc1b53f-ec5f-4044-b107-0372d85ab101" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%207.png"><img style="width:863px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%207.png"/></a></figure><p id="c70100b3-949d-477e-94e6-32f59b75e0b5" class="">优缺点：避免用户或内核主动轮询设备造成的资源浪费；但是handler是在中断环境下运行，多线程不稳定，而且要考虑信号的平台兼容性，其次是SIGIO信号被POSIX定义为standard signals不会进入队列，所以同时存在多个SIGIO会只触发第一个SIGIO</p></li></ol><p id="d97e156e-9e1a-4a82-b98c-d60e5e1f55ff" class=""><strong>异步</strong></p><ol id="048d34d4-e5a7-431b-8405-e2682df39a4b" class="numbered-list" start="1"><li><strong>异步IO模型 （AIO）</strong><p id="31b5b4a6-51d6-454c-905c-8d050dc7c5dc" class="">数据拷贝是进程也无需阻塞</p><figure id="8b3e3762-35d3-4fe2-bdc0-13380b26b5d3" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%208.png"><img style="width:866px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%208.png"/></a></figure><p id="e61a0171-7f59-40aa-8b59-7db59aea0349" class="">
+</p></li></ol><p id="3e1673f5-6fd0-49f1-b312-251c9b162311" class=""><strong>五种模型的比较</strong></p><figure id="1b8dbc8d-c1d2-4453-aca4-99991f8f1ab5" class="image"><a href="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%209.png"><img style="width:844px" src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%206e3d4bb9558848f7afa23df675f51ea7/Untitled%209.png"/></a></figure><figure id="6b2b0d36-3872-4324-8bfb-5fb9d55adef6"><a href="https://blog.csdn.net/jay900323/article/details/18141217#t3" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Linux五种IO模型性能分析_深秋哋黎明的专栏-CSDN博客</div><div class="bookmark-description">例如普通B/S模式（同步）：提交请求等待服务器处理-&gt;处理完毕返回这个期间客户端浏览器不能干任何事 异步： 异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的部件在完成后，通过状态、通知和回调来通知调用者。 ...</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/jay900323/article/details/18141217#t3</div></div><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" class="bookmark-image"/></a></figure><p id="8a5d1cc8-5fc8-4f58-a304-d687c8a1b560" class="">
+</p><p id="68dbb7a7-0b0f-4cf7-b296-02c91be9484f" class="">个人理解：所以判断是同步还是异步，是根据拷贝数据的时候是否阻塞来判断的。</p></div></article></body></html>

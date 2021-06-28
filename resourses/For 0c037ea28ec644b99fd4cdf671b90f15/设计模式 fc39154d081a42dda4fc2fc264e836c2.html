@@ -1,0 +1,778 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>设计模式</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="fc39154d-081a-42dd-a4fc-2fc264e836c2" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🍥</span></div><h1 class="page-title">设计模式</h1></header><div class="page-body"><hr id="b1f4df9e-d921-4bf5-b2a1-11aab1d60e67"/><p id="ec35a412-819d-4557-9a43-19c29bc18511" class="">
+</p><p id="9a07206a-85e3-4246-87d4-56d5747dd074" class="">
+</p><p id="2cbdfb99-a5a0-4dfa-b62f-2527d963cee3" class="">
+</p><nav id="01b6b9ca-1013-473d-b34c-9c121f92fae7" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a8d5add3-8c84-44e8-97b1-29163865656d">介绍常见的设计模式？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#25aebe4f-1d1b-4d8a-a234-c126caf96386">创建型模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9dd43033-d112-4606-84a0-41db42725cee">⭐️工厂模式</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3bc6080e-0ee0-4973-ad50-bfe933303b3f">简单工厂模式</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4e53d6dc-7bce-452f-9ff1-8994e2ff39c8">工厂方法模式</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0b2956ab-aa35-400e-9c06-9c06db09d547">抽象工厂模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51e68cd2-0a39-46ae-bee1-b3f53dc2aae3">建造者模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a5b43e85-6459-4577-a371-aaf97e976944">原型模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7d385b4-b962-4f18-a3de-15c98d177a8c">⭐️⭐️单例模式</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6809fc16-6b1f-4da5-90ee-3268a8c77567">单例模式的几种写法？</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#68e5f33a-f7d9-45a6-8dac-1f428eba6d1c">如何保证单例模式只有唯一实例？</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ad69e651-56a8-4929-89cf-2e7a14264410">结构型模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21741d1c-80fa-4f53-a9c0-5a967b7cc70d">适配器模式</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8170701a-2c3d-4eb3-8b0a-5d4c140394b0">适配器模式是什么？实现？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f395d139-7811-4b16-9852-dfb079071c87">装饰器模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#70db627a-0f81-4575-9186-8ef3ca79047d">⭐️外观模式</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ecab08ec-748f-4bf3-975e-2083436f0220">行为型模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e73fffc-5caa-4b29-93b8-0158f1e13e9f">⭐️迭代器模式</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fab36c16-0e84-45eb-9028-7ca0bd363fba">⭐️观察者模式</a></div></nav><p id="dfe1d42b-3fbb-48f5-960c-dee221ba212f" class="">
+</p><h3 id="a8d5add3-8c84-44e8-97b1-29163865656d" class="">介绍常见的设计模式？</h3><ol id="52eeb1f5-0ca6-4a45-b033-d7191c228ef8" class="numbered-list" start="1"><li>单例模式<p id="ea2818a3-8842-4030-b78a-447518d2f1b4" class="">解决问题：主要解决一个全局使用的类频繁的创建和销毁的问题。</p><p id="ddc03843-4bc0-497d-98d9-f9180abf5517" class="">三要素：</p><ol id="a32f3cce-028c-40ce-9f42-5d042354cf1c" class="numbered-list" start="1"><li>某个类只能有一个实例</li></ol><ol id="24901847-65f9-4876-8ae1-930150221fa6" class="numbered-list" start="2"><li>它必须自行创建这个实例</li></ol><ol id="ac8eea34-3b44-427b-8436-ddc3fd9c2301" class="numbered-list" start="3"><li>它必须自行向整个系统提供这个实例</li></ol></li></ol><ol id="d6bc2f63-e0fa-47d0-86de-139cea89b571" class="numbered-list" start="2"><li>工厂模式<p id="fa3578b7-dc7e-4b4f-be44-abe5fa849c97" class="">解决问题：主要解决接口选择的问题。</p><p id="fbd710b2-c4b4-439b-a05f-14108d8b8a3b" class="">描述：在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。该模式下定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，使其创建过程延迟到子类进行。</p></li></ol><ol id="4eacc5a7-b985-4036-8821-88b3f67a1592" class="numbered-list" start="3"><li>观察者模式<p id="731922c2-c5b5-4363-8f40-c9c8b6a8a55c" class="">描述：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p></li></ol><ol id="e098e50f-ba51-4fe5-bf42-96050b442619" class="numbered-list" start="4"><li>装饰器模式<p id="ce378475-69db-4c85-bab6-09f44e0397ad" class="">描述：对已经存在的某些类进行装饰，以此来扩展一些功能，从而动态的为一个对象增加新的功能。</p><p id="725734f7-f09c-4f75-9b56-3c11f83a9c2a" class="">装饰器模式是一种用于代替继承的技术，无需通过继承增加子类就能扩展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时避免类型体系的快速膨胀。</p></li></ol><p id="5ff3ae16-809f-4e98-a054-cb911a26d86d" class="">
+</p><figure id="ac0085fa-2b33-436c-b268-60d7022cf79c" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled.png"><img style="width:864px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled.png"/></a></figure><p id="4707eafa-90df-46c9-a04b-125711a7a758" class="">
+</p><p id="6118ab6f-c855-4d92-8840-fc0d75a04b25" class="">
+</p><h1 id="25aebe4f-1d1b-4d8a-a234-c126caf96386" class="">创建型模式</h1><h2 id="9dd43033-d112-4606-84a0-41db42725cee" class="">⭐️工厂模式</h2><h3 id="3bc6080e-0ee0-4973-ad50-bfe933303b3f" class="">简单工厂模式</h3><p id="b4aa9c17-7f3c-4e29-8d94-6f095f571257" class="">描述：把要生产的对象名扔进工厂，就会生产出对应的对象，而无需在意其中的生产过程</p><figure id="f90c0028-b394-4b46-8cf5-aa6c214df1b2" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%201.png"><img style="width:624px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%201.png"/></a></figure><p id="a9b94d17-9548-4dcf-81f9-07916042d1d2" class="">缺点：<div class="indented"><ol id="20885b38-2352-4884-96da-d60597ab7751" class="numbered-list" start="1"><li>违背了开闭原则（对扩展开放，对修改关闭）。如果新增一种产品，就要在工厂类中修改代码（增加判断条件）</li></ol><ol id="c171e12f-0f24-428a-9b59-5d864759cc75" class="numbered-list" start="2"><li>所有判断逻辑都在工厂类中实现，一旦工厂类设计故障，整个系统会受影响。</li></ol></div></p><h3 id="4e53d6dc-7bce-452f-9ff1-8994e2ff39c8" class="">工厂方法模式</h3><p id="f5ed33d3-ebe0-43df-876e-415169c6712a" class="">相较于简单工厂模式，工厂模式在工厂上也引入了抽象层，用户代码中均使用抽象层。</p><figure id="80c21d12-a898-4ee4-85dc-2285162e73eb" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%202.png"><img style="width:816px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%202.png"/></a></figure><p id="43151e85-529a-492b-9b89-59877f499d4b" class="">优点：增强了系统的可扩展性，符合开闭原则。</p><p id="99cd4907-959f-464c-9f72-e48a663c6c4a" class="">缺点：<div class="indented"><ol id="46d78afc-b679-42ec-8b2c-4624f232de02" class="numbered-list" start="1"><li>添加新产品是需要成对添加产品和工厂，增加系统复杂度</li></ol><ol id="8dac3a92-e936-4bbd-a913-8e1c0e303a72" class="numbered-list" start="2"><li>两个抽象层增大了理解难度</li></ol></div></p><h3 id="0b2956ab-aa35-400e-9c06-9c06db09d547" class="">抽象工厂模式</h3><p id="b5d603e4-0f91-4f87-bf15-873757a6a53f" class="">相较于工厂方法模式，抽象工厂模式可以生产多种同类相关的产品。</p><figure id="08972d11-28de-462b-9a0b-81814fd68317" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%203.png"><img style="width:864px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%203.png"/></a></figure><p id="814e6d74-8473-4595-a0b9-e0a1215c5db0" class="">优点：加入新产品系列（如加入棒球系列）时，无需修改原有系统，增强了系统的可扩展性，符合开闭原则。</p><p id="f617f0f8-43e8-4353-861e-cde3f082b4e0" class="">缺点：在已有产品系列中添加新产品（如增加篮球鞋）时，需要修改抽象层代码，违背开闭原则。</p><p id="a616649d-f89d-490f-b02c-f56960b24ba9" class="">
+</p><p id="54ecc74b-6ab0-44f6-9f13-154cd0c121f3" class="">
+</p><h2 id="51e68cd2-0a39-46ae-bee1-b3f53dc2aae3" class="">建造者模式</h2><p id="4a8fdcd1-7b13-4bbc-8410-7823e0f44b10" class="">将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p><p id="3b3c3338-a254-4d5e-bf7a-55cdf4388fe2" class="">
+</p><h2 id="a5b43e85-6459-4577-a371-aaf97e976944" class="">原型模式</h2><p id="c03113a8-b920-4ab7-8087-290a7c6a0d85" class="">使用原型实例指定待创建对象的类型，并且通过复制这个原型来创建新的对象。</p><p id="81ea68d1-379d-48e7-9146-0dcb396ff387" class="">注意深拷贝和浅拷贝问题。</p><p id="c8a9b0ac-0b7d-498e-8026-4648a1a43f26" class="">
+</p><p id="9ef7aa5f-b6ae-4c5f-8477-e4445a0bfe92" class="">
+</p><h2 id="c7d385b4-b962-4f18-a3de-15c98d177a8c" class="">⭐️⭐️单例模式</h2><p id="5f1af591-7402-4485-9eae-a8865f9a01e0" class="">该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p><p id="6c7fb90e-ff67-4180-990e-948698c128a0" class="">三要素：</p><ol id="48442830-4e87-430e-8b91-d732e4fb864a" class="numbered-list" start="1"><li>某个类只能有一个实例</li></ol><ol id="7d077ea3-227d-477b-9a50-4301d7454fb1" class="numbered-list" start="2"><li>它必须自行创建这个实例</li></ol><ol id="1b1e175c-3bc0-4a93-bd71-f6cbd0a788a4" class="numbered-list" start="3"><li>它必须自行向整个系统提供这个实例</li></ol><h3 id="6809fc16-6b1f-4da5-90ee-3268a8c77567" class="">单例模式的几种写法？</h3><ul id="cc7d4a25-f17c-49e3-bbfd-d079499d2b00" class="bulleted-list"><li>懒汉式：在第一次被使用时才进行初始化，这叫做延迟初始化。<pre id="f7c4f06c-02f4-4078-adad-6e3e3b1c13d6" class="code"><code>class Singleton{
+private:
+    static Singleton* instance;
+    
+private:
+    Singleton(){}
+    ~Singleton(){}
+    Singleton(const Singleton&amp; s);
+    Singleton&amp; operator=(Singleton&amp; s);
+    
+    
+public:
+    static Singleton* getInstance(){
+        if (instance == nullptr){
+            instance = new Singleton();
+        }
+        return instance;
+    }
+};
+Singleton* Singleton::instance = nullptr;</code></pre><p id="12c1ae5f-43ee-4f06-af79-72102f9f8960" class="">存在问题：</p><ol id="498849dd-5b7b-48f1-8384-6a30b3f7a6b1" class="numbered-list" start="1"><li>内存泄漏——<span style="border-bottom:0.05em solid">使用智能指针</span>或<span style="border-bottom:0.05em solid">使用静态的嵌套类对象</span><pre id="e7bf25f9-0749-418b-bab7-8da20afb9f9d" class="code"><code>//使用静态的嵌套类对象
+class Singleton{
+private:
+    static Singleton* instance;
+    
+private:
+    Singleton(){}
+    ~Singleton(){}
+    Singleton(const Singleton&amp; s);
+    Singleton&amp; operator=(Singleton&amp; s);
+    
+private:
+		class Deletor{
+		public:
+					~Deletor(){
+							if (Singleton::instance != nullptr){
+									delete instance;
+							}
+					}
+		};
+		static Deletor deletor;
+public:
+    static Singleton* getInstance(){
+        if (instance == nullptr){
+            instance = new Singleton();
+        }
+        return instance;
+    }
+};
+Singleton* Singleton::instance = nullptr;
+Singleton::Deletor Singleton::deletor;</code></pre></li></ol><ol id="b4a17935-775c-41f6-aa1c-630073bfcf52" class="numbered-list" start="2"><li>多线程不安全<pre id="a8327882-bc11-4d79-b87b-f10c44a003c7" class="code"><code>//双检测锁模式 （DCL：Double-Checked Locking Pattern）
+static Singleton* getInstance(){
+		if (instance == nullptr){
+				std::unique_lock&lt;std::mutex&gt; lock;
+				if (instance == nullptr){
+						instance = new Singleton();
+				}
+		}
+		return instance;
+};</code></pre><p id="ff14b21c-afc0-4935-b697-debac8be1c14" class="">但是仍然存在问题：CPU乱序的问题？ <code>instance = new Singleton()</code> 不是原子操作 —— 加上volatile（不行，这个关键字在C++里只针对编译器？）？或static atomic&lt;Singleton*&gt; instance？更加优雅的实现是：</p><pre id="3750d5cf-4daa-4b9d-b298-d0e164672fde" class="code"><code>//C++11规定了local static在多线程条件下的初始化行为，
+//要求编译器保证了内部静态变量的线程安全性。
+class Singleton
+{
+private:
+		Singleton() { };
+		~Singleton() { };
+		Singleton(const Singleton&amp;);
+		Singleton&amp; operator=(const Singleton&amp;);
+public:
+		static Singleton&amp; getInstance() 
+	  {
+				static Singleton instance; //C++11保证「局部静态变量」的初始化是原子操作？
+				return instance;
+		}
+};
+//注：C++标准定为全局或静态对象是有首次用到时才会进行构造</code></pre></li></ol></li></ul><ul id="7f3753e2-d837-47dd-92a0-2136c37e858b" class="bulleted-list"><li>饿汉式：单例实例在程序运行时被立即执行初始化<pre id="c3bdb10e-6e49-406b-8051-a9caa5915eff" class="code"><code>class Singleton{
+private:
+    static Singleton instance;
+    
+private:
+    Singleton(){}
+    ~Singleton(){}
+    Singleton(const Singleton&amp; s);
+    Singleton&amp; operator=(Singleton&amp; s);
+    
+    
+public:
+    static Singleton&amp; getInstance(){
+        return instance;
+    }
+};
+Singleton Singleton::instance; //这里就是实例化了</code></pre><p id="098c2f46-bcd0-4104-972b-3de839a2f8f8" class="">由于在main函数之前初始化，所以没有线程安全的问题。</p><p id="0797798c-9d50-475d-9e48-ffa5d648f8a5" class="">潜在问题：non-local static对象（函数外的static对象）在不同编译单元中的初始化顺序是未定义的。也即，static Singleton instance;和static Singleton&amp; getInstance()二者的初始化顺序不确定，如果在初始化完成之前调用 getInstance() 方法会返回一个未定义的实例。</p></li></ul><p id="35754995-6d60-4fbc-b82d-813e30e8d40c" class="">
+</p><p id="6aa70bae-08a5-4ef2-8355-a30c011546ff" class="">
+</p><h3 id="68e5f33a-f7d9-45a6-8dac-1f428eba6d1c" class="">如何保证单例模式只有唯一实例？</h3><ul id="c19c9f4a-0e83-4904-99f6-72e00c35301e" class="bulleted-list"><li>将该类的构造函数定义为私有，这样只有通过该类提供的静态方法来得到该类的唯一实例</li></ul><ul id="03af329c-d998-46dc-9032-792ebd2b48c8" class="bulleted-list"><li>在该类的静态方法中，如果指针为空（或静态变量没有初始化过）才创建该类的实例</li></ul><p id="e8410f2f-927f-41a6-badb-3eaf85990828" class="">
+</p><p id="93b64e2b-abbf-43fa-90ac-94916dfd1e15" class="">
+</p><p id="f88abb4a-2087-400b-9a53-8285a1d531a8" class="">
+</p><h1 id="ad69e651-56a8-4929-89cf-2e7a14264410" class="">结构型模式</h1><div id="adc018c1-2a04-4488-b3ec-8d4780c2547b" class="column-list"><div id="d7d1e2e4-c8f9-4f21-9773-e8d5ef23fc1a" style="width:50%" class="column"><h2 id="21741d1c-80fa-4f53-a9c0-5a967b7cc70d" class="">适配器模式</h2></div><div id="37ce8922-52c9-4941-880b-e0720a12092c" style="width:50%" class="column"><p id="54270f8b-db24-4e8b-802d-cf4ae1af6620" class="">
+</p></div></div><h3 id="8170701a-2c3d-4eb3-8b0a-5d4c140394b0" class="">适配器模式是什么？实现？</h3><p id="9c61d9d4-902f-4198-9863-2ac48c51194b" class="">将一个类的接口转换成客户希望的另一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p><figure id="32dc7983-435b-43ef-a07d-f7d39203e853" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%204.png"><img style="width:720px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%204.png"/></a></figure><pre id="02f0d718-bf34-4abc-b7f7-83d722a74eba" class="code"><code>class A{
+public:
+    virtual void getName(){
+        cout &lt;&lt; &quot;A getName&quot; &lt;&lt; endl;
+    }
+};
+
+class B{
+public:
+    virtual void getname(){
+        cout &lt;&lt; &quot;B getname&quot; &lt;&lt; endl;
+    }
+};
+
+class Adapter : public A{
+public:
+    Adapter(B* b) : _b(b){};
+    void getName() override{
+        _b-&gt;getname();
+    }
+private:
+    B* _b;
+};
+
+int main(int argc, const char * argv[]) {
+    B* b = new B;
+    A* a = new Adapter(b);
+    a-&gt;getName();
+    
+    return 0;
+}</code></pre><p id="255a7bf6-924c-4008-b24e-27c4ec4b16b0" class="">
+</p><p id="51791fc8-cbb3-4224-81d5-c89f666f7d1e" class="">
+</p><h2 id="f395d139-7811-4b16-9852-dfb079071c87" class="">装饰器模式</h2><p id="b142161f-353d-449f-aea8-d36ff21aad14" class="">动态地给一个对象增加一些额外的职责。就扩展功能而言，装饰模式提供了一种比使用子类更加灵活的替代方案。</p><p id="d522b5da-f8d0-4359-97e4-bba71af45975" class="">
+</p><h2 id="70db627a-0f81-4575-9186-8ef3ca79047d" class="">⭐️外观模式</h2><p id="5707ea4a-f143-4df6-826b-fd9f0d2f4313" class="">为子系统中的一组接口提供一个统一的入口。外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p><p id="a862972d-b1f8-4651-8195-c52b66bbb938" class="">例如浏览器。用户要查找什么东西，不论是浏览知乎、腾讯或者CSDN，用户都只需要打开浏览器即可，剩下的搜索工作由浏览器完成。</p><figure id="6a864fc3-c594-490a-b3af-3b9abf32aab9" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%205.png"><img style="width:528px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%205.png"/></a></figure><figure id="81e7dbd2-3a31-4a15-806d-8d2d395d1d1f" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%206.png"><img style="width:912px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%206.png"/></a></figure><p id="a657abc4-9116-4c92-963d-40129ce55dd4" class="">优点：<div class="indented"><ul id="7a9d61e9-6a2b-4711-8d4a-75a97b491ed3" class="bulleted-list"><li>使得用户不必关心子系统组件，减少了与用户交互的对象的数量，简化了客户端的编程</li></ul><ul id="50a05dc7-82c9-42c6-9afc-c453ae26ef5d" class="bulleted-list"><li>大大降低系统的耦合度</li></ul></div></p><p id="545ee9da-f5ca-4f84-8606-c8fdc5068fda" class="">缺点：<div class="indented"><ul id="22d8de87-ea5c-4e53-a6b3-9a5f71a2b325" class="bulleted-list"><li>如果需要增加或者减少子系统，需要修改外观类，违反开闭原则；</li></ul></div></p><p id="fd148f8b-44e9-48b4-a2aa-8c084789718a" class="">
+</p><p id="85f313a9-d54e-4930-a406-3006f295c979" class="">
+</p><p id="4ac7d2dd-306d-46ea-914f-46f37b928865" class="">
+</p><h1 id="ecab08ec-748f-4bf3-975e-2083436f0220" class="">行为型模式</h1><h2 id="4e73fffc-5caa-4b29-93b8-0158f1e13e9f" class="">⭐️迭代器模式</h2><p id="f4952b61-4c77-46bf-8b24-7c7025de09b9" class="">提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露该对象的内部表示。</p><p id="e96aab31-e394-4cbb-a624-5db6796be80a" class="">例如电视遥控器、STL中的容器迭代器。</p><figure id="a7127c1c-5a6d-49b1-9484-9e1c6a183603" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%207.png"><img style="width:560px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%207.png"/></a></figure><p id="d3dbd543-581d-432b-905b-09f834fa3647" class="">
+</p><h2 id="fab36c16-0e84-45eb-9028-7ca0bd363fba" class="">⭐️观察者模式</h2><p id="f4d1dfab-d1ac-4f44-8489-a9842875899d" class="">定义对象之间的一种一对多的依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象都得到通知并被自动更新。</p><figure id="83039735-8cdf-48fe-afc2-d766bb38690e" class="image"><a href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%208.png"><img style="width:587px" src="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20fc39154d081a42dda4fc2fc264e836c2/Untitled%208.png"/></a></figure><p id="9082c527-6e24-432f-996e-738959da3ad6" class="">
+</p><p id="6197b9ac-5632-4220-b0ff-75a408fb0466" class="">
+</p><p id="3c091115-8b62-4efe-a3d0-9a04cb361ed5" class="">
+</p><p id="62b8bab4-76ae-4310-90b7-6ad0925532b2" class="">
+</p><p id="a6230f68-2d10-409e-ac48-95ad24f8108a" class="">
+</p><p id="cd98a683-af26-4e15-b16c-6b7aa657a8c5" class="">设计抽象层，大多数情况下是为了便于扩展。</p></div></article></body></html>

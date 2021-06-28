@@ -1,0 +1,636 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>IP</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d8d0a52-b603-4eb4-b618-2ccdbf5a324f" class="page sans"><header><h1 class="page-title">IP</h1></header><div class="page-body"><hr id="da9f4a5f-eea5-454e-a0da-59a9d4e56512"/><p id="f3097620-7c5c-4d4d-a983-eeaa7f84febb" class="">MAC是实现直连的两个设备之间通信，而IP是在没有直连的网络中实现点对点通信。在网络中数据包传输时，源IP地址和目标IP地址一直不变，但源MAC地址和目标MAC地址一直在变化。</p><p id="e189425f-f471-4616-b6fb-ca9bfb5137f5" class="">IP地址是以网卡来配置的，像服务器、路由器等有2个以上网卡，则有2个以上的IP地址。</p><p id="6d0cfa9f-c14f-4b1d-bd0c-f2cc71adacb1" class="">
+</p><h2 id="cec3a63c-9c35-4bb9-9394-add03d1fa3da" class="">IP地址的基础</h2><h3 id="feb6a728-cfc6-4cf6-8361-b13bb244efe4" class="">IP分类地址</h3><div id="b9b6c059-e362-405c-bc5f-4fa06e5e4d5c" class="column-list"><div id="35e8033b-6e7a-4bab-b521-9396b2dadd71" style="width:50%" class="column"><p id="f6a74ff2-7062-4db5-9533-2e1f08c887b4" class="">类别号+网络号+主机号</p><p id="c14b3f59-ba22-4abc-b728-70be2005a1e3" class="">IP地址中主机号全1表示网络下的所有主机，用于广播；全0指定这个网络。</p></div><div id="4c736258-8125-4287-91e6-43552170166f" style="width:50%" class="column"><figure id="c0f97b2b-c061-4242-932d-c100c74351ab" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled.png"><img style="width:1104px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled.png"/></a></figure></div></div><h3 id="70e945d8-af68-4375-9407-5e40db2975d9" class="">无分类地址CIDR——没有分类</h3><p id="50b51fdb-6229-4617-9274-a6de9b94a8d6" class="">网络号+主机号</p><p id="a1a42722-5394-4c8c-9ed3-391a6e379dc6" class="">10.100.122.2/24，表示前24位是网络号，剩余8位是主机号。子网掩码是255.255.255.0，子网掩码和IP地址求与，则可以得到网络号。</p><div id="a3dc94d8-3722-466a-a299-1c6c50f8ee94" class="column-list"><div id="3c97dc39-3958-4c69-afa6-2e10178716a1" style="width:50%" class="column"><p id="33575d8e-87b1-4e9b-b633-050f3496472b" class="">子网掩码还可以有划分子网的作用。例如在C类地址中，使用子网掩码255.255.255.192对其进行子网划分，则可以从8位主机号中借用2位作为子网号。</p></div><div id="352081d9-a507-4f53-945a-b48723677a3a" style="width:50%" class="column"><figure id="3c3c05fe-b0a6-448e-adc6-a3b45b149e71" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%201.png"><img style="width:1108px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%201.png"/></a></figure></div></div><p id="c460c9e2-5a71-4629-af69-91aa4a12d957" class="">
+</p><h3 id="518ce30b-167b-4fdc-ba2f-b038005d5412" class=""> IP分片</h3><p id="17bc5f1d-9e07-4656-bfe9-8fdd2b0d91f2" class="">以太网的MTU（最大传输单元）是1500字节，当IP数据包大于MTU是，源主机会分片，目标主机再进行重组。</p><p id="3c2793f5-f07b-45ce-8925-ccd1c09ddcb4" class="">
+</p><h2 id="7eee050c-b649-41d5-a555-8d5524289667" class="">IPv6</h2><p id="0d347d6a-d396-4a11-a467-21beeebbafd9" class="">128位，更多的IP地址，并且</p><ul id="320ed452-d5e2-437f-a5b3-ba9565692b56" class="bulleted-list"><li>便捷：可自动配置，即使没有DHCP服务器</li></ul><ul id="5c3bbd2d-5291-4c42-b3c5-c2124bf8d264" class="bulleted-list"><li>传输性能：简化头部，减轻路由器负荷</li></ul><ul id="6180a045-5ddf-4201-8137-ad20831df9ee" class="bulleted-list"><li>安全性</li></ul><figure id="c1d41897-1c62-420d-99cb-3f74117e1357" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%202.png"><img style="width:1762px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%202.png"/></a></figure><p id="037ab22c-c92f-4b47-bebe-b184fc1ff916" class="">
+</p><h2 id="996caad8-78d1-4f17-a72a-bb7235e35c16" class="">IP协议相关技术</h2><h3 id="cceea13e-ad43-49a7-9a6e-8fac3cb121bd" class="">DNS域名解析</h3><p id="e6c66deb-e385-4d5c-929d-a1b3c997579d" class="">将域名网址转换为具体的IP地址。</p><p id="208646ae-c99b-487d-ac1b-1584c786a4bc" class="">客户端只要找到任意一台DNS服务器，就可以通过它找到根据DNS服务器，再一路顺藤摸瓜找到位于下层的某台目标DNS服务器。</p><figure id="9eb7586e-df69-4214-a8da-0fdd679284e4" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%203.png"><img style="width:1316px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%203.png"/></a></figure><h3 id="2e387247-ec18-4469-b05c-5a9fbffe90b1" class="">ARP</h3><p id="4cdefc9b-2289-4003-afd4-b86b06a39fc2" class="">由IP地址得到MAC地址。</p><p id="6d16e73a-5056-447b-a7c2-3dc7d6f82574" class="">RARP则是由MAC地址得到IP地址，经常用于将打印机等小型嵌入式设备接入网络时。</p><div id="31af4878-0a88-4053-ab80-3536e49275d7" class="column-list"><div id="60808b8f-06a7-4f88-9897-dec43dc51def" style="width:37.5%" class="column"><h3 id="cc6eaebe-bb6d-4e01-b0f6-e64655bba68e" class="">DHCP</h3><p id="a289c0db-b296-4680-84dc-e74d66e5f157" class="">动态获取IP地址</p><p id="e6c94630-fa5b-44d8-b68b-2b34941f0673" class="">DHCP客户端进程监听68端口号，DHCP服务端进程监听67端口号。</p><p id="0f55e1e3-16be-4537-b4a3-5ef891eeecb7" class="">DHCP交互中，都是使用UDP广播通信。</p></div><div id="de4fab1b-553c-46fd-9d35-dc3cb20aa74f" style="width:62.5%" class="column"><figure id="e3891ba6-c0b2-45f1-8672-d8cce10bbc54" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%204.png"><img style="width:1306px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%204.png"/></a></figure></div></div><h3 id="ee2e6f84-a061-4318-99d9-a7346746a29a" class="">NAT网络地址转换</h3><p id="cc5efb5e-2463-439d-a006-98b0b0793f21" class="">同个公司、家庭、教室内的主机对外部通信时，把私有IP地址转换成公有IP地址。</p><p id="d32d7916-6dad-4d56-a657-0c672e598f40" class="">如何解决IPv4地址耗尽的问题呢？——NAPT，即网络地址和端口一起转换</p><figure id="48d12a70-3da1-4bae-925c-4f8f71d9f0c4" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%205.png"><img style="width:2036px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%205.png"/></a></figure><p id="72901bf3-5ea8-4560-a6ae-eb531c27456e" class="">NAT穿透技术：客户端主动从 NAT 设备获取公有 IP 地址，然后⾃自⼰己建⽴立端⼝口映射条⽬目，然后⽤用这个条⽬目 对外通信，就不不需要 NAT 设备来进⾏行行转换了。——解决外部无法主动与NAT内部服务器建立连接、NAT路由器重启、转换开销等的问题。</p><p id="3cdf84a6-f6ce-4417-a550-db4b11f4ddc2" class="">
+</p><h3 id="9f0f6eb4-df11-4eaf-a0b7-dec87914b984" class="">ICMP互联网控制报文协议：</h3><p id="999bcff2-4c53-41bc-8d84-50088f3ab9da" class="">确认 IP 包是否成功送达目标地址、报告发送过程中 IP 包被废弃的原因和改善网络设置等。<strong>ICMP负责通知失败的原因。</strong></p><p id="53586e32-2400-4b54-afe1-75d2cddbb464" class=""><strong>几种类型</strong></p><ul id="f7026f4d-f92c-4b50-ab4a-56bafdae8434" class="bulleted-list"><li>0和8用于判断所发送的数据包是否成功到达对端<p id="b7a6263a-cb62-4fba-ade8-9411ba24946c" class="">ping命令中就是用的0和8。</p></li></ul><ul id="2349763f-9d55-4603-895b-3122076c9429" class="bulleted-list"><li>3目标不可达<ul id="83146b1d-b412-4e16-9905-dcac2b209c3e" class="bulleted-list"><li>网络不可达0</li></ul><ul id="06760773-ef77-4e3c-a9bf-20adbb8f943b" class="bulleted-list"><li>主机不可达1</li></ul><ul id="f6e9221f-0c4e-465e-88c5-84e85189f22d" class="bulleted-list"><li>协议不可达2</li></ul><ul id="b370e2e8-ab2d-45d3-af82-77fe84d11979" class="bulleted-list"><li>端口不可达3</li></ul><ul id="fa6bbfec-8e4c-4ca2-80be-e8c01d834a98" class="bulleted-list"><li>需要分片但设置了不分片4</li></ul></li></ul><ul id="b331e519-a769-4479-955d-e8f90d5981bc" class="bulleted-list"><li>4原点抑制：缓和网络拥堵</li></ul><ul id="37f95a17-3bbe-40b0-8188-b32d6bf3a8a0" class="bulleted-list"><li>5重定向：如果路由器发现发送端主机使⽤了「不是最优」的路径发送数据，那么它会返回⼀一个 ICMP 重定向消息给这个主机。</li></ul><ul id="04c9aef1-a4a7-4b1a-8963-cce7cac8561e" class="bulleted-list"><li>11超时：IP包中的TTL（生存周期），每经过一次路由器就会减1。</li></ul><figure id="3a8e52ad-3cdd-413a-879a-f4cba19b7a7f" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%206.png"><img style="width:432px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%206.png"/></a></figure><p id="f4afba9d-06d4-4f03-97a3-e4b5d6b682d3" class="">ICMP报文封装在IP包里。</p><figure id="172a3584-6881-4d01-8439-2765067e0707" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%207.png"><img style="width:1546px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%207.png"/></a></figure><h3 id="a7b51ebc-0a3f-437f-8305-0defa11de036" class="">IGMP</h3><p id="37b751dc-bb58-4d30-89d3-ee72ae2acf43" class="">管理组播成员。</p><p id="c309bf37-e06d-4abf-baed-c4bb41f0dd9a" class="">
+</p><p id="15bd67d1-071d-4e1d-9310-043903a892c2" class="">
+</p><h2 id="7d9e1c21-5dd1-48f6-b781-98897e117ab4" class="">与ICMP协议有关的常用命令</h2><h3 id="21655169-a2a7-4c73-8fce-68fc7c4916e8" class="">ping</h3><figure id="c5c3cf55-5172-4b6c-908f-ba9d37503239" class="image"><a href="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%208.png"><img style="width:672px" src="IP%202d8d0a52b6034eb4b6182ccdbf5a324f/Untitled%208.png"/></a></figure><h3 id="1785a03a-430f-4442-9ce9-32873134fbb2" class="">traceroute</h3><p id="42b7edf9-d79e-4319-b8bc-aaf5e5b81aac" class="">跟踪路由</p><ul id="b473cbeb-3e15-452f-9fb1-771e572b3782" class="bulleted-list"><li>作用一：从1开始逐渐递增TTL，就可以追踪沿途所有路由器的IP。</li></ul><ul id="47c5b89c-82c2-4990-99c3-5cca68db8efa" class="bulleted-list"><li>作用二：故意设置不分片，从而确定路径的MTU。</li></ul><p id="db9d595e-25ef-429e-80d5-7d279fa0c34c" class="">
+</p></div></article></body></html>

@@ -19,7 +19,8 @@ Connection::Connection(int fd)
       _parser(),
       _responser(),
       _filefd(0),
-      _keepalive(false)
+      _keepalive(false),
+      _code(200)
 {
 
 }
@@ -91,7 +92,10 @@ int Connection::Write(int& err) {
 bool Connection::processCore() {
     HTTP_CODE httpcode = _parser.parseContent(_inbuffer);
     if (httpcode == GET_REQUEST){
-        _responser.setStatus(_parser.getMethod(), _parser.getUrl());
+//        if (_parser.getMethod()=="POST"){
+//            _parser.parsePost();
+//        }
+        _responser.setStatus(_code, _parser.getUrl());
         if (_parser.isKeepalive()){
             _keepalive = true;
         }
@@ -131,4 +135,5 @@ void Connection::Clear() {
     _parser.init();
     _responser.init();
     _keepalive = false;
+    _code = 200;
 }
