@@ -22,6 +22,8 @@ public:
 
     ~Connection();
 
+    bool isKeepalive(){ return _keepalive; }
+
 public:
     void setEvent(uint32_t ev) { _event = ev; }
 
@@ -50,6 +52,8 @@ public:
 
     std::mutex* getMutex(){ return &_mutex; }
 
+    void Clear();
+
 private:
     std::mutex _mutex;
 
@@ -66,7 +70,11 @@ private:
 
     HttpResponse _responser;
 
+    int _filefd;
+
     bool _halfclosed;
+
+    bool _keepalive;
 
 
     callback handleRead;

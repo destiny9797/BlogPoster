@@ -18,7 +18,7 @@
 
 //#define MAX_BUF 4096
 #define MAX_CONN 65536
-#define TIMEOUT 2000 //2000ms
+#define TIMEOUT 5000 //2000ms
 
 TcpServer::TcpServer(int port, spTaskPool taskpool)
     : _port(port),
@@ -142,6 +142,7 @@ void TcpServer::handleClose(int fd) {
     std::unique_lock<std::mutex> lk(*conn->getMutex());
     _timermanager.rmTimer(fd);
     _connections[fd] = nullptr;
+    conn->Clear(); //bug: 以防系统没有来得及回收内存
     delEpoll(fd);
     close(fd);
     LOG_DEBUG("Socket %d closed.", fd);
@@ -186,7 +187,8 @@ void TcpServer::handleRequest(int fd) {
         return;
     }
 
-//    std::cout << "before process" << std::endl;
+
+    //业务处理
     bool hasRequest = conn->processCore();
     if (!hasRequest){
         return;
@@ -213,7 +215,7 @@ void TcpServer::handleWrite(int fd) {
     int writeerr;
     int nwrite = conn->Write(writeerr);
     if (nwrite < 0){
-        if (nwrite == EAGAIN){
+        if (writeerr == EAGAIN){
             //没发完,此时不允许收
             uint32_t ev = EPOLLOUT | EPOLLET | EPOLLONESHOT;
             modEpoll(fd, ev);
@@ -226,9 +228,15 @@ void TcpServer::handleWrite(int fd) {
     }
     else{
         //发完了，或者本来就没有消息要发
-        handleClose(fd);
-//        uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
-//        modEpoll(fd, ev);
+        if (conn->isKeepalive()){
+            uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
+            modEpoll(fd, ev);
+            LOG_WARN("Write finish to Socket %d, keepalive, wait for read", fd);
+        }
+        else{
+            handleClose(fd);
+        }
+
     }
 }
 

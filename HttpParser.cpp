@@ -11,15 +11,10 @@
 
 HttpParser::HttpParser()
     : checkState(CHECK_STATE_REQUESTLINE),
-      content_len(0)
+      content_len(0),
+      keepalive(false)
 {
-    char* curpath = getcwd(NULL, 0);
-    if (curpath==nullptr){
-        perror("getcwd wrong:");
-    }
-    else{
-        path = std::string(curpath) + "/../data";
-    }
+
 }
 
 HttpParser::~HttpParser() {
@@ -34,6 +29,7 @@ void HttpParser::init() {
     url = "";
     version = "";
     headers.clear();
+    keepalive = false;
 }
 
 
@@ -66,11 +62,14 @@ void HttpParser::parseHeaders(std::string& line){
     if (header=="Content-Length:"){
         content_len = std::stoi(content);
     }
+    else if (header=="Connection:" && content=="keep-alive"){
+        keepalive = true;
+    }
 }
 
 void HttpParser::parseBody(std::string& line) {
     body += line;
-    assert(body.size() < content_len);
+    assert(body.size() <= content_len);
     if (body.size()==content_len){
         checkState = FINISH;
     }
@@ -93,7 +92,7 @@ HTTP_CODE HttpParser::parseContent(Buffer& buffer){
                 if (!parseRequseline(line)){
                     return NO_REQUEST;
                 }
-                url  = path + url;
+//                url  = pathdir + url;
                 break;
             case CHECK_STATE_HEADER:
                 parseHeaders(line);

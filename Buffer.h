@@ -24,6 +24,8 @@ public:
 
     char* writePtr();
 
+    void init();
+
     void append(const std::string& str);
 
     void updateReadptr(int len);

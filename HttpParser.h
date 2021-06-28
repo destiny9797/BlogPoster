@@ -26,12 +26,16 @@ public:
 
     ~HttpParser();
 
+    void init();
+
     //入口函数
     HTTP_CODE parseContent(Buffer& buffer);
 
+    const std::string& getMethod(){ return method; }
+
     const std::string& getUrl(){ return url; }
 
-    void init();
+    bool isKeepalive(){ return keepalive; }
 
 
 private:
@@ -61,9 +65,11 @@ private:
 
     CHECK_STATE checkState;
 
-    std::string path;
+//    std::string pathdir;
 
     int content_len;
+
+    bool keepalive;
 
 };
 

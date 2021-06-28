@@ -21,6 +21,12 @@ Buffer::~Buffer() {
 
 }
 
+void Buffer::init() {
+    _data.clear();
+    _readindex = 0;
+    _writeindex = 0;
+}
+
 int Buffer::Read(int fd, int& err) {
     int avail_space = writableSpace();
     char buffer2[65536];

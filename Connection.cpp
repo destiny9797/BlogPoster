@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sys/epoll.h>
 #include <assert.h>
+#include <sys/sendfile.h>
 
 #define BUF_SIZE 1024
 
@@ -16,7 +17,9 @@ Connection::Connection(int fd)
       _inbuffer(BUF_SIZE),
       _outbuffer(BUF_SIZE),
       _parser(),
-      _responser()
+      _responser(),
+      _filefd(0),
+      _keepalive(false)
 {
 
 }
@@ -31,8 +34,8 @@ int Connection::Read(int& err) {
 //        std::cout << "Before receive, " << std::endl;
 //        _inbuffer.printdata();
         int nread = _inbuffer.Read(_fd, err);
-//        std::cout << "After receive, " << std::endl;
-//        _inbuffer.printdata();
+        std::cout << "After receive, " << std::endl;
+        _inbuffer.printdata();
         if (nread <= 0){
             //wrong, or no more data, or closed
 //            std::cout << "return" << std::endl;
@@ -60,13 +63,38 @@ int Connection::Write(int& err) {
         LOG_DEBUG("Write %d bytes to Socket %d", nwrite, _fd);
     }
     assert(_outbuffer.datasize()==0);
+
+    //...
+    int filefd = _responser.getFile();
+    if (filefd > 0){
+        LOG_DEBUG("Socket %d: request for file %s", _fd, _parser.getUrl().c_str());
+        off_t offset = _responser.getOffset();
+        while (_responser.getOffset()<_responser.getFileSize()){
+            int nsend = sendfile(_fd, filefd, &offset, _responser.getFileSize()-_responser.getOffset());
+            _responser.setOffset(offset);
+            if (nsend < 0){
+                err = errno;
+                return -1;
+            }
+            LOG_DEBUG("Sendfile %d bytes to Socket %d", nsend, _fd);
+        }
+        std::cout << "offset=" << _responser.getOffset() << ", filesize=" << _responser.getFileSize() << std::endl;
+        assert(_responser.getOffset()==_responser.getFileSize());
+    }
+
+    _parser.init();
+    _responser.init();
+
     return 1;
 }
 
 bool Connection::processCore() {
     HTTP_CODE httpcode = _parser.parseContent(_inbuffer);
     if (httpcode == GET_REQUEST){
-        _responser.setStatus(200, "");
+        _responser.setStatus(_parser.getMethod(), _parser.getUrl());
+        if (_parser.isKeepalive()){
+            _keepalive = true;
+        }
 //        std::cout << "httpcode=GET_REQUEST" << std::endl;
     }
     else if (httpcode == NO_REQUEST){
@@ -76,7 +104,7 @@ bool Connection::processCore() {
     _responser.setResponse(_outbuffer);
 //    std::cout << "After preocess, outbuffer:" << std::endl;
 //    _outbuffer.printdata();
-    _parser.init();
+
     return true;
 }
 
@@ -97,3 +125,10 @@ void Connection::handleEvent() {
 }
 
 
+void Connection::Clear() {
+    _inbuffer.init();
+    _outbuffer.init();
+    _parser.init();
+    _responser.init();
+    _keepalive = false;
+}
