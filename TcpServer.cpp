@@ -24,7 +24,7 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
     : _port(port),
       _taskpool(taskpool),
       _quit(false),
-      _threadpool(1, _taskpool),
+      _threadpool(4, _taskpool),
       _connections(MAX_CONN, 0),
       _timermanager(std::bind(&TcpServer::handleExpire, this, std::placeholders::_1))
 {
@@ -60,7 +60,7 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
     LOG_INFO("===========ZhuJiaying's Simple WebServer===========");
     LOG_INFO("Open port: %d", port);
     LOG_INFO("IO Model: Epoll(ET)");
-    LOG_INFO("Connection: short connection");
+    LOG_INFO("Connection: depend on client");
     LOG_INFO("Available Max Open files: %d", MAX_CONN);
     LOG_INFO("===================================================");
 
@@ -108,7 +108,7 @@ void TcpServer::handleNewConn() {
     int clnt_sock;
     if ((clnt_sock = accept(_serv_sock, (struct sockaddr*)&clnt_addr, &socklen)) > 0){
         //添加HttpConnection
-        spConnection conn = std::make_shared<Connection>(clnt_sock);
+        spConnection conn = std::make_shared<Connection>(clnt_sock,inet_ntoa(clnt_addr.sin_addr));
         conn->setHandleRead(std::bind(&TcpServer::handleRequest, this, clnt_sock));
         conn->setHandleWrite(std::bind(&TcpServer::handleWrite, this, clnt_sock));
         conn->setHandleError(std::bind(&TcpServer::handleError, this, clnt_sock));
@@ -124,7 +124,7 @@ void TcpServer::handleNewConn() {
             setNonBlocking(clnt_sock);
             ctlEpoll(clnt_sock);
         }
-        LOG_INFO("New Connection From: %s", inet_ntoa(clnt_addr.sin_addr));
+        LOG_INFO("New Connection From: %s, Socket=%d", inet_ntoa(clnt_addr.sin_addr), clnt_sock);
 //        std::cout << "New Connection from: " << inet_ntoa(clnt_addr.sin_addr) << std::endl;
 
 //        std::make_shared<Request>();
@@ -147,17 +147,18 @@ void TcpServer::handleClose(int fd) {
     std::unique_lock<std::mutex> lk(*conn->getMutex());
     _timermanager.rmTimer(fd);
     _connections[fd] = nullptr;
+    const char* addr = conn->getAddr();
     conn->Clear(); //bug: 以防系统没有来得及回收内存
     delEpoll(fd);
     close(fd);
-    LOG_DEBUG("Socket %d closed.", fd);
+    LOG_DEBUG("Socket %d(%s): closed", fd, addr);
 //    std::cout << "Socket " << fd << " Closed!" << std::endl;
 }
 
 void TcpServer::handleExpire(int fd) {
     //主线程调用，如果正好有线程在写或读这个fd怎么办？
-    //一般来说不会，因为有线程正好在读或写，说明刚更新过定时器，如果都要超时了还没操作完，说明这个连接有问题
-    LOG_DEBUG("Socket %d expired.", fd);
+    //没关系，智能指针的读写加锁了，如果已关闭IO会返回-1
+//    LOG_DEBUG("Socket %d(%s): expired.", fd, addr);
     handleClose(fd);
 }
 
@@ -224,10 +225,10 @@ void TcpServer::handleWrite(int fd) {
             //没发完,此时不允许收
             uint32_t ev = EPOLLOUT | EPOLLET | EPOLLONESHOT;
             modEpoll(fd, ev);
-            LOG_WARN("Write unfinish to Socket %d", fd);
+            LOG_WARN("Socket %d(%s): Write unfinish to", fd, conn->getAddr());
         }
         else{
-            LOG_WARN("Write wrong to Socket %d", fd);
+            LOG_WARN("Socket %d(%s): Write wrong to ", fd, conn->getAddr());
             handleClose(fd);
         }
     }
@@ -236,7 +237,7 @@ void TcpServer::handleWrite(int fd) {
         if (conn->isKeepalive()){
             uint32_t ev = EPOLLIN | EPOLLET | EPOLLONESHOT;
             modEpoll(fd, ev);
-            LOG_WARN("Write finish to Socket %d, keepalive, wait for read", fd);
+            LOG_WARN("Socket %d(%s): Write finish to , keepalive, wait for read", fd, conn->getAddr());
         }
         else{
             handleClose(fd);
@@ -258,7 +259,7 @@ void TcpServer::Start() {
     struct epoll_event ev[MAX_CONN];
     while (!_quit){
         _timermanager.closeExpire();
-        int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT);
+        int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT/2);
         if (event_cnt < 0){
             if (errno==EINTR){
                 LOG_ERROR("Outside Interrupt!");

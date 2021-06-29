@@ -11,6 +11,7 @@
 #include <string>
 #include <functional>
 #include <mutex>
+#include <arpa/inet.h>
 
 
 class Connection{
@@ -18,11 +19,13 @@ public:
 
     typedef std::function<void(void)> callback;
 
-    Connection(int fd);
+    Connection(int fd, const char* addr);
 
     ~Connection();
 
     bool isKeepalive(){ return _keepalive; }
+
+    const char* getAddr(){ return _addr; }
 
 public:
     void setEvent(uint32_t ev) { _event = ev; }
@@ -62,6 +65,8 @@ private:
     int _fd;
 
     uint32_t _event;
+
+    const char* _addr;
 
 
     Buffer _inbuffer;

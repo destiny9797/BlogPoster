@@ -8,10 +8,11 @@
 #include <sys/epoll.h>
 #include <assert.h>
 #include <sys/sendfile.h>
+#include <cstring>
 
 #define BUF_SIZE 1024
 
-Connection::Connection(int fd)
+Connection::Connection(int fd, const char* addr)
     : _fd(fd),
       _halfclosed(false),
       _inbuffer(BUF_SIZE),
@@ -20,7 +21,8 @@ Connection::Connection(int fd)
       _responser(),
       _filefd(0),
       _keepalive(false),
-      _code(200)
+      _code(200),
+      _addr(addr)
 {
 
 }
@@ -43,7 +45,7 @@ int Connection::Read(int& err) {
             break;
         }
         total += nread;
-        LOG_DEBUG("Read %d bytes from Socket %d", nread, _fd);
+        LOG_DEBUG("Socket %d(%s): Read %d bytes from", _fd, _addr, nread);
     }while(1);
     return total;
     //.......
@@ -61,14 +63,14 @@ int Connection::Write(int& err) {
             //没发完，设置EPOLLOUT
             return -1;
         }
-        LOG_DEBUG("Write %d bytes to Socket %d", nwrite, _fd);
+        LOG_DEBUG("Socket %d(%s): Write %d bytes to", _fd, _addr, nwrite);
     }
     assert(_outbuffer.datasize()==0);
 
     //...
     int filefd = _responser.getFile();
     if (filefd > 0){
-        LOG_DEBUG("Socket %d: request for file %s", _fd, _parser.getUrl().c_str());
+        LOG_DEBUG("Socket %d(%s): request for file %s", _fd, _addr, _parser.getUrl().c_str());
         off_t offset = _responser.getOffset();
         while (_responser.getOffset()<_responser.getFileSize()){
             int nsend = sendfile(_fd, filefd, &offset, _responser.getFileSize()-_responser.getOffset());
@@ -77,9 +79,9 @@ int Connection::Write(int& err) {
                 err = errno;
                 return -1;
             }
-            LOG_DEBUG("Sendfile %d bytes to Socket %d", nsend, _fd);
+            LOG_DEBUG("Socket %d(%s): Sendfile %d bytes to", _fd, _addr, nsend);
         }
-        std::cout << "offset=" << _responser.getOffset() << ", filesize=" << _responser.getFileSize() << std::endl;
+//        std::cout << "offset=" << _responser.getOffset() << ", filesize=" << _responser.getFileSize() << std::endl;
         assert(_responser.getOffset()==_responser.getFileSize());
     }
 

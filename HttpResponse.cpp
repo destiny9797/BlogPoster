@@ -3,6 +3,7 @@
 //
 
 #include "HttpResponse.h"
+#include "HttpServer.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <cstring>
@@ -48,13 +49,7 @@ HttpResponse::HttpResponse()
       _filefd(0),
       _offset(0)
 {
-    char* curpath = getcwd(NULL, 0);
-    if (curpath==nullptr){
-        perror("getcwd wrong:");
-    }
-    else{
-        _pathdir = std::string(curpath) + "/../resourses";
-    }
+    _pathdir = HttpServer::getPath();
 
 }
 
@@ -91,34 +86,34 @@ void HttpResponse::setResponse(Buffer &buffer) {
     addHeader(buffer);
 
     //测试时不打开文件
-//    std::string filepath = _pathdir + _url;
-//    _filefd = open(filepath.c_str(), O_RDONLY);
-//    if (_filefd<=0){
-//        perror("open file wrong:");
-//    }
+    std::string filepath = _pathdir + _url;
+    _filefd = open(filepath.c_str(), O_RDONLY);
+    if (_filefd<=0){
+        perror("open file wrong:");
+    }
 //    std::cout << "filepath=" << filepath.c_str() << std::endl << "_filefd=" << _filefd << std::endl;
 }
 
 void HttpResponse::addResponseLine(Buffer &buffer) {
     //测试时不打开文件
-//    if (getResourse(_url)){
+    if (getResourse(_url)){
         _code = 200;
         buffer.append("HTTP/1.1 200 OK\r\n");
-//    }
-//    else{
-//        _code = 404;
-//        _url = "/errorpage/404.html";
-//        if (!getResourse(_url)){
-//            assert(S_ISREG(_fileinfo.st_mode));
-//        }
-//        buffer.append("HTTP/1.1 404 NOT_FOUND\r\n");
-//    }
+    }
+    else{
+        _code = 404;
+        _url = "/errorpage/404.html";
+        if (!getResourse(_url)){
+            assert(S_ISREG(_fileinfo.st_mode));
+        }
+        buffer.append("HTTP/1.1 404 NOT_FOUND\r\n");
+    }
 }
 
 void HttpResponse::addHeader(Buffer &buffer) {
     buffer.append("Server: ZhuJiaying's webserver\r\n");
     buffer.append("Content-Type: text/html; charset=utf-8\r\n");
-    buffer.append("Content-Length: 0\r\n");// + std::to_string(_fileinfo.st_size) + "\r\n");
+    buffer.append("Content-Length: " + std::to_string(_fileinfo.st_size) + "\r\n"); //测试时不发文件
     buffer.append("\r\n");
 }
 

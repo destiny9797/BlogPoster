@@ -3,6 +3,7 @@
 //
 
 #include "HttpParser.h"
+#include "HttpServer.h"
 
 #include <iostream>
 #include <sstream>
@@ -37,8 +38,8 @@ void HttpParser::init() {
 }
 
 void HttpParser::parseUrl(std::string &url) {
-    if (url == "/" || url == "/For"){
-        url = "/index.html";
+    if (url == "/"){
+        url += HttpServer::getHomepage();
     }
     else{
         urldecode(&*url.begin(), &*url.begin());
