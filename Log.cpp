@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <assert.h>
 #include <cstring>
-//#include <iostream>
+#include <iostream>
 
 #define MAX_BUFSIZE 256
 
@@ -22,7 +22,11 @@ Log::Log()
 {
 }
 
-Log::~Log() {}
+Log::~Log() {
+    // bug: 要调用quit()，以防服务器打开失败
+    Quit();
+//    std::cout << "~Log()" << std::endl;
+}
 
 void Log::Init(const std::string &path, int maxQueueLen) {
     _path = path;
@@ -44,7 +48,7 @@ void Log::Start() {
 
     if (_queuelen > 0){
         _asyncThr = std::make_unique<std::thread>(&Log::asyncWork, this);
-        _asyncThr->detach();
+//        _asyncThr->detach();
     }
 
     _open = true;
@@ -55,6 +59,10 @@ void Log::Quit() {
     _open = false;
     _quit = true;
     _cond.notify_one();
+
+    if (_asyncThr!=nullptr && _asyncThr->joinable()){
+        _asyncThr->join();
+    }
 }
 
 

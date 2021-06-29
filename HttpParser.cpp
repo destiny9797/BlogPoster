@@ -38,7 +38,7 @@ void HttpParser::init() {
 
 void HttpParser::parseUrl(std::string &url) {
     if (url == "/" || url == "/For"){
-        url = "/ohohoh 998069b3e639400cb81e32dbaa4fee17.html";
+        url = "/index.html";
     }
     else{
         urldecode(&*url.begin(), &*url.begin());

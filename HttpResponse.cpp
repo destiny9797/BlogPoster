@@ -90,39 +90,40 @@ void HttpResponse::setResponse(Buffer &buffer) {
 
     addHeader(buffer);
 
-//    addBody(buffer);
-    std::string filepath = _pathdir + _url;
-    _filefd = open(filepath.c_str(),O_RDONLY);
-    if (_filefd<=0){
-        perror("open file wrong:");
-    }
-    std::cout << "filepath=" << filepath.c_str() << std::endl << "_filefd=" << _filefd << std::endl;
+    //测试时不打开文件
+//    std::string filepath = _pathdir + _url;
+//    _filefd = open(filepath.c_str(), O_RDONLY);
+//    if (_filefd<=0){
+//        perror("open file wrong:");
+//    }
+//    std::cout << "filepath=" << filepath.c_str() << std::endl << "_filefd=" << _filefd << std::endl;
 }
 
 void HttpResponse::addResponseLine(Buffer &buffer) {
-    if (getResourse(_url)){
+    //测试时不打开文件
+//    if (getResourse(_url)){
         _code = 200;
         buffer.append("HTTP/1.1 200 OK\r\n");
-    }
-    else{
-        _code = 404;
-        _url = "/errorpage/404.html";
-        if (!getResourse(_url)){
-            assert(S_ISREG(_fileinfo.st_mode));
-        }
-        buffer.append("HTTP/1.1 404 NOT_FOUND\r\n");
-    }
+//    }
+//    else{
+//        _code = 404;
+//        _url = "/errorpage/404.html";
+//        if (!getResourse(_url)){
+//            assert(S_ISREG(_fileinfo.st_mode));
+//        }
+//        buffer.append("HTTP/1.1 404 NOT_FOUND\r\n");
+//    }
 }
 
 void HttpResponse::addHeader(Buffer &buffer) {
     buffer.append("Server: ZhuJiaying's webserver\r\n");
     buffer.append("Content-Type: text/html; charset=utf-8\r\n");
-    buffer.append("Content-Length: " + std::to_string(_fileinfo.st_size) + "\r\n");
+    buffer.append("Content-Length: 0\r\n");// + std::to_string(_fileinfo.st_size) + "\r\n");
     buffer.append("\r\n");
 }
 
 void HttpResponse::addBody(Buffer &buffer) {
-
+    buffer.append("Pressure test");
 }
 
 bool HttpResponse::getResourse(const std::string& url) {

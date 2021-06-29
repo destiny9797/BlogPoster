@@ -25,7 +25,9 @@ public:
 
     spHttpConnection getTask();
 
-    void notifyAll() { _cond.notify_all(); }
+    void Quit();
+
+//    void notifyAll() { _cond.notify_all(); }
 
 private:
     std::queue<spHttpConnection> _activeconn;
@@ -33,6 +35,8 @@ private:
     std::mutex _mutex;
 
     std::condition_variable _cond;
+
+    bool _quit;
 
 };
 

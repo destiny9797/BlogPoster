@@ -21,9 +21,15 @@ TimerManager::~TimerManager() {
 
 }
 
-
+//有bug，会dump
 void TimerManager::closeExpire(){
-    spTimer timer = _tail->last;
+    spTimer timer = nullptr;
+    {
+        //智能指针的线程安全问题
+        std::unique_lock<std::mutex> lk(_mutex);
+        timer = _tail->last;
+    }
+
     //尾部是即将超时的
     while (timer!=_head){
         assert(timer!=nullptr);
@@ -32,11 +38,14 @@ void TimerManager::closeExpire(){
         }
         //应该在这个线程中关闭吗？
         int fd = timer->getfd();
-        spTimer lasttimer = timer->last;
+        {
+            //智能指针的线程安全问题
+            std::unique_lock<std::mutex> lk(_mutex);
+            timer = timer->last;
+        }
         handleExpire(fd);
 //        std::cout << "Socket " << fd << "expired, Closed! " << std::endl;
 
-        timer = lasttimer;
     }
 }
 

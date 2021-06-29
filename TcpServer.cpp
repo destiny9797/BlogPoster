@@ -68,7 +68,12 @@ TcpServer::TcpServer(int port, spTaskPool taskpool)
 
 
 TcpServer::~TcpServer() {
-    close(_serv_sock);
+    if (close(_epoll_fd)<0){
+        perror("close epoll fd wrong");
+    }
+    if (close(_serv_sock)<0){
+        perror("close serv socket wrong");
+    }
     std::cout << "~TcpServer()" << std::endl;
 }
 
@@ -101,7 +106,7 @@ void TcpServer::handleNewConn() {
     struct sockaddr_in clnt_addr;
     socklen_t socklen = sizeof(clnt_addr); //bug: 未初始化会收到来自1.0.0.0的连接
     int clnt_sock;
-    while ((clnt_sock = accept(_serv_sock, (struct sockaddr*)&clnt_addr, &socklen)) > 0){
+    if ((clnt_sock = accept(_serv_sock, (struct sockaddr*)&clnt_addr, &socklen)) > 0){
         //添加HttpConnection
         spConnection conn = std::make_shared<Connection>(clnt_sock);
         conn->setHandleRead(std::bind(&TcpServer::handleRequest, this, clnt_sock));
@@ -250,8 +255,8 @@ void TcpServer::handleError(int fd) {
 void TcpServer::Start() {
     LOG_INFO("Now Start!");
     _threadpool.run();
+    struct epoll_event ev[MAX_CONN];
     while (!_quit){
-        struct epoll_event ev[MAX_CONN];
         _timermanager.closeExpire();
         int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT);
         if (event_cnt < 0){
@@ -277,6 +282,9 @@ void TcpServer::Start() {
             }
         }
     }
+    //等服务器退出，日志才退出
+    LOG_INFO("TcpServer Quit");
+    Log::getInstance().Quit();
 }
 
 
@@ -285,9 +293,6 @@ void TcpServer::Quit() {
     _threadpool.quit();
 //    _taskpool->notifyAll();
     _threadpool.join();
-    _quit = true;
 
-    LOG_INFO("TcpServer Quit");
-    //等服务器退出，日志才退出
-    Log::getInstance().Quit();
+    _quit = true;
 }

@@ -35,8 +35,8 @@ int Connection::Read(int& err) {
 //        std::cout << "Before receive, " << std::endl;
 //        _inbuffer.printdata();
         int nread = _inbuffer.Read(_fd, err);
-        std::cout << "After receive, " << std::endl;
-        _inbuffer.printdata();
+//        std::cout << "After receive, " << std::endl;
+//        _inbuffer.printdata();
         if (nread <= 0){
             //wrong, or no more data, or closed
 //            std::cout << "return" << std::endl;

@@ -15,6 +15,7 @@ ThreadPool::ThreadPool(int threadnum, spTaskPool taskpool)
 }
 
 ThreadPool::~ThreadPool() {
+    quit();
     std::cout << "~ThreadPool()" << std::endl;
 }
 
@@ -26,10 +27,12 @@ void ThreadPool::run() {
 
 void ThreadPool::quit() {
     _quit = true;
+    _taskpool->Quit();
 }
 
 void ThreadPool::join() {
-    for (int i=0; i<_threadnum; ++i){
+    //bug: 不能是_threadnum,因为可能还没run
+    for (int i=0; i<_threadpool.size(); ++i){
         if (_threadpool[i].joinable()){
             _threadpool[i].join();
         }
@@ -39,10 +42,11 @@ void ThreadPool::join() {
 void ThreadPool::work() {
     while (!_quit){
         spConnection conn = _taskpool->getTask();
+//        assert(conn!=nullptr);
         if (conn != nullptr){
             conn->handleEvent();
         }
     }
-    std::thread::id tid = std::this_thread::get_id();
+//    std::thread::id tid = std::this_thread::get_id();
     LOG_INFO("Work Thread Quit.");
 }
