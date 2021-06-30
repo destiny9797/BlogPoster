@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11)
-project(MyWebServer)
+project(BlogPoster)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -26,8 +26,8 @@ set(SRCS
 #        MysqlConnPool.cpp
         main.cpp)
 
-add_executable(MyWebServer ${SRCS})
+add_executable(webserver ${SRCS})
 
-#target_link_libraries(MyWebServer pthread mysqlcppconn8 ${SSL_LIB} ${CRYPTO_LIB})
+#target_link_libraries(BlogPoster pthread mysqlcppconn8 ${SSL_LIB} ${CRYPTO_LIB})
 
-target_link_libraries(MyWebServer pthread)
+target_link_libraries(webserver pthread)

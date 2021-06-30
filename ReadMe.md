@@ -18,7 +18,7 @@
    cmake ../
    make
    mkdir log #创建日志文件夹
-   ./MyWebServer #运行
+   ./BlogPoster #运行
    ```
 
 4. 在浏览器中输入url，例如云服务器的ip是`xx.xx.xx.xx`，则输入`http://xx.xx.xx.xx`，即可访问
