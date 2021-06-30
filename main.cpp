@@ -7,7 +7,7 @@ int main() {
 
 
     HttpServer& httpserver = HttpServer::getInstance();
-    httpserver.Init(80, "For 0c037ea28ec644b99fd4cdf671b90f15.html");
+    httpserver.Init(80, "藏宝阁 2d05c1d04c964b92852be60208ad61d3.html");
 
     httpserver.Start();
 
