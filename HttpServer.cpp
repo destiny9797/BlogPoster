@@ -24,7 +24,7 @@ std::string HttpServer::getPath() {
         exit(1);
     }
     else{
-       return std::string(curpath) + "/../resourses";
+       return std::string(curpath) + "/../resourse";
     }
 }
 
