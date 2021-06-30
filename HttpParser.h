@@ -87,7 +87,6 @@ private:
 
     bool keepalive;
 
-    static const std::unordered_set<std::string> DEFAULT_HTML;
 
 };
 

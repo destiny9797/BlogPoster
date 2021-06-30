@@ -65,8 +65,8 @@ void TimerManager::updateTimer(int fd, int timeout) {
 //    assert(timer!=nullptr);
     timer->last->next = timer->next;
     timer->next->last = timer->last;
+    timer->update(timeout);
     addToHead(timer);
-//    _timers[fd]->update(timeout);
 }
 
 void TimerManager::rmTimer(int fd) {

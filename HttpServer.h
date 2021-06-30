@@ -20,26 +20,31 @@ public:
     typedef std::shared_ptr<TcpServer> spTcpServer;
     typedef std::shared_ptr<TaskPool> spTaskPool;
 
-    HttpServer(int port, const std::string& homepage);
-
-    ~HttpServer();
-
-    void Start();
-
-    void Quit();
+    static HttpServer& getInstance();
 
     static std::string getPath();
 
     static std::string getHomepage();
 
+    void Init(int port, const std::string& homepage);
+
+    void Start();
+
+    void Quit();
+
 
 private:
+    HttpServer();
+
+    ~HttpServer();
 
     spTaskPool _taskpool;
 
     spTcpServer _tcpserver;
 
     static std::string _homepage;
+
+    bool _inited;
 
 };
 

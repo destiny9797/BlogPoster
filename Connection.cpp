@@ -41,7 +41,6 @@ int Connection::Read(int& err) {
 //        _inbuffer.printdata();
         if (nread <= 0){
             //wrong, or no more data, or closed
-//            std::cout << "return" << std::endl;
             break;
         }
         total += nread;
@@ -101,10 +100,8 @@ bool Connection::processCore() {
         if (_parser.isKeepalive()){
             _keepalive = true;
         }
-//        std::cout << "httpcode=GET_REQUEST" << std::endl;
     }
     else if (httpcode == NO_REQUEST){
-//        std::cout << "httpcode=NO_REQUEST" << std::endl;
         return false;
     }
     _responser.setResponse(_outbuffer);
@@ -116,16 +113,13 @@ bool Connection::processCore() {
 
 
 void Connection::handleEvent() {
-    if (_event & (EPOLLIN | EPOLLPRI)){ //对方有数据或正常关闭
-//        std::cout << "one thread handle read" << std::endl;
+    if (_event & (EPOLLIN)){ //对方有数据或正常关闭
         handleRead();
     }
-    else if (_event & EPOLLOUT){
-//        std::cout << "one thread handle write" << std::endl;
+    else if (_event & EPOLLOUT){ //缓冲区可写
         handleWrite();
     }
     else if (_event & (EPOLLERR | EPOLLHUP)){
-//        std::cout << "one thread handle error" << std::endl;
         handleError();
     }
 }

@@ -11,7 +11,7 @@ TaskPool::TaskPool() : _quit(false)
 }
 
 TaskPool::~TaskPool() {
-    std::cout << "~TaskPool()" << std::endl;
+//    std::cout << "~TaskPool()" << std::endl;
 }
 
 void TaskPool::Quit() {

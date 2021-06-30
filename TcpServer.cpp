@@ -18,7 +18,7 @@
 
 //#define MAX_BUF 4096
 #define MAX_CONN 65536
-#define TIMEOUT 5000 //2000ms
+#define TIMEOUT 120000 //120s
 
 TcpServer::TcpServer(int port, spTaskPool taskpool)
     : _port(port),
@@ -259,7 +259,7 @@ void TcpServer::Start() {
     struct epoll_event ev[MAX_CONN];
     while (!_quit){
         _timermanager.closeExpire();
-        int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT/2);
+        int event_cnt = epoll_wait(_epoll_fd, ev, MAX_CONN, TIMEOUT/10);
         if (event_cnt < 0){
             if (errno==EINTR){
                 LOG_ERROR("Outside Interrupt!");
