@@ -68,7 +68,7 @@ CPU：Intel(R) Xeon(R) CPU E5-2682 v4
 
 内存：2G
 
-![image-20210629155247345](/Users/zhujiaying/Library/Application Support/typora-user-images/image-20210629155247345.png)
+![image-20210629155247345](images/image-20210629155247345.png)
 
 QPS=10000+
 
@@ -82,7 +82,7 @@ CPU：AMD FX(tm)-6300
 
 内存：8G
 
-![image-20210629155146047](/Users/zhujiaying/Library/Application Support/typora-user-images/image-20210629155146047.png)
+![image-20210629155146047](images/image-20210629155146047.png)
 
 QPS=27340
 
