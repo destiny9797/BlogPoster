@@ -9,8 +9,13 @@
 #include <sstream>
 #include <algorithm>
 #include <assert.h>
+#include <unordered_set>
 
 //#include <mysqlx/xdevapi.h>
+
+std::unordered_set<std::string> methodset = {
+        "GET","POST"
+};
 
 
 HttpParser::HttpParser()
@@ -103,7 +108,13 @@ HTTP_CODE HttpParser::parseContent(Buffer& buffer){
         switch (checkState) {
             case CHECK_STATE_REQUESTLINE:
                 if (!parseRequseline(line)){
-                    return NO_REQUEST;
+                    if (methodset.find(method)==methodset.end()){
+                        url = "/errorpage/400.html";
+                        return BAD_REQUEST;
+                    }
+                    else{
+                        return NO_REQUEST;
+                    }
                 }
 //                url  = pathdir + url;
                 break;

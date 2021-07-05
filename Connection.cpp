@@ -101,6 +101,10 @@ bool Connection::processCore() {
             _keepalive = true;
         }
     }
+    else if (httpcode == BAD_REQUEST){
+        _responser.setStatus(_code, _parser.getUrl());
+        _keepalive = false;
+    }
     else if (httpcode == NO_REQUEST){
         return false;
     }

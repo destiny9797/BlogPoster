@@ -1,0 +1,647 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>博客珍藏</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25163cc1-062a-4902-a62e-bf4c838e9415" class="page sans"><header><h1 class="page-title">博客珍藏</h1></header><div class="page-body"><hr id="90153874-3650-48c8-8dd3-f2c59d0f4364"/><p id="9d478846-5e7a-4150-adfa-d690703175b9" class="">
+</p><p id="5807efb0-1327-45ec-8aaf-3878485cee6d" class="">
+</p><nav id="e036fd2d-a28c-4ed8-b50e-655336a64bad" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#695c2f69-f2b4-49ff-b24b-d3d3e84f0ad7">CS相关</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6246ebc0-4ad5-4baa-bf18-f0e58ce35c4a">EE相关</a></div></nav><p id="a390fc2d-dfc2-4e4f-9742-b39b00f8a15f" class="">
+</p><p id="639644f3-ec88-4112-97bd-16ea133088f9" class="">
+</p><h3 id="695c2f69-f2b4-49ff-b24b-d3d3e84f0ad7" class="">CS相关</h3><figure id="83ccf2a5-5b49-4386-b378-d0c87779e589"><a href="https://guisu.blog.csdn.net/article/details/5713164" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">操作系统内存管理(思维导图详解)</div><div class="bookmark-description">操作系统内存管理： 总的来说，操作系统内存管理包括物理内存管理和虚拟内存管理。 物理内存管理： 包括程序装入 等概念、交换技术、连续分配管理方式和非连续分配管理方式（分页、分段、段页式）。 虚拟内存管理： 虚拟内存管理包括虚拟内存概念、请求分页管理方式、页面置换算法、页面分配策略、工作集和抖动。 这个系列主要使用linux内存管理来具体说明： linux内存管理 ...</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://guisu.blog.csdn.net/article/details/5713164</div></div><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy50ZWNodWcuY29tL3dvcmRwcmVzcy93cC1jb250ZW50L3VwbG9hZHMvMjAxOC8wOS8yLmpwZw?x-oss-process=image/format,png" class="bookmark-image"/></a></figure><p id="ee8d815e-b640-41a4-9264-8be4df12597f" class="">
+</p><figure id="583a2653-f826-4d57-b55a-bc1d3418ab78"><a href="https://blog.csdn.net/historyasamirror/article/details/5778378" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">IO - 同步，异步，阻塞，非阻塞 （亡羊补牢篇）_智障大师 的专栏-CSDN博客_同步异步阻塞非阻塞</div><div class="bookmark-description">当你发现自己最受欢迎的一篇blog其实大错特错时，这绝对不是一件让人愉悦的事。 《 IO - 同步，异步，阻塞，非阻塞 》是我在开始学习epoll和libevent的时候写的，主要的思路来自于文中的那篇 link 。写完之后发现很多人都很喜欢，我还是非常开心的，也说明这个问题确实困扰了很多人。随着学习的深入，渐渐的感觉原来的理解有些偏差，但是还是没引起自己的重视，觉着都是一些小错误，无伤大雅。直到有位博友问了一个问题，我重新查阅了一些更权威的资料，才发现原来的文章中有很大的理论错误。我不知道有多少人已经看过这篇blog并受到了我的误导，鄙人在此表示抱歉。俺以后写技术blog会更加严谨的。 一度想把原文删了，最后还是没舍得。毕竟每篇blog都花费了不少心血，另外放在那里也可以引以为戒。所以这里新补一篇。算是亡羊补牢吧。 言归正传。 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO分别是什么，到底有什么区别？这个问题其实不同的人给出的答案都可能不同，比如wiki，就认为asynchronous IO和non-blocking IO是一个东西。这其实是因为不同的人的知识背景不同，并且在讨论这个问题的时候上下文(context)也不相同。所以，为了更好的回答这个问题，我先限定一下本文的上下文。 本文讨论的背景是Linux环境下的network IO。 本文最重要的参考文献是Richard Stevens的&quot; UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking &quot;，6.2节&quot; I/O Models &quot;，Stevens在这节中详细说明了各种IO的特点和区别，如果英文够好的话，推荐直接阅读。Stevens的文风是有名的深入浅出，所以不用担心看不懂。本文中的流程图也是截取自参考文献。 Stevens在文章中一共比较了五种IO Model： blocking IO nonblocking IO IO multiplexing signal driven IO asynchronous IO 由于signal driven IO在实际中并不常用，所以我这只提及剩下的四种IO</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/historyasamirror/article/details/5778378</div></div><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" class="bookmark-image"/></a></figure><p id="55c4c94d-2494-4fa3-a441-1d80309c8780" class="">
+</p><figure id="d22cc90c-6a4a-4260-a7bb-e800f096fdc7"><a href="https://blog.csdn.net/wangrenhaioylj/article/details/109119466" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">linux的两种共享内存方式---mmap和shmat区别_wangrenhaioylj的博客-CSDN博客_mmap和shmat的区别</div><div class="bookmark-description">linux中的两种共享内存。一种是我们的IPC通信System V版本的共享内存，另外的一种就是我们今天提到的存储映射I/O（mmap函数） ...</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/wangrenhaioylj/article/details/109119466</div></div><img src="https://img-blog.csdnimg.cn/20201016165611665.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dhbmdyZW5oYWlveWxq,size_16,color_FFFFFF,t_70#pic_center" class="bookmark-image"/></a></figure><p id="fd38d61b-8e51-4805-846f-bf0eb27a65d8" class="">
+</p><figure id="b3573ed8-3e48-41fc-b1b7-66f15b8fc681"><a href="https://blog.csdn.net/afei__/article/details/81201039" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">CMakeLists.txt 语法介绍与实例演练_阿飞的博客-CSDN博客_cmakelist</div><div class="bookmark-description">cmake 是一个跨平台、开源的构建系统。它是一个集软件构建、测试、打包于一身的软件。它使用与平台和编译器独立的配置文件来对软件编译过程进行控制。 cmake_minimum_required(VERSION 3.4.1) 这行命令是可选的，我们可以不写这句话，但在有些情况下，如果 CMakeLists.txt 文件中使用了一些高版本 cmake 特有的一些命令的时候，就需要加上这样一行，提醒用户升级到该版本之后再执行 cmake。 project(demo) 这个命令不是强制性的，但最好都加上。它会引入两个变量 demo_BINARY_DIR 和 demo_SOURCE_DIR，同时，cmake 自动定义了两个等价的变量 PROJECT_BINARY_DIR 和 PROJECT_SOURCE_DIR。 add_executable(demo demo.cpp) # 生成可执行文件 add_library(common STATIC util.cpp) # 生成静态库 add_library(common SHARED util.cpp) # 生成动态库或共享库 add_library 默认生成是静态库，通过以上命令生成文件名字， 4.1 明确指定包含哪些源文件 add_library(demo demo.cpp test.cpp util.cpp) 4.2 搜索所有的 cpp 文件 aux_source_directory(dir VAR) 发现一个目录下所有的源代码文件并将列表存储在一个变量中。 aux_source_directory(.</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/afei__/article/details/81201039</div></div><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" class="bookmark-image"/></a></figure><p id="160e0f75-b020-43a8-891d-9f0f0e5c36f5" class="">
+</p><figure id="5ee4039f-2f99-4c1b-a2f0-a2964eaa1e8d"><a href="https://blog.csdn.net/liang13664759/article/details/1771246" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://blog.csdn.net/liang13664759/article/details/1771246</div></div></a></figure><p id="c89cd260-a04f-4f30-b339-308460207422" class="">
+</p><figure id="8d8e08ab-fd58-496a-8b3f-2203f0bf9106"><a href="https://blog.csdn.net/haoel/article/details/1948051" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">C++ 虚函数表解析_陈皓专栏　【空谷幽兰，心如皓月】-CSDN博客_虚函数表</div><div class="bookmark-description">陈皓 http://blog.csdn.net/haoel C++ 中的虚函数的作用主要是实现了多态的机制。关于多态，简而言之就是用父类型别的指针指向其子类的实例，然后通过父类的指针调用实际子类的成员函数。这种技术可以让父类的指针有&quot;多种形态&quot;，这是一种泛型技术。所谓泛型技术，说白了就是试图使用不变的代码来实现可变的算法。比如：模板技术， RTTI 技术，虚函数技术，要么是试图做到在编译时决议，要么试图做到运行时决议。 关于虚函数的使用方法，我在这里不做过多的阐述。大家可以看看相关的 C++ 的书籍。在这篇文章中，我只想从虚函数的实现机制上面为大家 一个清晰的剖析。 当然，相同的文章在网上也出现过一些了，但我总感觉这些文章不是很容易阅读，大段大段的代码，没有图片，没有详细的说明，没有比较，没有举一反三。不利于学习和阅读，所以这是我想写下这篇文章的原因。也希望大家多给我提意见。 对 C++ 了解的人都应该知道虚函数（ Virtual Function ）是通过一张虚函数表（ Virtual Table ）来实现的。简称为 V-Table 。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。 这里我们着重看一下这张虚函数表。 C++ 的编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能--如果有多层继承或是多重继承的情况下）。 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。 Fun pFun = NULL; 实际运行经果如下： (Windows XP+VS2003,Linux 2.6.22 + GCC 4.1.3) 这个时候你应该懂了吧。什么？还是有点晕。也是，这样的代码看着太乱了。没问题，让我画个图解释一下。如下所示： 注意：在上面这个图中，我在虚函数表的最后多加了一个结点，这是虚函数表的结束结点，就像字符串的结束符&quot; /0 &quot;一样，其标志了虚函数表的结束。这个结束标志的值在不同的编译器下是不同的。在 WinXP+VS2003 下，这个值是 NULL 。而在 Ubuntu 7.10 + Linux 2.6.22</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/haoel/article/details/1948051</div></div><img src="https://p-blog.csdn.net/images/p_blog_csdn_net/haoel/15190/o_vtable1.jpg" class="bookmark-image"/></a></figure><p id="5cd45aae-5490-4a4b-8cb6-621d40e9dc81" class="">
+</p><figure id="ea3558aa-b29f-4324-b4b5-f10f30b1a1a0"><a href="https://blog.csdn.net/cao0507/article/details/82707971" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">frp 内网穿透实现 ssh 访问内网主机_cao0507的博客-CSDN博客_frp ssh</div><div class="bookmark-description">frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp, http, https 协议。 本文将基于 frp 来实现内网穿透，从而实现从外网 ssh 登录内网主机，而不对 frp 其他的应用做过多的说明。 利用处于内网或防火墙后的机器，对外网环境提供 http 或 https 服务。 对于 http, https 服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口。 利用处于内网或防火墙后的机器，对外网环境提供 tcp 和 udp 服务，例如在家里通过 ssh 访问处于公司内网环境内的主机。 [外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-No4jWfB7-1612859347591)(https://raw.githubusercontent.com/fatedier/frp/master/doc/pic/architecture.png)] 在具有公网IP的服务器或VPS上安装运行 frp 的服务端程序frps，并在处于内网的目标主机上面安装运行 frp 的客户端程序 frpc ，然后 User 就可以通过公网服务器来实现内网穿透从而访问内网主机。 根据不同的系统架构选择不同的安装包，从 frp下载链接 上下载合适的安装包。由于本人的公网服务器是 vultr 上面的一台 VPS，操作系统是 CentOS 7；内网机器也是一台 Linux 服务器，操作系统是</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/cao0507/article/details/82707971</div></div><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" class="bookmark-image"/></a></figure><p id="e47cdf46-f30d-47c0-ac8e-51c4c93b692f" class="">
+</p><p id="8ce7bfc5-ecb0-45d2-9478-1258b4c4a186" class="">
+</p><p id="38066c8b-4ea3-4ae0-bcbe-a9a834725b49" class="">
+</p><h2 id="6246ebc0-4ad5-4baa-bf18-f0e58ce35c4a" class="">EE相关</h2><figure id="e153b5c8-56c6-47c9-9245-2275eee376bc"><a href="https://blog.csdn.net/weixin_41683971/article/details/103844756" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">基于Matlab的载波同步建模与仿真（科斯塔斯环）_Your_Raymond的博客-CSDN博客</div><div class="bookmark-description">载波同步又称载波恢复( carrier restoration)，即在接收设备中产生一个和接收信号的载波同频同相的本地振荡( local ...</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/weixin_41683971/article/details/103844756</div></div></a></figure><p id="7ebcee3b-f7f5-4fde-be7d-8ae3ab67dc67" class="">
+</p><figure id="ba9461aa-dbef-4088-839e-c4093d9a33db"><a href="https://blog.csdn.net/qq_34070723/article/details/90605095" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">通信应用中数字上变频DUC与数字下变频DDC详细原理（带图）_king阿金-CSDN博客_数字上变频</div><div class="bookmark-description">关于上下变频的仿真： 数字插值滤波与数字正交上变频的仿真与实验----基于高速DAC芯片 数字正交下变频与数字滤波抽取的仿真与实验----基于高速ADC芯片 1.DUC与DDC的应用场景来源[2] 2.DUC与DDC的各部分简介 3.DUC与DDC的详细框图 3.1数字上变频Digital Up Converters 框图 3.2数字下变频Digital Down Converters 框图</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/qq_34070723/article/details/90605095</div></div><img src="https://img-blog.csdn.net/20180719110229537?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI5ODYyOTY3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" class="bookmark-image"/></a></figure><p id="d5aaab83-5ebc-4be2-b645-20011343a430" class="">
+</p><figure id="75899fa0-0e0f-44d0-9230-c98029de31dc"><a href="https://www.mobibrw.com/2018/12118" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">无线通信中的IQ调制，BPSK调制，QPSK调制，16QAM调制的理解</div></div><div class="bookmark-href">https://www.mobibrw.com/2018/12118</div></div><img src="https://www.mobibrw.com/wp-content/uploads/2018/04/471c03570bb35be5a465ae38d068618b_r.jpg" class="bookmark-image"/></a></figure><p id="f89dd8d0-e9fb-4690-819b-b226cacce17c" class="">
+</p><figure id="17c68979-2c00-4a6a-9beb-27b55c2b0039"><a href="https://blog.csdn.net/enjoy_pascal/article/details/81478582" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">十分简明易懂的FFT（快速傅里叶变换）_路人黑的纸巾-CSDN博客_fft</div><div class="bookmark-description">FFT有什么用 快速傅里叶变换 (fast Fourier transform),即利用计算机计算离散傅里叶变换（DFT)的高效、快速计算方法的统称，简称FFT。快速傅里叶变换是1965年由J.W.库利和T.W.图基提出的。采用这种算法能使计算机计算离散傅里叶变换所需要的乘法次数大为减少，特别是被变换的抽样点数N越多，FFT算法计算量的节省就越显著。 FFT（Fast Fouri...</div></div><div class="bookmark-href"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="icon bookmark-icon"/>https://blog.csdn.net/enjoy_pascal/article/details/81478582</div></div><img src="https://img-blog.csdn.net/20180808221410675?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vuam95X3Bhc2NhbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" class="bookmark-image"/></a></figure><p id="07a0198f-f561-457e-889b-351769a47454" class="">
+</p><p id="95c76a9d-65cf-47d1-a7fb-2e2c11163481" class="">
+</p><p id="b050642f-16ce-46ce-89f4-31196f21cc8c" class="">开发中。。。</p><p id="b13b1cf5-412a-4011-817e-65d2eb8f51e0" class="">
+</p></div></article></body></html>
