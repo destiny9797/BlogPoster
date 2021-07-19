@@ -9,6 +9,8 @@
 #include <assert.h>
 #include <errno.h>
 
+#define RMEM 137072
+
 Buffer::Buffer(int initlen)
     : _data(initlen),
       _readindex(0),
@@ -29,7 +31,7 @@ void Buffer::init() {
 
 int Buffer::Read(int fd, int& err) {
     int avail_space = writableSpace();
-    char buffer2[65536];
+    char buffer2[RMEM];
     struct iovec iov[2];
     iov[0].iov_base = writePtr();
     iov[0].iov_len = avail_space;

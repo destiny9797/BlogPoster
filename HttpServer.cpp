@@ -47,7 +47,7 @@ HttpServer::~HttpServer() {
 void HttpServer::Init(int port, const std::string &homepage) {
     Log& log = Log::getInstance();
     log.Init("./log", 1024);
-    Log::getInstance().Start(); //测试时不打开
+//    Log::getInstance().Start(); //测试时不打开
 
     _tcpserver = std::make_shared<TcpServer>(port, _taskpool);
     HttpServer::_homepage = homepage;

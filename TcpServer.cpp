@@ -227,6 +227,11 @@ void TcpServer::handleWrite(int fd) {
             modEpoll(fd, ev);
             LOG_WARN("Socket %d(%s): Write unfinish to", fd, conn->getAddr());
         }
+        else if (writeerr == EPIPE){
+            LOG_WARN("Socket %d(%s): Write wrong, connection is closed by peer", fd, conn->getAddr());
+            std::cout << "rst" << std::endl;
+            handleClose(fd);
+        }
         else{
             LOG_WARN("Socket %d(%s): Write wrong to ", fd, conn->getAddr());
             handleClose(fd);

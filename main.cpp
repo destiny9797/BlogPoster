@@ -4,6 +4,7 @@
 
 int main() {
     signal(SIGINT, [](int){HttpServer::getInstance().Quit();});
+    signal(SIGPIPE, SIG_IGN);
 
 
     HttpServer& httpserver = HttpServer::getInstance();

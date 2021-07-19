@@ -51,6 +51,7 @@ void TimerManager::closeExpire(){
 
 void TimerManager::addTimer(int fd, int timeout) {
     std::unique_lock<std::mutex> lk(_mutex);
+    assert(_map.count(fd)==0);
     spTimer timer = std::make_shared<Timer>(fd, timeout);
     addToHead(timer);
     _map[fd] = timer;
